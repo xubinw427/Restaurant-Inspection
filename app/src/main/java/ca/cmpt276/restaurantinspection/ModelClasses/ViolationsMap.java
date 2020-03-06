@@ -45,15 +45,15 @@ public class ViolationsMap {
             String violation;
 //            final String TAG = "MyActivity";
             while ((violation = input.readLine()) != null) {
-                String[] row = violation.split(",");
+                String[] line = violation.split(",");
                 /** For some reason there's a pre-trailing " in front of key so I had to trim it below **/
-                row[0] = row[0].substring(1);
-//                Log.v(TAG, row[0]);
-//                Log.v(TAG, row[1]);
-//                Log.v(TAG, row[2]);
-//                Log.v(TAG, row[3]);
-//                Log.v(TAG, row[4]);
-                violationsLookup.put(row[0], row);
+                line[0] = line[0].substring(1);
+//                Log.v(TAG, line[0]);
+//                Log.v(TAG, line[1]);
+//                Log.v(TAG, line[2]);
+//                Log.v(TAG, line[3]);
+//                Log.v(TAG, line[4]);
+                violationsLookup.put(line[0], line);
             }
         }
         catch (IOException ex) {
