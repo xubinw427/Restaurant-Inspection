@@ -11,8 +11,14 @@ import androidx.appcompat.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import java.io.InputStream;
+
+import ca.cmpt276.restaurantinspection.ModelClasses.ViolationsMap;
 
 public class MainActivity extends AppCompatActivity {
+    private ViolationsMap violationsMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +35,17 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        /** ================== **/
+        InputStream input = getResources().openRawResource(R.raw.all_violations);
+        violationsMap = ViolationsMap.getInstance(input);
+
+        /** Testing data is populated in correctly. TO DELETE. **/
+//        String[] TEST = violationsMap.getViolationFromMap("404");
+//
+//        Toast toast = Toast.makeText(this, TEST[4], Toast.LENGTH_SHORT);
+//        toast.show();
+        /** ================== **/
     }
 
     @Override
