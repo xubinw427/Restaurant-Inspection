@@ -1,42 +1,39 @@
 package ca.cmpt276.restaurantinspection.Model;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
-
 public class Violation {
-    public class ViolationElements {
-        private String severity;
-        private String description;
-        private String repeat;
+    private String ID;
+    private String type;
+    private String severity;
+    private String longDescription;
+    private String shortDescription;
 
-        public String getSeverity() {
-            return severity;
-        }
+    /** String[]: [0: ID, 1: Type, 2: Severity, 3: LongDescription, 4: ShortDescription]**/
 
-        public void setSeverity(String severity) {
-            this.severity = severity;
-        }
-
-        public String getDescription() {
-            return description;
-        }
-
-        public void setDescription(String description) {
-            this.description = description;
-        }
-
-        public String getRepeat() {
-            return repeat;
-        }
-
-        public void setRepeat(String repeat) {
-            this.repeat = repeat;
-        }
+    public Violation(String[] violationDetails) {
+        this.ID = violationDetails[0];
+        this.type = violationDetails[1];
+        this.severity = violationDetails[2];
+        this.longDescription = violationDetails[3];
+        this.shortDescription = violationDetails[4];
     }
 
-    Dictionary<Integer, ViolationElements> list = new Hashtable();
+    public String getID() {
+        return ID;
+    }
 
-    public Dictionary<Integer, ViolationElements> getList() {
-        return list;
+    public String getType() {
+        return type;
+    }
+
+    public String getSeverity() {
+        return severity;
+    }
+
+    public String getLongDescription() {
+        return longDescription;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
     }
 }

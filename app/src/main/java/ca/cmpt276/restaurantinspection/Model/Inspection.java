@@ -1,26 +1,29 @@
 package ca.cmpt276.restaurantinspection.Model;
 
-import android.util.Log;
-
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class Inspection {
     private String trackingNumber;
+
     private String inspDate;
     private int daysAgo;
     private String monthDate;
     private String monthYear;
+
     private String inspType;
     private int numCritical;
     private int numNonCritical;
     private String hazardRating;
-    private String violLump;
 
-    /** String[] = [0: TrackingNum, 1: Date, 2: InspType, 3: NumCrit, 4: NumNonCrit, 5: HazRating, 6: ViolLump[]] **/
-    public Inspection(String[] inspectionDetails) {
+    private ArrayList<Violation> violationsList;
+
+    /** String[] = [0: TrackingNum, 1: Date, 2: InspType, 3: NumCrit, 4: NumNonCrit, 5: HazRating, 6: ViolLump] **/
+    /** ViolLump is currently a long string of all violations; need to split by '|' **/
+    public Inspection(String[] inspectionDetails, ViolationsMap map) {
         trackingNumber = inspectionDetails[0];
         inspDate = inspectionDetails[1];
         inspType = inspectionDetails[2];
@@ -36,7 +39,26 @@ public class Inspection {
         hazardRating = inspectionDetails[5];
 
         /** Deal with Violation Lump here **/
+        violationsList = new ArrayList<>();
+        String violLump = inspectionDetails[6];
+        String[] violations = violLump.split("\\|");
 
+        /** ["ID,...,...,...", "ID,...,...,..."] **/
+        for (String violation : violations) {
+            String[] currViolation = violation.split(",");
+            /** ["ID", "...", "...", ...] **/
+            String violationID = currViolation[0];
+
+            /** Look-up key and get violation details from ViolationsMap **/
+            String[] violationInfo = map.getViolationFromMap(violationID);
+
+            assert(violationInfo != null);
+
+            /** Create new data from info retrieved **/
+            Violation newViolation = new Violation(violationInfo);
+
+            violationsList.add(newViolation);
+        }
     }
 
     public String getTrackingNumber() {
@@ -45,6 +67,14 @@ public class Inspection {
 
     public int getDaysAgo() {
         return daysAgo;
+    }
+
+    public String getMonthDate() {
+        return monthDate;
+    }
+
+    public String getMonthYear() {
+        return monthYear;
     }
 
     public String getInspType() {
@@ -63,12 +93,12 @@ public class Inspection {
         return hazardRating;
     }
 
-    public String getViolLump() {
-        return violLump;
+    public ArrayList<Violation> getViolationsList() {
+        return violationsList;
     }
 
     private void getDateInformation() {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.CANADA);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
 
@@ -78,9 +108,7 @@ public class Inspection {
             Date startDate = sdf.parse(inspDate);
             Date endDate = sdf.parse(today);
             long difference = endDate.getTime() - startDate.getTime();
-            int daysBetween = (int) (difference / (1000*60*60*24));
-
-            daysAgo = daysBetween;
+            daysAgo = (int) (difference / (1000*60*60*24));
         }
         catch (java.text.ParseException ex) {
             throw new RuntimeException("ERROR: Failed to parse dates");
