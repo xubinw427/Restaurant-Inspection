@@ -8,14 +8,15 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import java.io.InputStream;
 
-import ca.cmpt276.restaurantinspection.ModelClasses.ViolationsMap;
+import ca.cmpt276.restaurantinspection.Model.Violation;
+import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
 public class MainActivity extends AppCompatActivity {
     private ViolationsMap violationsMap;
@@ -40,7 +41,17 @@ public class MainActivity extends AppCompatActivity {
         InputStream input = getResources().openRawResource(R.raw.all_violations);
         violationsMap = ViolationsMap.getInstance(input);
 
-        /** Testing data is populated in correctly. TO DELETE. **/
+        /** Testing Violation Class with data from ViolationsMap. TO DELETE **/
+//        String[] tmp = violationsMap.getViolationFromMap("404");
+//        Violation test = new Violation(tmp);
+//        String TAG = "MyActivity";
+//        Log.v(TAG, test.getID());
+//        Log.v(TAG, test.getType());
+//        Log.v(TAG, test.getSeverity());
+//        Log.v(TAG, test.getLongDescription());
+//        Log.v(TAG, test.getShortDescription());
+
+        /** Testing data is populated into ViolationsMap correctly. TO DELETE. **/
 //        String[] TEST = violationsMap.getViolationFromMap("404");
 //
 //        Toast toast = Toast.makeText(this, TEST[4], Toast.LENGTH_SHORT);

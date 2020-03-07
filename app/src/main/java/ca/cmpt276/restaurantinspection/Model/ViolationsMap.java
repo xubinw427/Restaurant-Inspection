@@ -1,6 +1,4 @@
-package ca.cmpt276.restaurantinspection.ModelClasses;
-
-import android.util.Log;
+package ca.cmpt276.restaurantinspection.Model;
 
 import java.io.BufferedReader;
 import java.io.IOException;
