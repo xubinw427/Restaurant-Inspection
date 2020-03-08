@@ -1,5 +1,7 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import java.util.ArrayList;
+
 public class Restaurant {
     private String ID;
     private String name;
@@ -7,6 +9,7 @@ public class Restaurant {
     private String coordinates;
     private double latitude;
     private double longitude;
+    private ArrayList<Inspection> inspections;
 
     public Restaurant(String restaurantLump) {
         String[] restaurantInfo = restaurantLump.split(",");
@@ -44,5 +47,11 @@ public class Restaurant {
 
     private double getLongitude() {
         return longitude;
+    }
+
+    private void addInspection(String[] inspectionDetails, ViolationsMap map) {
+        Inspection newInspection = new Inspection(inspectionDetails, map);
+
+        inspections.add(newInspection);
     }
 }
