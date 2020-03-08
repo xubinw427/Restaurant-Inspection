@@ -3,7 +3,7 @@ package ca.cmpt276.restaurantinspection.Model;
 import java.util.ArrayList;
 
 public class Restaurant {
-    private String ID;
+    private String id;
     private String name;
     private String address;
     private String coordinates;
@@ -14,7 +14,7 @@ public class Restaurant {
     public Restaurant(String restaurantLump) {
         String[] restaurantInfo = restaurantLump.split(",");
         /** [0: ID, 1: Name, 2: PhysAddress, 3: PhysCity, 4: Factype, 5: Latitude, 6: Longitude] **/
-        ID = restaurantInfo[0].replaceAll("\"", "");
+        id = restaurantInfo[0].replaceAll("\"", "");
         name = restaurantInfo[1].replaceAll("\"", "");
         address = restaurantInfo[2].replaceAll("\"", "") + ", " +
                   restaurantInfo[3].replaceAll("\"", "");
@@ -25,8 +25,8 @@ public class Restaurant {
         longitude = Double.parseDouble(restaurantInfo[6]);
     }
 
-    public String getID() {
-        return ID;
+    public String getId() {
+        return id;
     }
 
     public String getName() {
