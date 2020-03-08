@@ -15,11 +15,11 @@ import android.view.MenuItem;
 
 import java.io.InputStream;
 
+import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.Violation;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
 public class MainActivity extends AppCompatActivity {
-    private ViolationsMap violationsMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,36 +27,6 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
-        /** ================== **/
-        InputStream input = getResources().openRawResource(R.raw.all_violations);
-        violationsMap = ViolationsMap.getInstance(input);
-
-        /** Testing Violation Class with data from ViolationsMap. TO DELETE **/
-//        String[] tmp = violationsMap.getViolationFromMap("404");
-//        Violation test = new Violation(tmp);
-//        String TAG = "MyActivity";
-//        Log.v(TAG, test.getID());
-//        Log.v(TAG, test.getType());
-//        Log.v(TAG, test.getSeverity());
-//        Log.v(TAG, test.getLongDescription());
-//        Log.v(TAG, test.getShortDescription());
-
-        /** Testing data is populated into ViolationsMap correctly. TO DELETE. **/
-//        String[] TEST = violationsMap.getViolationFromMap("404");
-//
-//        Toast toast = Toast.makeText(this, TEST[4], Toast.LENGTH_SHORT);
-//        toast.show();
-        /** ================== **/
     }
 
     @Override
