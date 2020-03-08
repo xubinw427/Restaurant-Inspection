@@ -49,9 +49,7 @@ public class Restaurant {
         return longitude;
     }
 
-    private void addInspection(String[] inspectionDetails, ViolationsMap map) {
-        Inspection newInspection = new Inspection(inspectionDetails, map);
-
-        inspections.add(newInspection);
+    private void addInspection(Inspection inspection) {
+        inspections.add(inspection);
     }
 }
