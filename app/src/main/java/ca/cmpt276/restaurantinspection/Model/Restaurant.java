@@ -49,7 +49,7 @@ public class Restaurant {
         return longitude;
     }
 
-    private void addInspection(Inspection inspection) {
-        inspections.add(inspection);
+    private void addInspection(Inspection newInspection) {
+        inspections.add(newInspection);
     }
 }
