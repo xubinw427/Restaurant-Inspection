@@ -22,11 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
-import ca.cmpt276.restaurantinspection.Model.Violation;
-import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
+import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 
 public class MainActivity extends AppCompatActivity {
-    private List<Restaurant> restaurants = new ArrayList<>();
+    private RestaurantManager restaurants;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        restaurants = RestaurantManager.getInstance();
         readRestaurantDate();
 
     }
@@ -61,26 +61,25 @@ public class MainActivity extends AppCompatActivity {
             while (((line = reader.readLine()) != null))
             {
                 // Split by ','
-                String[] tokens = line.split(",");
+                //String[] tokens = line.split(",");
 
                 // Read the data
-                Restaurant temp = new Restaurant();
-                temp.setTrackingNumber(tokens[0]);
-                temp.setName(tokens[1]);
-                temp.setAddress(tokens[2]);
-                temp.setPhysicalcity(tokens[3]);
-                temp.setFacType(tokens[4]);
-                temp.setLatitude(Double.parseDouble(tokens[5]));
-                temp.setLongitude(Double.parseDouble(tokens[6]));
-                restaurants.add(temp);
-
-                Log.d("MyActivity", "Just Created" + temp);
-
+                Restaurant temp = new Restaurant(line);
+                restaurants.addNew(temp);
+                //Log.d("MyActivity", "Just Created" + temp);
             }
         } catch (IOException e) {
-            Log.wtf("MyActivity", "Error reading data file on line " + line, e);
+            //Log.wtf("MyActivity", "Error reading data file on line " + line, e);
             e.printStackTrace();
         }
+        restaurants.sortByAlphabet();
+        int size = restaurants.getsize();
+        for(int i = 0; i < size; i++)
+        {
+            Log.d("MyActivity", "Restaurant" + i +": " + restaurants.getTheOneAt(i).getName());
+        }
+
+
     }
 
     @Override
