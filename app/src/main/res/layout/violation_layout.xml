@@ -1,54 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="55dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="55dp">
 
         <ImageView
-            android:id="@+id/imageView3"
+            android:id="@+id/violRow"
             android:layout_width="wrap_content"
             android:layout_height="56dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="0dp"
             app:srcCompat="@drawable/violation_bar" />
 
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="29dp"
-            android:layout_height="31dp"
-            android:layout_alignBottom="@+id/imageView3"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="349dp"
-            android:layout_marginRight="349dp"
-            android:layout_marginBottom="13dp"
-            app:srcCompat="@drawable/pest_noncrit" />
-
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="300dp"
-            android:layout_height="18dp"
-            android:layout_alignBottom="@+id/imageView3"
+            android:id="@+id/violDesc"
+            android:layout_width="289dp"
+            android:layout_height="17dp"
+
             android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginStart="75dp"
-            android:layout_marginLeft="75dp"
-            android:layout_marginTop="17dp"
-            android:layout_marginEnd="36dp"
-            android:layout_marginRight="36dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="68dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginEnd="54dp"
             android:layout_marginBottom="20dp"
             android:text="Short Violation Description Here"
-            android:textColor="@color/fontColour"/>
+            android:textColor="@color/fontColour"
+            android:textSize="13sp"
+            android:textStyle="bold"/>
+
+        <ImageView
+            android:id="@+id/violIcon"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="-52dp"
+            android:layout_marginBottom="13dp"
+            android:layout_toStartOf="@+id/violDesc"
+            app:srcCompat="@drawable/employee_crit" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

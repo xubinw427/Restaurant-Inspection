@@ -1,10 +1,10 @@
 package ca.cmpt276.restaurantinspection.Model;
 
 public class TestViolation {
-    public String type;
-    public String level;
-    public String sDesc;
-    public String lDesc;
+    private String type;
+    private String level;
+    private String sDesc;
+    private String lDesc;
 
     public TestViolation(String vtype, String vlevel, String vSDesc, String vLongDesc) {
         type = vtype;
