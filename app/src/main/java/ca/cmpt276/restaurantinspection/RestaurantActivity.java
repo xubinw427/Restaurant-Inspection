@@ -19,7 +19,8 @@ import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.Violation;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
-public class MainActivity extends AppCompatActivity {
+public class RestaurantActivity extends AppCompatActivity {
+    private ViolationsMap violationsMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
