@@ -27,6 +27,7 @@
             android:layout_height="wrap_content"/>
 
 
+
     </RelativeLayout>
     <RelativeLayout
         android:layout_weight="1"
@@ -34,6 +35,7 @@
         android:layout_height="0dp">
 
         <TextView
+            android:id="@+id/backgroundbuttons"
             android:layout_width="349dp"
             android:layout_height="63dp"
             android:layout_centerInParent="true"
@@ -49,7 +51,8 @@
             android:layout_marginLeft="50dp"
             android:background="@drawable/button_info"
             android:elevation="20dp"
-            android:text="Information" />
+            android:text="Information"
+            android:enabled="false"/>
 
         <Button
             android:id="@+id/InspectionButton"
@@ -70,12 +73,73 @@
         android:layout_height="0dp">
 
         <TextView
+            android:id="@+id/backgroundinfo"
             android:layout_width="338dp"
             android:layout_height="343dp"
-            android:background="@drawable/box"
-            android:elevation="2dp"
-            android:layout_centerInParent="true"/>
+            android:layout_centerInParent="true"
+            android:background="@drawable/box_info" />
 
+        <ImageView
+            android:id="@+id/image_location"
+            android:layout_width="50dp"
+            android:layout_height="65dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_margin="70dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/address_icon" />
+
+        <TextView
+            android:id="@+id/text_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="139dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="100dp"
+            android:gravity="center"
+            android:text="1234 Oak Street, Burnaby"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/image_coordinate"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_margin="130dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="100dp"
+            android:background="@drawable/coordinates_icon" />
+
+        <TextView
+            android:id="@+id/text_coordinate"
+            android:layout_width="255dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginStart="100dp"
+            android:layout_marginLeft="100dp"
+            android:layout_marginTop="280dp"
+            android:layout_marginEnd="100dp"
+            android:layout_marginRight="100dp"
+            android:layout_marginBottom="100dp"
+            android:gravity="center"
+            android:text="41 24 0 0 0 0"
+            android:textSize="18sp" />
 
 
     </RelativeLayout>
