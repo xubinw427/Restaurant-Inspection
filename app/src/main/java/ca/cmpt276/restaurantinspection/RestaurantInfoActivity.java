@@ -1,5 +1,7 @@
 package ca.cmpt276.restaurantinspection;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -22,4 +24,8 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
     }
 
+    public Intent makeLaunchIntent(Context c){
+        Intent i = new Intent(c, RestaurantInfoActivity.class);
+        return i;
+    }
 }

@@ -51,4 +51,5 @@ public class RestaurantActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }
