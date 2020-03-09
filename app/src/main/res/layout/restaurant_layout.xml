@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="-55dp"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="0dp"
+    app:cardMaxElevation="0dp"
+    app:cardUseCompatPadding="true"
+    android:background="@null">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="180dp"
+        android:padding="0dp"
+        android:background="@android:color/transparent">
+
+        <ImageView
+            android:id="@+id/restaurantButton"
+            android:layout_width="366dp"
+            android:layout_height="159dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
+            android:gravity="center"
+            app:srcCompat="@drawable/button_red"/>
+
+        <TextView
+            android:id="@+id/restaurantName"
+            android:layout_width="148dp"
+            android:layout_height="56dp"
+            android:layout_alignStart="@+id/restaurantButton"
+            android:layout_alignTop="@+id/restaurantButton"
+            android:layout_alignEnd="@+id/restaurantButton"
+            android:layout_alignBottom="@+id/restaurantButton"
+            android:layout_marginStart="109dp"
+            android:layout_marginTop="38dp"
+            android:layout_marginEnd="153dp"
+            android:layout_marginBottom="86dp"
+            android:layout_toEndOf="@+id/foodIcon"
+            android:gravity="center"
+            android:lineSpacingExtra="5dp"
+            android:maxLines="4"
+            android:singleLine="false"
+            android:text="RESTAURANT NAME"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/inspectionDate"
+            android:layout_width="174dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/restaurantButton"
+            android:layout_alignTop="@+id/restaurantButton"
+            android:layout_alignEnd="@+id/restaurantButton"
+            android:layout_alignBottom="@+id/restaurantButton"
+            android:layout_marginStart="81dp"
+            android:layout_marginTop="97dp"
+            android:layout_marginEnd="124dp"
+            android:layout_marginBottom="62dp"
+            android:gravity="center"
+            android:text="Date HERE" />
+
+        <TextView
+            android:id="@+id/numIssues"
+            android:layout_width="70dp"
+            android:layout_height="65dp"
+            android:layout_alignStart="@+id/restaurantButton"
+            android:layout_alignTop="@+id/restaurantButton"
+            android:layout_alignEnd="@+id/restaurantButton"
+            android:layout_alignBottom="@+id/restaurantButton"
+            android:layout_marginStart="259dp"
+            android:layout_marginTop="28dp"
+            android:layout_marginEnd="50dp"
+            android:layout_marginBottom="85dp"
+            android:gravity="center"
+            android:text="10"
+            android:textSize="40sp" />
+
+        <TextView
+            android:id="@+id/issues"
+            android:layout_width="65dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/restaurantButton"
+            android:layout_alignTop="@+id/restaurantButton"
+            android:layout_alignEnd="@+id/restaurantButton"
+            android:layout_alignBottom="@+id/restaurantButton"
+            android:layout_marginStart="261dp"
+            android:layout_marginTop="97dp"
+            android:layout_marginEnd="52dp"
+            android:layout_marginBottom="62dp"
+            android:gravity="center"
+            android:text="Issues" />
+
+        <ImageView
+            android:id="@+id/foodIcon"
+            android:layout_width="38dp"
+            android:layout_height="25dp"
+            android:layout_alignStart="@+id/restaurantButton"
+            android:layout_alignTop="@+id/restaurantButton"
+            android:layout_alignEnd="@+id/restaurantButton"
+            android:layout_alignBottom="@+id/restaurantButton"
+            android:layout_marginStart="46dp"
+            android:layout_marginTop="76dp"
+            android:layout_marginEnd="327dp"
+            android:layout_marginBottom="79dp"
+            android:gravity="center"
+            app:srcCompat="@drawable/food_icon" />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>
