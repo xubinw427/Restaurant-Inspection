@@ -38,7 +38,7 @@
         app:layout_constraintVertical_bias="0.506"
         app:srcCompat="@drawable/button_box" />
 
-    <TextView
+    <Button
         android:id="@+id/inspAct"
         android:layout_width="165dp"
         android:layout_height="38dp"
@@ -46,8 +46,7 @@
         android:gravity="center"
         android:text="INSPECTIONS"
         android:textColor="@color/fontColour"
-        android:textStyle="bold"
-        android:elevation="3dp"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.861"
