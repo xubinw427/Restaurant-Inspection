@@ -62,8 +62,6 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
     }
     public void readRestaurantDate(InputStream file) {
-
-
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(file, Charset.forName("UTF-8"))
         );
@@ -75,16 +73,12 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
             while (((line = reader.readLine()) != null))
             {
-                // Split by ','
-                //String[] tokens = line.split(",");
-
                 // Read the data
                 Restaurant temp = new Restaurant(line);
                 this.addNew(temp);
-                //Log.d("MyActivity", "Just Created" + temp);
             }
         } catch (IOException e) {
-            //Log.wtf("MyActivity", "Error reading data file on line " + line, e);
+
             e.printStackTrace();
         }
         this.sortByAlphabet();
