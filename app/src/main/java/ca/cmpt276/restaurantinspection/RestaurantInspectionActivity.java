@@ -1,6 +1,9 @@
 package ca.cmpt276.restaurantinspection;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -16,7 +19,7 @@ import ca.cmpt276.restaurantinspection.Model.TestInspection;
 
 /** TO-DO CHANGE NAME FROM tester
  *  Re-point TestInspection Data to ACTUAL Inspection data **/
-public class InspectionActivity extends AppCompatActivity implements InspectionAdapter.OnInspectionListener {
+public class RestaurantInspectionActivity extends AppCompatActivity implements InspectionAdapter.OnInspectionListener {
     private RecyclerView myRecyclerView;
     private RecyclerView.Adapter myAdapter;
     private RecyclerView.LayoutManager myLayoutManager;
@@ -26,6 +29,9 @@ public class InspectionActivity extends AppCompatActivity implements InspectionA
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspection);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Current Restaurant Name");
+        actionBar.setElevation(0);
 
         /** == TEST == **/
         tester = new ArrayList<>();
@@ -45,9 +51,17 @@ public class InspectionActivity extends AppCompatActivity implements InspectionA
         myRecyclerView.setAdapter(myAdapter);
         /** == END TEST == **/
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Current Restaurant Name");
-        actionBar.setElevation(0);
+        /** ================= REPLACE INTENT FUNCTION BELOW ================**/
+
+        Button btn = findViewById(R.id.infoInact);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RestaurantInfoActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     /** == TEST == **/
