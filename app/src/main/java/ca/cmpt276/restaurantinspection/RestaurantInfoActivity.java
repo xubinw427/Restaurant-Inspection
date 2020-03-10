@@ -3,10 +3,11 @@ package ca.cmpt276.restaurantinspection;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class RestaurantInfoActivity extends AppCompatActivity {
     public static final String EXTRA = "cmpt276.restaurantinspection.EXTRA";
@@ -17,10 +18,25 @@ public class RestaurantInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_info);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Current Restaurant Name");
+        actionBar.setElevation(0);
 
         index = getIntent().getIntExtra(EXTRA, 0);
+
+        /** ================= REPLACE INTENT FUNCTION BELOW ================**/
+
+        Button btn = findViewById(R.id.inspection_button_inact);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), RestaurantInspectionActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                startActivity(intent);
+                finish();
+            }
+        });
+
 //        setData();
     }
 
@@ -37,8 +53,8 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 //    }
 
     public static Intent makeLaunchIntent(Context c, int index){
-        Intent i = new Intent(c, RestaurantInfoActivity.class);
-        i.putExtra(EXTRA, index);
-        return i;
+        Intent intent = new Intent(c, RestaurantInspectionActivity.class);
+        intent.putExtra(EXTRA, index);
+        return intent;
     }
 }

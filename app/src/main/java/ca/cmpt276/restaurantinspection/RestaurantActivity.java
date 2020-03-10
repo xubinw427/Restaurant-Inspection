@@ -1,29 +1,21 @@
 package ca.cmpt276.restaurantinspection;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.InputStream;
 import java.util.ArrayList;
 
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
-import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.TestRestaurant;
-import ca.cmpt276.restaurantinspection.Model.Violation;
-import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
     /** == TESTING == **/
@@ -38,7 +30,9 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        toolbar.setTitle("Restaurants List");
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setElevation(0);
 
         /** == TESTING == **/
         tester = new ArrayList<>();
@@ -86,7 +80,8 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
     @Override
     public void onRestaurantClick(int position) {
         tester.get(position);
-        Intent intent = RestaurantInfoActivity.makeLaunchIntent(this, position);
+        Intent intent = new Intent(this, RestaurantInfoActivity.class);
+//        Intent intent = RestaurantInfoActivity.makeLaunchIntent(this, position);
         startActivity(intent);
     }
     /** == END TESTING == **/
