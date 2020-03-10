@@ -25,7 +25,7 @@ import ca.cmpt276.restaurantinspection.Model.TestRestaurant;
 import ca.cmpt276.restaurantinspection.Model.Violation;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
-public class MainActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
+public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
     /** == TESTING == **/
     private RecyclerView restaurantRecyclerView;
     private RecyclerView.Adapter restaurantAdapter;
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     @Override
     public void onRestaurantClick(int position) {
         tester.get(position);
-        Intent intent = new Intent(this, TESTActivity.class);
+        Intent intent = RestaurantInfoActivity.makeLaunchIntent(this, position);
         startActivity(intent);
     }
     /** == END TESTING == **/
