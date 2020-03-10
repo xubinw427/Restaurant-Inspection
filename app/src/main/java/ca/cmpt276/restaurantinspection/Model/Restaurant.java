@@ -1,60 +1,65 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import androidx.annotation.NonNull;
 
 import java.util.ArrayList;
 
 public class Restaurant implements Comparable<Restaurant>{
-        private String id;
-        private String name;
-        private String address;
-        private String coordinates;
-        private double latitude;
-        private double longitude;
-        private ArrayList<Inspection> inspections;
+    private String id;
+    private String name;
+    private String address;
+    private String coordinates;
+    private double latitude;
+    private double longitude;
+    private ArrayList<Inspection> inspections = new ArrayList<>();
 
-        public Restaurant(String restaurantLump) {
-            String[] restaurantInfo = restaurantLump.split(",");
-            /** [0: ID, 1: Name, 2: PhysAddress, 3: PhysCity, 4: Factype, 5: Latitude, 6: Longitude] **/
-            id = restaurantInfo[0].replaceAll("\"", "");
-            name = restaurantInfo[1].replaceAll("\"", "");
-            address = restaurantInfo[2].replaceAll("\"", "") + ", " +
-                    restaurantInfo[3].replaceAll("\"", "");
+    public Restaurant(String restaurantLump) {
+        String[] restaurantInfo = restaurantLump.split(",");
+        /** [0: ID, 1: Name, 2: PhysAddress, 3: PhysCity, 4: Factype, 5: Latitude, 6: Longitude] **/
+        id = restaurantInfo[0];
+        name = restaurantInfo[1];
+        address = restaurantInfo[2] + ", " + restaurantInfo[3];
 
-            coordinates = restaurantInfo[5].replaceAll("\"", "") + ", " +
-                    restaurantInfo[6].replaceAll("\"", "");
-            latitude = Double.parseDouble(restaurantInfo[5]);
-            longitude = Double.parseDouble(restaurantInfo[6]);
-        }
+        coordinates = restaurantInfo[5] + ", " +
+                    restaurantInfo[6];
+        latitude = Double.parseDouble(restaurantInfo[5]);
+        longitude = Double.parseDouble(restaurantInfo[6]);
+    }
 
-        public String getId() {
+    public String getId() {
             return id;
         }
 
-        public String getName() {
+    public String getName() {
             return name;
         }
 
-        public String getAddress() {
+    public String getAddress() {
             return address;
         }
 
-        public String getCoordinates() {
+    public String getCoordinates() {
             return coordinates;
         }
 
-        public double getLatitude() {
+    public double getLatitude() {
             return latitude;
         }
 
-        public double getLongitude() {
+    public double getLongitude() {
             return longitude;
         }
 
-        public void addInspection(Inspection inspection) {
+    public ArrayList<Inspection> getInspections() {
+        return inspections;
+    }
+
+    public void addInspection(Inspection inspection) {
             inspections.add(inspection);
         }
 
     @Override
+    @NonNull
     public String toString() {
         return "Restaurant{" +
                 "id='" + id + '\'' +

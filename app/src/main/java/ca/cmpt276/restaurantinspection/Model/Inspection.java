@@ -38,9 +38,18 @@ public class Inspection {
 
         hazardRating = inspectionDetails[5];
 
+        System.out.println(trackingNumber + inspDate + numCritical + numNonCritical + hazardRating);
+
+        if (inspectionDetails.length < 7) {
+            return;
+        }
+
         /** Deal with Violation Lump here **/
         violationsList = new ArrayList<>();
+
         String violLump = inspectionDetails[6];
+        System.out.println(violLump);
+
         String[] violations = violLump.split("\\|");
 
         /** ["ID,...,...,...", "ID,...,...,..."] **/
@@ -48,11 +57,15 @@ public class Inspection {
             String[] currViolation = violation.split(",");
             /** ["ID", "...", "...", ...] **/
             String violationID = currViolation[0];
+            System.out.println("violationID is: " + violationID);
 
             /** Look-up key and get violation details from ViolationsMap **/
             String[] violationInfo = map.getViolationFromMap(violationID);
 
-            assert(violationInfo != null);
+            /** ID not found **/
+            if (violationInfo == null) {
+                return;
+            }
 
             /** Create new data from info retrieved **/
             Violation newViolation = new Violation(violationInfo);

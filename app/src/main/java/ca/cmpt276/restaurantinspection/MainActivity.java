@@ -9,8 +9,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 
+import ca.cmpt276.restaurantinspection.Model.Inspection;
+import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
 public class MainActivity extends AppCompatActivity {
     private RestaurantManager restaurantList;
@@ -22,9 +26,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        InputStream in = getResources().openRawResource(R.raw.restaurants_itr1);
-        RestaurantManager.init(in);
+        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
+        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
+        InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
+
+        ViolationsMap.init(violationsIn);
+        RestaurantManager.init(restaurantsIn, inspectionsIn);
+
         restaurantList = RestaurantManager.getInstance();
+
+        /** ================ TEST ===============**/
+
+        for (Restaurant res : restaurantList.getList()) {
+            ArrayList<Inspection> ins = res.getInspections();
+            System.out.println(res.getName() + ": " + ins.size());
+        }
+
+        /** ================ END TEST ===============**/
     }
 
     @Override

@@ -1,5 +1,7 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import androidx.annotation.NonNull;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,56 +12,66 @@ import java.util.Arrays;
 import java.util.Iterator;
 
 public class RestaurantManager implements Iterable<Restaurant> {
-    private static ArrayList<Restaurant> restaurants = new ArrayList<>();
+    private ArrayList<Restaurant> restaurantsList = new ArrayList<>();
     private static RestaurantManager INSTANCE;
+    private ViolationsMap violationsMap;
 
-    public RestaurantManager(InputStream file) {
-        //Private to prevent anyone else from instantiating.
+    //Private to prevent anyone else from instantiating.
+    private RestaurantManager(InputStream restaurantFile,
+                             InputStream inspectionsFile) {
+
+        readRestaurantData(restaurantFile);
+
+        violationsMap = ViolationsMap.getInstance();
+
+        populateInspections(inspectionsFile);
     }
 
     public static RestaurantManager getInstance() {
         if(INSTANCE == null) {
             throw new AssertionError(
-                    "RestaurantManager.init(InputStream file must be called first.");
+                    "RestaurantManager.init(InputStream file) must be called first.");
         }
 
         return INSTANCE;
     }
 
-    public static RestaurantManager init(InputStream file) {
+    public static RestaurantManager init(InputStream restaurantFile,
+                                         InputStream inspectionsFile) {
         if (INSTANCE != null) {
             throw new AssertionError("RestaurantManager has already been initialized.");
         }
 
-        return new RestaurantManager(file);
+        INSTANCE = new RestaurantManager(restaurantFile, inspectionsFile);
+        return INSTANCE;
     }
 
-    public static ArrayList<Restaurant> getList() {
-        return restaurants;
+    public ArrayList<Restaurant> getList() {
+        return restaurantsList;
     }
 
-    public void addNew(Restaurant restaurant) {
-        restaurants.add(restaurant);
+    private void addNew(Restaurant restaurant) {
+        restaurantsList.add(restaurant);
     }
 
     public Restaurant getTheOneAt(int index) {
-        return restaurants.get(index);
+        return restaurantsList.get(index);
     }
 
     public int getsize() {
-        return restaurants.size();
+        return restaurantsList.size();
     }
 
-    public void sortByAlphabet() {
-        Arrays.sort(new ArrayList[]{restaurants});
+    private void sortByAlphabet() {
+        Arrays.sort(new ArrayList[]{restaurantsList});
     }
 
-    public void readRestaurantData(InputStream file) {
+    private void readRestaurantData(InputStream file) {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(file, Charset.forName("UTF-8"))
         );
 
-        String line = "";
+        String line;
         try {
             // Step over header
             reader.readLine();
@@ -74,12 +86,55 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
             e.printStackTrace();
         }
+        try {
+            file.close();
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("ERROR: Failed to close " + file);
+        }
 
         this.sortByAlphabet();
     }
 
+    private void populateInspections(InputStream file) {
+        BufferedReader input = new BufferedReader(new InputStreamReader(file));
+
+        try {
+            String line;
+
+            // Step over header
+            input.readLine();
+
+            while ((line = input.readLine()) != null) {
+                String[] inspectionData = line.split("\\*");
+
+                Inspection currInspection = new Inspection(inspectionData, violationsMap);
+
+                String currRestaurantID = inspectionData[0];
+                /** PRINT OUT THE ID AND MAKE SURE ITS RIGHT!!!!!!!!! **/
+
+                for (Restaurant restaurant : restaurantsList) {
+                    if (restaurant.getId().equals(currRestaurantID)) {
+                        restaurant.addInspection(currInspection);
+                        break;
+                    }
+                }
+            }
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("ERROR: Failed to read in " + file);
+        }
+        try {
+            file.close();
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("ERROR: Failed to close " + file);
+        }
+    }
+
     @Override
+    @NonNull
     public Iterator<Restaurant> iterator() {
-        return restaurants.iterator();
+        return restaurantsList.iterator();
     }
 }
