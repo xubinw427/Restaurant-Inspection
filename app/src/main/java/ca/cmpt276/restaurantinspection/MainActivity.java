@@ -43,44 +43,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         restaurants = RestaurantManager.getInstance();
-        readRestaurantDate();
-
-    }
-
-    private void readRestaurantDate() {
         InputStream in = getResources().openRawResource(R.raw.restaurants_itr1);
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(in, Charset.forName("UTF-8"))
-        );
-
-        String line = "";
-        try {
-            // Step over header
-            reader.readLine();
-
-            while (((line = reader.readLine()) != null))
-            {
-                // Split by ','
-                //String[] tokens = line.split(",");
-
-                // Read the data
-                Restaurant temp = new Restaurant(line);
-                restaurants.addNew(temp);
-                //Log.d("MyActivity", "Just Created" + temp);
-            }
-        } catch (IOException e) {
-            //Log.wtf("MyActivity", "Error reading data file on line " + line, e);
-            e.printStackTrace();
-        }
-        restaurants.sortByAlphabet();
-        int size = restaurants.getsize();
-        for(int i = 0; i < size; i++)
-        {
-            Log.d("MyActivity", "Restaurant" + i +": " + restaurants.getTheOneAt(i).getName());
-        }
-
+        restaurants.readRestaurantDate(in);
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
