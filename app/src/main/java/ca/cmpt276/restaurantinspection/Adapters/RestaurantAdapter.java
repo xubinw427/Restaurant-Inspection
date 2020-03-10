@@ -22,7 +22,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView btnBackground;
-        private ImageView icon;
+        private ImageView foodIcon;
+        private ImageView hazardIcon;
         private TextView restaurantName;
         private TextView inspectionDate;
         private TextView numIssues;
@@ -33,7 +34,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         private RestaurantViewHolder(@NonNull View itemView, OnRestaurantListener onRestaurantListener) {
             super(itemView);
             btnBackground = itemView.findViewById((R.id.restaurantButton));
-//            icon = itemView.findViewById(R.id.foodIcon);
+            hazardIcon = itemView.findViewById(R.id.hazIcon);
+//            foodIcon = itemView.findViewById(R.id.foodIcon);
             restaurantName = itemView.findViewById(R.id.restaurantName);
             inspectionDate = itemView.findViewById(R.id.inspectionDate);
             numIssues = itemView.findViewById(R.id.numIssues);
@@ -77,12 +79,15 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         switch(currRestaurant.getHazard()) {
             case "high":
                 holder.btnBackground.setImageResource(R.drawable.button_red);
+                holder.hazardIcon.setImageResource(R.drawable.restlist_high);
                 break;
             case "mod":
                 holder.btnBackground.setImageResource(R.drawable.button_yellow);
+                holder.hazardIcon.setImageResource(R.drawable.restlist_mod);
                 break;
             case "low":
                 holder.btnBackground.setImageResource(R.drawable.button_teal);
+                holder.hazardIcon.setImageResource(R.drawable.restlist_low);
                 break;
             default:
                 break;

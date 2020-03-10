@@ -33,23 +33,24 @@
 
         <TextView
             android:id="@+id/restaurantName"
-            android:layout_width="148dp"
-            android:layout_height="56dp"
+            android:layout_width="176dp"
+            android:layout_height="53dp"
             android:layout_alignStart="@+id/restaurantButton"
             android:layout_alignTop="@+id/restaurantButton"
             android:layout_alignEnd="@+id/restaurantButton"
             android:layout_alignBottom="@+id/restaurantButton"
-            android:layout_marginStart="109dp"
-            android:layout_marginTop="38dp"
-            android:layout_marginEnd="153dp"
+            android:layout_marginStart="95dp"
+            android:layout_marginTop="41dp"
+            android:layout_marginEnd="139dp"
             android:layout_marginBottom="86dp"
             android:layout_toEndOf="@+id/foodIcon"
             android:gravity="center"
             android:lineSpacingExtra="5dp"
             android:maxLines="4"
             android:singleLine="false"
-            android:text="RESTAURANT NAME"
-            android:textSize="16sp"
+            android:text="RESTAURANT \nNAME"
+            android:textColor="@color/fontColour"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -61,11 +62,12 @@
             android:layout_alignEnd="@+id/restaurantButton"
             android:layout_alignBottom="@+id/restaurantButton"
             android:layout_marginStart="81dp"
-            android:layout_marginTop="97dp"
+            android:layout_marginTop="107dp"
             android:layout_marginEnd="124dp"
-            android:layout_marginBottom="62dp"
+            android:layout_marginBottom="52dp"
             android:gravity="center"
-            android:text="Date HERE" />
+            android:text="Date HERE"
+            android:textColor="@color/fontColour" />
 
         <TextView
             android:id="@+id/numIssues"
@@ -76,11 +78,12 @@
             android:layout_alignEnd="@+id/restaurantButton"
             android:layout_alignBottom="@+id/restaurantButton"
             android:layout_marginStart="259dp"
-            android:layout_marginTop="28dp"
+            android:layout_marginTop="49dp"
             android:layout_marginEnd="50dp"
-            android:layout_marginBottom="85dp"
+            android:layout_marginBottom="64dp"
             android:gravity="center"
             android:text="10"
+            android:textColor="@color/fontColour"
             android:textSize="40sp" />
 
         <TextView
@@ -92,11 +95,12 @@
             android:layout_alignEnd="@+id/restaurantButton"
             android:layout_alignBottom="@+id/restaurantButton"
             android:layout_marginStart="261dp"
-            android:layout_marginTop="97dp"
+            android:layout_marginTop="107dp"
             android:layout_marginEnd="52dp"
-            android:layout_marginBottom="62dp"
+            android:layout_marginBottom="52dp"
             android:gravity="center"
-            android:text="Issues" />
+            android:text="Issues"
+            android:textColor="@color/fontColour" />
 
         <ImageView
             android:id="@+id/foodIcon"
@@ -112,6 +116,20 @@
             android:layout_marginBottom="79dp"
             android:gravity="center"
             app:srcCompat="@drawable/food_icon" />
+
+        <ImageView
+            android:id="@+id/hazIcon"
+            android:layout_width="19dp"
+            android:layout_height="20dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="300dp"
+            android:layout_marginTop="37dp"
+            android:layout_marginEnd="91dp"
+            android:layout_marginBottom="123dp"
+            app:srcCompat="@drawable/restlist_high" />
 
     </RelativeLayout>
 

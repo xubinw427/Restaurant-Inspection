@@ -1,6 +1,7 @@
 package ca.cmpt276.restaurantinspection;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -39,6 +40,10 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        toolbar.setTitle("Restaurants List");
+        toolbar.setTitleTextColor(Color.WHITE);
+        toolbar.setElevation(0);
+
 
         /** == TESTING == **/
         tester = new ArrayList<>();
@@ -85,6 +90,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     /** == TESTING == **/
     @Override
     public void onRestaurantClick(int position) {
+        /** Should use the position below to store clicked Restaurant as currRestaurant **/
         tester.get(position);
         Intent intent = new Intent(this, TESTActivity.class);
         startActivity(intent);
