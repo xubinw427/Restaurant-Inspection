@@ -17,7 +17,7 @@
         android:background="@android:color/transparent">
 
         <ImageView
-            android:id="@+id/restaurantButton"
+            android:id="@+id/restaurant_button"
             android:layout_width="366dp"
             android:layout_height="159dp"
             android:layout_alignParentStart="true"
@@ -32,18 +32,18 @@
             app:srcCompat="@drawable/button_red"/>
 
         <TextView
-            android:id="@+id/restaurantName"
+            android:id="@+id/restaurant_name"
             android:layout_width="176dp"
             android:layout_height="53dp"
-            android:layout_alignStart="@+id/restaurantButton"
-            android:layout_alignTop="@+id/restaurantButton"
-            android:layout_alignEnd="@+id/restaurantButton"
-            android:layout_alignBottom="@+id/restaurantButton"
+            android:layout_alignStart="@+id/restaurant_button"
+            android:layout_alignTop="@+id/restaurant_button"
+            android:layout_alignEnd="@+id/restaurant_button"
+            android:layout_alignBottom="@+id/restaurant_button"
             android:layout_marginStart="95dp"
             android:layout_marginTop="41dp"
             android:layout_marginEnd="139dp"
             android:layout_marginBottom="86dp"
-            android:layout_toEndOf="@+id/foodIcon"
+            android:layout_toEndOf="@+id/food_icon"
             android:gravity="center"
             android:lineSpacingExtra="5dp"
             android:maxLines="4"
@@ -54,13 +54,13 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/inspectionDate"
+            android:id="@+id/inspection_date"
             android:layout_width="174dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/restaurantButton"
-            android:layout_alignTop="@+id/restaurantButton"
-            android:layout_alignEnd="@+id/restaurantButton"
-            android:layout_alignBottom="@+id/restaurantButton"
+            android:layout_alignStart="@+id/restaurant_button"
+            android:layout_alignTop="@+id/restaurant_button"
+            android:layout_alignEnd="@+id/restaurant_button"
+            android:layout_alignBottom="@+id/restaurant_button"
             android:layout_marginStart="81dp"
             android:layout_marginTop="107dp"
             android:layout_marginEnd="124dp"
@@ -70,30 +70,30 @@
             android:textColor="@color/fontColour" />
 
         <TextView
-            android:id="@+id/numIssues"
+            android:id="@+id/num_issues"
             android:layout_width="70dp"
             android:layout_height="65dp"
-            android:layout_alignStart="@+id/restaurantButton"
-            android:layout_alignTop="@+id/restaurantButton"
-            android:layout_alignEnd="@+id/restaurantButton"
-            android:layout_alignBottom="@+id/restaurantButton"
+            android:layout_alignStart="@+id/restaurant_button"
+            android:layout_alignTop="@+id/restaurant_button"
+            android:layout_alignEnd="@+id/restaurant_button"
+            android:layout_alignBottom="@+id/restaurant_button"
             android:layout_marginStart="258dp"
             android:layout_marginTop="49dp"
             android:layout_marginEnd="51dp"
             android:layout_marginBottom="64dp"
             android:gravity="center"
             android:text="10"
-            android:textColor="@color/fontColour"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            android:textColor="@color/fontColour" />
 
         <TextView
             android:id="@+id/issues"
             android:layout_width="65dp"
             android:layout_height="wrap_content"
-            android:layout_alignStart="@+id/restaurantButton"
-            android:layout_alignTop="@+id/restaurantButton"
-            android:layout_alignEnd="@+id/restaurantButton"
-            android:layout_alignBottom="@+id/restaurantButton"
+            android:layout_alignStart="@+id/restaurant_button"
+            android:layout_alignTop="@+id/restaurant_button"
+            android:layout_alignEnd="@+id/restaurant_button"
+            android:layout_alignBottom="@+id/restaurant_button"
             android:layout_marginStart="261dp"
             android:layout_marginTop="107dp"
             android:layout_marginEnd="52dp"
@@ -103,13 +103,13 @@
             android:textColor="@color/fontColour" />
 
         <ImageView
-            android:id="@+id/foodIcon"
+            android:id="@+id/food_icon"
             android:layout_width="38dp"
             android:layout_height="25dp"
-            android:layout_alignStart="@+id/restaurantButton"
-            android:layout_alignTop="@+id/restaurantButton"
-            android:layout_alignEnd="@+id/restaurantButton"
-            android:layout_alignBottom="@+id/restaurantButton"
+            android:layout_alignStart="@+id/restaurant_button"
+            android:layout_alignTop="@+id/restaurant_button"
+            android:layout_alignEnd="@+id/restaurant_button"
+            android:layout_alignBottom="@+id/restaurant_button"
             android:layout_marginStart="46dp"
             android:layout_marginTop="76dp"
             android:layout_marginEnd="327dp"
@@ -118,7 +118,7 @@
             app:srcCompat="@drawable/food_icon" />
 
         <ImageView
-            android:id="@+id/hazIcon"
+            android:id="@+id/haz_icon"
             android:layout_width="19dp"
             android:layout_height="20dp"
             android:layout_alignParentStart="true"

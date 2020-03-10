@@ -33,12 +33,12 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         private RestaurantViewHolder(@NonNull View itemView, OnRestaurantListener onRestaurantListener) {
             super(itemView);
-            btnBackground = itemView.findViewById((R.id.restaurantButton));
-            hazardIcon = itemView.findViewById(R.id.hazIcon);
+            btnBackground = itemView.findViewById((R.id.restaurant_button));
+            hazardIcon = itemView.findViewById(R.id.haz_icon);
 //            foodIcon = itemView.findViewById(R.id.foodIcon);
-            restaurantName = itemView.findViewById(R.id.restaurantName);
-            inspectionDate = itemView.findViewById(R.id.inspectionDate);
-            numIssues = itemView.findViewById(R.id.numIssues);
+            restaurantName = itemView.findViewById(R.id.restaurant_name);
+            inspectionDate = itemView.findViewById(R.id.inspection_date);
+            numIssues = itemView.findViewById(R.id.num_issues);
 //            issues = itemView.findViewById(R.id.issues);
 
             myOnRestaurantListener = onRestaurantListener;

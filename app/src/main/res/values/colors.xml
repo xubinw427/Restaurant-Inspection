@@ -6,4 +6,5 @@
     <color name="barColor">#35CDB2</color>
     <color name="fontColour">#8E949E</color>
     <color name="bgColour">#FAFAFA</color>
+    <color name="colorLightBlue">#32CBDC</color>
 </resources>

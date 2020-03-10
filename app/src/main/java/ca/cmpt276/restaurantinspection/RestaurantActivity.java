@@ -4,29 +4,36 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.View;
+import android.view.Menu;
+import android.view.MenuItem;
+
+import java.util.ArrayList;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
+import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
-import ca.cmpt276.restaurantinspection.Model.TestRestaurant;
-import ca.cmpt276.restaurantinspection.Model.Violation;
+import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
-public class MainActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
+import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
+import ca.cmpt276.restaurantinspection.Model.TestRestaurant;
+
+public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
+    private RestaurantManager restaurantList;
+
     /** == TESTING == **/
     private RecyclerView restaurantRecyclerView;
     private RecyclerView.Adapter restaurantAdapter;
@@ -43,6 +50,25 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         toolbar.setTitle("Restaurants List");
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
+
+        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
+        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
+        InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
+
+        ViolationsMap.init(violationsIn);
+        RestaurantManager.init(restaurantsIn, inspectionsIn);
+
+        restaurantList = RestaurantManager.getInstance();
+
+
+        /** ================ TEST ===============**/
+
+        for (Restaurant res : restaurantList.getList()) {
+            ArrayList<Inspection> ins = res.getInspections();
+            System.out.println(res.getName() + ": " + ins.size());
+        }
+
+        /** ================ END TEST ===============**/
 
 
         /** == TESTING == **/
@@ -63,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         restaurantRecyclerView.setLayoutManager(restaurantLayoutManager);
         restaurantRecyclerView.setAdapter(restaurantAdapter);
         /** == END TESTING == **/
+
+        System.out.println("TESTING COMPLETE");
     }
 
     @Override
@@ -92,7 +120,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     public void onRestaurantClick(int position) {
         /** Should use the position below to store clicked Restaurant as currRestaurant **/
         tester.get(position);
-        Intent intent = new Intent(this, TESTActivity.class);
+        Intent intent = new Intent(this, RestaurantInfoActivity.class);
+//        Intent intent = RestaurantInfoActivity.makeLaunchIntent(this, position);
         startActivity(intent);
     }
     /** == END TESTING == **/
