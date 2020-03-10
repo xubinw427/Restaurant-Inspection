@@ -22,12 +22,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView btnBackground;
-        private ImageView foodIcon;
         private ImageView hazardIcon;
         private TextView restaurantName;
         private TextView inspectionDate;
         private TextView numIssues;
-        private TextView issues;
 
         OnRestaurantListener myOnRestaurantListener;
 
@@ -35,11 +33,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             super(itemView);
             btnBackground = itemView.findViewById((R.id.restaurant_button));
             hazardIcon = itemView.findViewById(R.id.haz_icon);
-//            foodIcon = itemView.findViewById(R.id.foodIcon);
             restaurantName = itemView.findViewById(R.id.restaurant_name);
             inspectionDate = itemView.findViewById(R.id.inspection_date);
             numIssues = itemView.findViewById(R.id.num_issues);
-//            issues = itemView.findViewById(R.id.issues);
 
             myOnRestaurantListener = onRestaurantListener;
             itemView.setOnClickListener(this);

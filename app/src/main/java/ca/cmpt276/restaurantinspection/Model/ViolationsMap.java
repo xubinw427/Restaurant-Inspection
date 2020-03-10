@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ViolationsMap {
-    private static ViolationsMap INSTANCE = null;
+    private static ViolationsMap instance = null;
     private static Map<String, String[]> violationsLookup;
 
     private ViolationsMap(InputStream file) {
@@ -16,21 +16,21 @@ public class ViolationsMap {
     }
 
     public static ViolationsMap getInstance() {
-        if (INSTANCE == null) {
+        if (instance == null) {
             throw new AssertionError(
                     "ViolationsMap.init(InputStream file) must be called first.");
         }
 
-        return INSTANCE;
+        return instance;
     }
 
     public static ViolationsMap init(InputStream violationsFile) {
-        if (INSTANCE != null) {
+        if (instance != null) {
             return null;
         }
 
-        INSTANCE = new ViolationsMap(violationsFile);
-        return INSTANCE;
+        instance = new ViolationsMap(violationsFile);
+        return instance;
     }
 
     /** Returning Violation Details from MAP **/
