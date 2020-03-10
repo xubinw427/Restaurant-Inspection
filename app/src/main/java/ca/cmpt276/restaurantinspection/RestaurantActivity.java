@@ -14,10 +14,26 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+
+import android.view.Menu;
+import android.view.MenuItem;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+
+import ca.cmpt276.restaurantinspection.Model.Inspection;
+import ca.cmpt276.restaurantinspection.Model.Restaurant;
+import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
+
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
 import ca.cmpt276.restaurantinspection.Model.TestRestaurant;
 
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
+    private RestaurantManager restaurantList;
+
     /** == TESTING == **/
     private RecyclerView restaurantRecyclerView;
     private RecyclerView.Adapter restaurantAdapter;
@@ -33,6 +49,26 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         toolbar.setTitle("Restaurants List");
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
+
+        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
+        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
+        InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
+
+        ViolationsMap.init(violationsIn);
+        RestaurantManager.init(restaurantsIn, inspectionsIn);
+
+        restaurantList = RestaurantManager.getInstance();
+
+
+        /** ================ TEST ===============**/
+
+        for (Restaurant res : restaurantList.getList()) {
+            ArrayList<Inspection> ins = res.getInspections();
+            System.out.println(res.getName() + ": " + ins.size());
+        }
+
+        /** ================ END TEST ===============**/
+
 
         /** == TESTING == **/
         tester = new ArrayList<>();
@@ -52,6 +88,8 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         restaurantRecyclerView.setLayoutManager(restaurantLayoutManager);
         restaurantRecyclerView.setAdapter(restaurantAdapter);
         /** == END TESTING == **/
+
+        System.out.println("TESTING COMPLETE");
     }
 
     @Override

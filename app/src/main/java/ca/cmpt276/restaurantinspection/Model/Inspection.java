@@ -11,8 +11,7 @@ public class Inspection {
 
     private String inspDate;
     private int daysAgo;
-    private String monthDate;
-    private String monthYear;
+    private String dateDisplay;
 
     private String inspType;
     private int numCritical;
@@ -25,7 +24,10 @@ public class Inspection {
     /** ViolLump is currently a long string of all violations; need to split by '|' **/
     public Inspection(String[] inspectionDetails, ViolationsMap map) {
         trackingNumber = inspectionDetails[0];
+
         inspDate = inspectionDetails[1];
+        getDateInformation();
+
         inspType = inspectionDetails[2];
 
         try {
@@ -38,8 +40,11 @@ public class Inspection {
 
         hazardRating = inspectionDetails[5];
 
+        if (inspectionDetails.length < 7) { return; }
+
         /** Deal with Violation Lump here **/
         violationsList = new ArrayList<>();
+
         String violLump = inspectionDetails[6];
         String[] violations = violLump.split("\\|");
 
@@ -50,9 +55,10 @@ public class Inspection {
             String violationID = currViolation[0];
 
             /** Look-up key and get violation details from ViolationsMap **/
-            String[] violationInfo = map.getViolationFromMap(violationID);
+            String[] violationInfo = ViolationsMap.getViolationFromMap(violationID);
 
-            assert(violationInfo != null);
+            /** ID not found **/
+            if (violationInfo == null) { return; }
 
             /** Create new data from info retrieved **/
             Violation newViolation = new Violation(violationInfo);
@@ -69,12 +75,8 @@ public class Inspection {
         return daysAgo;
     }
 
-    public String getMonthDate() {
-        return monthDate;
-    }
-
-    public String getMonthYear() {
-        return monthYear;
+    public String getDateDisplay() {
+        return dateDisplay;
     }
 
     public String getInspType() {
@@ -120,7 +122,14 @@ public class Inspection {
 
         cal.add(Calendar.DATE, -daysAgo);
 
-        monthDate = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime());
-        monthYear = getMonth.format(cal.getTime()) + " " + getYear.format(cal.getTime());
+        if (daysAgo < 31) {
+            dateDisplay = daysAgo + "days ago";
+        }
+        else if (daysAgo < 366) {
+            dateDisplay = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime());
+        }
+        else {
+            dateDisplay = getMonth.format(cal.getTime()) + " " + getYear.format(cal.getTime());
+        }
     }
 }
