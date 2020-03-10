@@ -58,4 +58,6 @@ public class InspectionActivity extends AppCompatActivity implements InspectionA
     }
     /** == END TEST == **/
 
+    /** =========== INTENT LAUNCHER HERE >> findViewById(R.id.inspAct ============ **/
+
 }

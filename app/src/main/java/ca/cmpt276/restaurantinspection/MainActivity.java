@@ -28,6 +28,15 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("Restaurants List");
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
+
+        Button btn = findViewById(R.id.btn);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), InspectionActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override

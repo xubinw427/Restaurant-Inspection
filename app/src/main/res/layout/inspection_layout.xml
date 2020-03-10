@@ -50,7 +50,8 @@
             android:singleLine="false"
             android:text="# Non-critical Issues: \n# Critical Issues: "
             android:textSize="14sp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:textColor="@color/fontColour"/>
 
         <TextView
             android:id="@+id/numNonCritIssues"
@@ -65,7 +66,8 @@
             android:layout_marginEnd="78dp"
             android:layout_marginBottom="70dp"
             android:text="8"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/fontColour"/>
 
         <TextView
             android:id="@+id/numCritIssues"
@@ -80,7 +82,8 @@
             android:layout_marginEnd="89dp"
             android:layout_marginBottom="49dp"
             android:text="8"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:textColor="@color/fontColour"/>
 
         <TextView
             android:id="@+id/inspDateField"
@@ -96,7 +99,7 @@
             android:layout_marginBottom="117dp"
             android:gravity="center"
             android:text="Date HERE"
-            android:textColor="#FFFFFF"
+            android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
 
