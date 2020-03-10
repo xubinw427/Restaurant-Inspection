@@ -57,7 +57,8 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RestaurantInfoActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RestaurantInfoActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }

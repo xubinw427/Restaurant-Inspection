@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 public class RestaurantInfoActivity extends AppCompatActivity {
     public static final String EXTRA = "cmpt276.restaurantinspection.EXTRA";
@@ -18,11 +18,9 @@ public class RestaurantInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_info);
-        Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("Current Restaurant Name");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Current Restaurant Name");
+        actionBar.setElevation(0);
 
         index = getIntent().getIntExtra(EXTRA, 0);
 
@@ -32,7 +30,8 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RestaurantInspectionActivity.class);
+                Intent intent = new Intent(getApplicationContext(), RestaurantInspectionActivity.class)
+                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
                 startActivity(intent);
                 finish();
             }
