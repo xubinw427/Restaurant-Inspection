@@ -11,7 +11,7 @@ public class Restaurant implements Comparable<Restaurant>{
     private String coordinates;
     private double latitude;
     private double longitude;
-    private ArrayList<Inspection> inspections = new ArrayList<>();
+    private ArrayList<Inspection> inspections;
 
     public Restaurant(String restaurantLump) {
         String[] restaurantInfo = restaurantLump.split(",");
@@ -24,6 +24,8 @@ public class Restaurant implements Comparable<Restaurant>{
                     restaurantInfo[6];
         latitude = Double.parseDouble(restaurantInfo[5]);
         longitude = Double.parseDouble(restaurantInfo[6]);
+
+        inspections = new ArrayList<>();
     }
 
     public String getId() {
