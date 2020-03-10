@@ -52,7 +52,6 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
     public void sortByAlphabet() {
         Arrays.sort(new ArrayList[]{restaurants});
-
     }
 
     public void readRestaurantData(InputStream file) {
@@ -65,16 +64,17 @@ public class RestaurantManager implements Iterable<Restaurant> {
             // Step over header
             reader.readLine();
 
-            while (((line = reader.readLine()) != null))
-            {
+            while (((line = reader.readLine()) != null)) {
                 // Read the data
-                Restaurant temp = new Restaurant(line);
-                this.addNew(temp);
+                Restaurant newRestaurant = new Restaurant(line);
+                this.addNew(newRestaurant);
             }
-        } catch (IOException e) {
+        }
+        catch (IOException e) {
 
             e.printStackTrace();
         }
+
         this.sortByAlphabet();
     }
 
