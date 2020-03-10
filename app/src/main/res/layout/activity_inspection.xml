@@ -27,7 +27,7 @@
     </androidx.recyclerview.widget.RecyclerView>
 
     <ImageView
-        android:id="@+id/buttonBg"
+        android:id="@+id/insp_button_background"
         android:layout_width="360dp"
         android:layout_height="59dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -39,7 +39,7 @@
         app:srcCompat="@drawable/button_box" />
 
     <Button
-        android:id="@+id/inspAct"
+        android:id="@+id/inspection_button_act"
         android:layout_width="165dp"
         android:layout_height="38dp"
         android:background="@drawable/button_insp_active"
@@ -55,7 +55,7 @@
         app:layout_constraintVertical_bias="0.0685" />
 
     <Button
-        android:id="@+id/infoInact"
+        android:id="@+id/info_button_inact"
         android:layout_width="165dp"
         android:layout_height="38dp"
         android:background="@drawable/button_info_inactive"

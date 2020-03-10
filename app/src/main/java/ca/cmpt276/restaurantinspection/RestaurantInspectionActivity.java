@@ -8,7 +8,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,7 +52,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
 
         /** ================= REPLACE INTENT FUNCTION BELOW ================**/
 
-        Button btn = findViewById(R.id.infoInact);
+        Button btn = findViewById(R.id.info_button_inact);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

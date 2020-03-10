@@ -18,7 +18,7 @@
         android:background="@android:color/transparent">
 
         <ImageView
-            android:id="@+id/inspectionButton"
+            android:id="@+id/inspection_button_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentStart="true"
@@ -33,7 +33,7 @@
             app:srcCompat="@drawable/inspection_high" />
 
         <TextView
-            android:id="@+id/numOfIssues"
+            android:id="@+id/insp_num_of_issues"
             android:layout_width="200dp"
             android:layout_height="52dp"
             android:layout_alignParentStart="true"
@@ -54,7 +54,7 @@
             android:textColor="@color/fontColour"/>
 
         <TextView
-            android:id="@+id/numNonCritIssues"
+            android:id="@+id/num_non_crit_issues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -70,7 +70,7 @@
             android:textColor="@color/fontColour"/>
 
         <TextView
-            android:id="@+id/numCritIssues"
+            android:id="@+id/num_crit_issues"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -86,7 +86,7 @@
             android:textColor="@color/fontColour"/>
 
         <TextView
-            android:id="@+id/inspDateField"
+            android:id="@+id/inspection_date"
             android:layout_width="match_parent"
             android:layout_height="23dp"
             android:layout_alignParentStart="true"

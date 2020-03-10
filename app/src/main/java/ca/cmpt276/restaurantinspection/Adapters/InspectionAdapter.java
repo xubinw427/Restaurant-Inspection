@@ -21,17 +21,17 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
     public static class InspectionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView inspBackground;
         private TextView inspDate;
-        private TextView numCritIss;
-        private TextView numNonCritIss;
+        private TextView numCritIssues;
+        private TextView numNonCritIssues;
 
         OnInspectionListener myOnInspectionListener;
 
         private InspectionViewHolder(@NonNull View itemView, OnInspectionListener onInspectionListener) {
             super(itemView);
-            inspBackground = itemView.findViewById(R.id.inspectionButton);
-            inspDate = itemView.findViewById(R.id.inspDateField);
-            numCritIss = itemView.findViewById(R.id.numCritIssues);
-            numNonCritIss = itemView.findViewById(R.id.numNonCritIssues);
+            inspBackground = itemView.findViewById(R.id.inspection_button_background);
+            inspDate = itemView.findViewById(R.id.inspection_date);
+            numCritIssues = itemView.findViewById(R.id.num_crit_issues);
+            numNonCritIssues = itemView.findViewById(R.id.num_non_crit_issues);
 
             myOnInspectionListener = onInspectionListener;
             itemView.setOnClickListener(this);
@@ -81,8 +81,8 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
         }
 
         holder.inspDate.setText(currInspection.getDate());
-        holder.numCritIss.setText(currInspection.getNumCrit());
-        holder.numNonCritIss.setText(currInspection.getNumNonCrit());
+        holder.numCritIssues.setText(currInspection.getNumCrit());
+        holder.numNonCritIssues.setText(currInspection.getNumNonCrit());
 
     }
 

@@ -7,16 +7,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".RestaurantInspectionActivity"
-            android:parentActivityName=".RestaurantActivity"
-            android:theme="@style/AppTheme.NoAnimation"/>
-        <activity
-            android:name=".RestaurantInfoActivity"
-            android:label="Restaurant Info"
-            android:parentActivityName=".RestaurantActivity"
-            android:theme="@style/AppTheme.NoAnimation"></activity>
+        android:supportsRtl="true">
         <activity
             android:name=".RestaurantActivity"
             android:label="@string/app_name"
@@ -27,6 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RestaurantInspectionActivity"
+            android:parentActivityName=".RestaurantActivity"
+            android:theme="@style/AppThemeCustom"/>
+        <activity
+            android:name=".RestaurantInfoActivity"
+            android:label="Restaurant Info"
+            android:parentActivityName=".RestaurantActivity"
+            android:theme="@style/AppThemeCustom"/>
     </application>
 
 </manifest>

@@ -26,7 +26,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
         /** ================= REPLACE INTENT FUNCTION BELOW ================**/
 
-        Button btn = findViewById(R.id.inspectionButton);
+        Button btn = findViewById(R.id.inspection_button_inact);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
