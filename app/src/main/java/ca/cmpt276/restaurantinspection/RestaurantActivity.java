@@ -69,21 +69,21 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
 
         /** ================ END TEST ===============**/
 
-
-        /** == TESTING == **/
-        tester = new ArrayList<>();
-        tester.add(new TestRestaurant("LEE YUEN SEAFOOD RESTAURANT", "May 5th, 2018", "low", "3"));
-        tester.add(new TestRestaurant("RESTAURANT B", "August 28th, 2018", "mod", "5"));
-        tester.add(new TestRestaurant("RESTAURANT C", "January 6th, 2018", "high", "11"));
-        tester.add(new TestRestaurant("RESTAURANT D", "May 02nd, 2018", "mod", "6"));
-        tester.add(new TestRestaurant("RESTAURANT E", "June 30th, 2018", "low", "2"));
-        tester.add(new TestRestaurant("RESTAURANT F", "December 15th, 2018", "high", "9"));
-        tester.add(new TestRestaurant("RESTAURANT G", "February 10th, 2018", "low", "1"));
+//
+//        /** == TESTING == **/
+//        tester = new ArrayList<>();
+//        tester.add(new TestRestaurant("LEE YUEN SEAFOOD RESTAURANT", "May 5th, 2018", "low", "3"));
+//        tester.add(new TestRestaurant("RESTAURANT B", "August 28th, 2018", "mod", "5"));
+//        tester.add(new TestRestaurant("RESTAURANT C", "January 6th, 2018", "high", "11"));
+//        tester.add(new TestRestaurant("RESTAURANT D", "May 02nd, 2018", "mod", "6"));
+//        tester.add(new TestRestaurant("RESTAURANT E", "June 30th, 2018", "low", "2"));
+//        tester.add(new TestRestaurant("RESTAURANT F", "December 15th, 2018", "high", "9"));
+//        tester.add(new TestRestaurant("RESTAURANT G", "February 10th, 2018", "low", "1"));
 
         restaurantRecyclerView = findViewById(R.id.rv);
         restaurantRecyclerView.setHasFixedSize(true);
         restaurantLayoutManager = new LinearLayoutManager(this);
-        restaurantAdapter = new RestaurantAdapter(tester, this);
+        restaurantAdapter = new RestaurantAdapter(restaurantList, this);
 
         restaurantRecyclerView.setLayoutManager(restaurantLayoutManager);
         restaurantRecyclerView.setAdapter(restaurantAdapter);
@@ -117,7 +117,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
     /** == TESTING == **/
     @Override
     public void onRestaurantClick(int position) {
-        tester.get(position);
+        restaurantList.getTheOneAt(position);
         Intent intent = new Intent(this, RestaurantInfoActivity.class);
 //        Intent intent = RestaurantInfoActivity.makeLaunchIntent(this, position);
         startActivity(intent);
