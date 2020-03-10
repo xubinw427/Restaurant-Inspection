@@ -36,10 +36,11 @@
             android:layout_alignParentLeft="true"
             android:layout_centerInParent="true"
             android:layout_marginLeft="50dp"
-            android:background="@drawable/button_info"
+            android:background="@drawable/button_info_active"
             android:elevation="20dp"
             android:text="Information"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:textColor="#000000"/>
 
         <Button
             android:id="@+id/InspectionButton"
@@ -48,7 +49,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginRight="50dp"
             android:layout_centerInParent="true"
-            android:background="@drawable/button_insp"
+            android:background="@drawable/button_insp_inactive"
             android:elevation="20dp"
             android:text="Inspection"/>
 
