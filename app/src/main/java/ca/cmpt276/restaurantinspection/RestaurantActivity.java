@@ -2,21 +2,12 @@ package ca.cmpt276.restaurantinspection;
 
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import java.io.InputStream;
-
-import ca.cmpt276.restaurantinspection.Model.Restaurant;
-import ca.cmpt276.restaurantinspection.Model.Violation;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
 public class RestaurantActivity extends AppCompatActivity {
