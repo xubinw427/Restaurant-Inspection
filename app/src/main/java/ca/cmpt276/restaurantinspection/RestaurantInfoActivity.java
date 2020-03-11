@@ -24,7 +24,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
         RestaurantManager restaurantManager = RestaurantManager.getInstance();
         index = restaurantManager.getCurrRestaurantPosition();
-        restaurant = restaurantManager.getTheOneAt(index);
+        restaurant = restaurantManager.getRestaurantAt(index);
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(restaurant.getName());

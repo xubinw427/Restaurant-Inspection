@@ -112,7 +112,7 @@ public class Inspection {
         try {
             Date startDate = sdf.parse(inspDate);
             Date endDate = sdf.parse(today);
-            long difference = endDate.getTime()/(1000*60*60*24) - startDate.getTime()/(1000*60*60*24);
+            float difference = endDate.getTime()/(1000*60*60*24) - startDate.getTime()/(1000*60*60*24);
             daysAgo = (int) difference;
         }
         catch (java.text.ParseException ex) {

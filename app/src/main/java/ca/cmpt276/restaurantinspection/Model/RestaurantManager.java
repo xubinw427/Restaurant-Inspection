@@ -51,7 +51,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return restaurantsList;
     }
 
-    public Restaurant getTheOneAt(int index) {
+    public Restaurant getRestaurantAt(int index) {
         return restaurantsList.get(index);
     }
 

@@ -65,7 +65,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        Restaurant currRestaurant = restaurantManager.getTheOneAt(position);
+        Restaurant currRestaurant = restaurantManager.getRestaurantAt(position);
 
         /** Check hazard level of restaurant, then set corresponding background **/
         switch(currRestaurant.getHazard()) {
