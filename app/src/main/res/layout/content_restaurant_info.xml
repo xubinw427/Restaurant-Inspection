@@ -57,6 +57,7 @@
         android:background="@drawable/button_info_active"
         android:elevation="0dp"
         android:text="Information"
+        android:enabled="false"
         android:textColor="@color/fontColour"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -67,8 +68,8 @@
 
     <ImageView
         android:id="@+id/image_location"
-        android:layout_width="75dp"
-        android:layout_height="100dp"
+        android:layout_width="60dp"
+        android:layout_height="80dp"
         android:background="@drawable/address_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -79,43 +80,41 @@
 
     <TextView
         android:id="@+id/text_location"
-        android:layout_width="202dp"
+        android:layout_width="250dp"
         android:layout_height="54dp"
         android:gravity="center"
-        android:text="1234 Oak Street, \nBurnaby"
-        android:textSize="18sp"
+        android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.515" />
+        app:layout_constraintVertical_bias="0.48" />
 
     <ImageView
         android:id="@+id/image_coordinate"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:background="@drawable/coordinates_icon"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/info_button_background"
-        app:layout_constraintVertical_bias="0.665" />
+        app:layout_constraintVertical_bias="0.6" />
 
     <TextView
         android:id="@+id/text_coordinate"
-        android:layout_width="wrap_content"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="41 24 0 0 0 0"
-        android:textSize="18sp"
+        android:textSize="19sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.846" />
+        app:layout_constraintVertical_bias="0.81" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

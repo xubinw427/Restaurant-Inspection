@@ -1,4 +1,4 @@
-package ca.cmpt276.restaurantinspection.Model;
+package ca.cmpt276.restaurantinspection.TestModel;
 
 /** DELETE THIS CLASS AT THE END !!!!! **/
 

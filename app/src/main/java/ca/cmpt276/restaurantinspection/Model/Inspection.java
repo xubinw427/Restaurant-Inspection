@@ -31,7 +31,6 @@ public class Inspection {
         inspDate = inspectionDetails[1];
         getDateInformation();
 
-
         inspType = inspectionDetails[2];
 
         try {
@@ -75,10 +74,6 @@ public class Inspection {
         return trackingNumber;
     }
 
-    public int getDaysAgo() {
-        return daysAgo;
-    }
-
     public String getDateDisplay() {
         return dateDisplay;
     }
@@ -117,8 +112,8 @@ public class Inspection {
         try {
             Date startDate = sdf.parse(inspDate);
             Date endDate = sdf.parse(today);
-            long difference = endDate.getTime() - startDate.getTime();
-            daysAgo = (int) (difference / (1000*60*60*24));
+            long difference = endDate.getTime()/(1000*60*60*24) - startDate.getTime()/(1000*60*60*24);
+            daysAgo = (int) difference;
         }
         catch (java.text.ParseException ex) {
             throw new RuntimeException("ERROR: Failed to parse dates");
@@ -128,7 +123,7 @@ public class Inspection {
         SimpleDateFormat getMonth = new SimpleDateFormat("MMMM", Locale.CANADA);
         SimpleDateFormat getYear = new SimpleDateFormat("yyyy", Locale.CANADA);
 
-        cal.add(Calendar.DATE, -daysAgo);
+        cal.add(Calendar.DATE, - daysAgo);
 
         if (daysAgo < 31) {
             dateDisplay = daysAgo + "days ago";
@@ -139,7 +134,7 @@ public class Inspection {
         else {
             dateDisplay = getMonth.format(cal.getTime()) + " " + getYear.format(cal.getTime());
         }
-        fullDate = getMonth.format(cal.getTime())+" "+ getDay.format(cal.getTime())+ ", " +getYear.format(cal.getTime());
+        fullDate = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime()) +
+                ", " + getYear.format(cal.getTime());
     }
-
 }

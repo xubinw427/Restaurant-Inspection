@@ -8,17 +8,18 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 
 public class RestaurantManager implements Iterable<Restaurant> {
     private ArrayList<Restaurant> restaurantsList = new ArrayList<>();
     private static RestaurantManager INSTANCE;
     private ViolationsMap violationsMap;
+    private int currRestaurantPosition;
+    private int currInspectionPosition;
 
-    //Private to prevent anyone else from instantiating.
+    /** Private to prevent anyone else from instantiating. **/
     private RestaurantManager(InputStream restaurantFile,
-                             InputStream inspectionsFile) {
+                              InputStream inspectionsFile) {
 
         readRestaurantData(restaurantFile);
 
@@ -50,20 +51,32 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return restaurantsList;
     }
 
-    private void addNew(Restaurant restaurant) {
-        restaurantsList.add(restaurant);
-    }
-
     public Restaurant getTheOneAt(int index) {
         return restaurantsList.get(index);
     }
 
-    public int getsize() {
+    public int getSize() {
         return restaurantsList.size();
     }
 
-    private void sortByAlphabet() {
-        Arrays.sort(new ArrayList[]{restaurantsList});
+    public int getCurrRestaurantPosition() {
+        return currRestaurantPosition;
+    }
+
+    public int getCurrInspectionPosition() {
+        return currInspectionPosition;
+    }
+
+    public void setCurrRestaurantPosition(int position) {
+        currRestaurantPosition = position;
+    }
+
+    public void setCurrInspectionPosition(int position) {
+        currInspectionPosition = position;
+    }
+
+    private void addNew(Restaurant restaurant) {
+        restaurantsList.add(restaurant);
     }
 
     private void readRestaurantData(InputStream file) {
@@ -73,11 +86,10 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
         String line;
         try {
-            // Step over header
+            /** Step over header **/
             reader.readLine();
 
             while (((line = reader.readLine()) != null)) {
-                // Read the data
                 Restaurant newRestaurant = new Restaurant(line);
                 this.addNew(newRestaurant);
             }
@@ -92,8 +104,6 @@ public class RestaurantManager implements Iterable<Restaurant> {
         catch (IOException ex) {
             throw new RuntimeException("ERROR: Failed to close " + file);
         }
-
-        this.sortByAlphabet();
     }
 
     private void populateInspections(InputStream file) {
@@ -102,7 +112,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         try {
             String line;
 
-            // Step over header
+            /** Step over header **/
             input.readLine();
 
             while ((line = input.readLine()) != null) {
@@ -111,7 +121,6 @@ public class RestaurantManager implements Iterable<Restaurant> {
                 Inspection currInspection = new Inspection(inspectionData, violationsMap);
 
                 String currRestaurantID = inspectionData[0];
-                /** PRINT OUT THE ID AND MAKE SURE ITS RIGHT!!!!!!!!! **/
 
                 for (Restaurant restaurant : restaurantsList) {
                     if (restaurant.getId().equals(currRestaurantID)) {

@@ -51,7 +51,7 @@ public class ViolationsMap {
 
         try {
             String violation;
-            
+
             while ((violation = input.readLine()) != null) {
                 String[] line = violation.split(",");
                 /** For some reason there's a pre-trailing " in front of key so I had to trim it below **/

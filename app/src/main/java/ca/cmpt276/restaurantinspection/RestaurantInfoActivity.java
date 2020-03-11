@@ -5,24 +5,32 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
+import ca.cmpt276.restaurantinspection.Model.Restaurant;
+import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+
 public class RestaurantInfoActivity extends AppCompatActivity {
-    public static final String EXTRA = "cmpt276.restaurantinspection.EXTRA";
+    private Restaurant restaurant;
     private int index;
-    //add restaurantManager getInstance here
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_info);
+
+        RestaurantManager restaurantManager = RestaurantManager.getInstance();
+        index = restaurantManager.getCurrRestaurantPosition();
+        restaurant = restaurantManager.getTheOneAt(index);
+
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Current Restaurant Name");
+        actionBar.setTitle(restaurant.getName());
         actionBar.setElevation(0);
 
-        index = getIntent().getIntExtra(EXTRA, 0);
+        extractRestaurantInfo();
 
         /** ================= REPLACE INTENT FUNCTION BELOW ================**/
 
@@ -30,32 +38,30 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = RestaurantInspectionActivity.makeIntent(RestaurantInfoActivity.this, index)
-                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
-
+                Intent intent = makeRestaurantInspectionIntent(getApplicationContext());
                 startActivity(intent);
                 finish();
             }
         });
-
-//        setData();
     }
 
-//    public void setData(){
-//        String name = manager.getList().get(index).getName();
-//        String address = manager.getList().get(index).getAddress();
-//        String coords = manager.getList().get(index).getCoordinates();
-//
-//        TextView textAddress = findViewById(R.id.text_location);
-//        TextView textCoords = findViewById(R.id.text_coordinate);
-//
-//        textAddress.setText("" + address);
-//        textCoords.setText("" + coords);
-//    }
+    private void extractRestaurantInfo() {
+        System.out.println("Now we are processing " + index + " th Restaurant.");
 
-    public static Intent makeLaunchIntent(Context c, int index){
-        Intent intent = new Intent(c, RestaurantInfoActivity.class);
-        intent.putExtra(EXTRA, index);
-        return intent;
+        TextView location = findViewById(R.id.text_location);
+        location.setText(" " + restaurant.getAddress());
+
+        TextView coordinate = findViewById(R.id.text_coordinate);
+
+        double latitude = restaurant.getLatitude();
+        double longitude = restaurant.getLongitude();
+
+        String coordinateInString = latitude + ",  " + longitude;
+
+        coordinate.setText(" " + coordinateInString);
+    }
+
+    public static Intent makeRestaurantInspectionIntent(Context c){
+        return new Intent(c, RestaurantInspectionActivity.class);
     }
 }
