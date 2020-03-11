@@ -11,11 +11,13 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".RestaurantViolationActivity"
-            android:parentActivityName=".RestaurantInspectionActivity"/>
+            android:parentActivityName=".RestaurantInspectionActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".RestaurantActivity"
             android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,12 +27,14 @@
         <activity
             android:name=".RestaurantInspectionActivity"
             android:parentActivityName=".RestaurantActivity"
-            android:theme="@style/AppThemeCustom" />
+            android:theme="@style/AppThemeCustom"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".RestaurantInfoActivity"
             android:label="Restaurant Info"
             android:parentActivityName=".RestaurantActivity"
-            android:theme="@style/AppThemeCustom" />
+            android:theme="@style/AppThemeCustom"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
