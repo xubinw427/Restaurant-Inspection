@@ -11,11 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import ca.cmpt276.restaurantinspection.Model.TestViolation;
+import ca.cmpt276.restaurantinspection.Model.Violation;
 import ca.cmpt276.restaurantinspection.R;
 
 public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.ViolationViewHolder> {
-    private ArrayList<TestViolation> ViolationList;
+    private ArrayList<Violation> ViolationList;
     private OnViolationListener myOnViolationListener;
 
     public static class ViolationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -44,7 +44,7 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
         void onViolationClick(int position);
     }
 
-    public ViolationAdapter(ArrayList<TestViolation> Violations, OnViolationListener onViolationListener) {
+    public ViolationAdapter(ArrayList<Violation> Violations, OnViolationListener onViolationListener) {
         ViolationList = Violations;
         myOnViolationListener = onViolationListener;
     }
@@ -62,12 +62,13 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
     @Override
     public void onBindViewHolder(@NonNull ViolationViewHolder holder, int position) {
         /** Set information below for current violation **/
-        TestViolation currViolation = ViolationList.get(position);
+
+        Violation currViolation = ViolationList.get(position);
 
         /** Check violation type & crit/non-crit of rest, then switch statements to set icon **/
         switch(currViolation.getType()) {
             case "Employee":
-                switch(currViolation.getLevel()) {
+                switch(currViolation.getSeverity()) {
                     case "Not Critical":
                         holder.violationIcon.setImageResource(R.drawable.employee_noncrit);
                         break;
@@ -79,7 +80,7 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
                 }
                 break;
             case "Equipment":
-                switch(currViolation.getLevel()) {
+                switch(currViolation.getSeverity()) {
                     case "Not Critical":
                         holder.violationIcon.setImageResource(R.drawable.equipment_noncrit);
                         break;
@@ -91,7 +92,7 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
                 }
                 break;
             case "Food":
-                switch(currViolation.getLevel()) {
+                switch(currViolation.getSeverity()) {
                     case "Not Critical":
                         holder.violationIcon.setImageResource(R.drawable.food_noncrit);
                         break;
@@ -112,7 +113,7 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
                 break;
         }
 
-        holder.violationDesc.setText(currViolation.getsDesc());
+        holder.violationDesc.setText(currViolation.getShortDescription());
     }
 
     @Override

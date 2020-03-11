@@ -10,11 +10,11 @@ public class Violation {
     /** String[]: [0: ID, 1: Type, 2: Severity, 3: LongDescription, 4: ShortDescription]**/
 
     public Violation(String[] violationDetails) {
-        this.ID = violationDetails[0];
-        this.type = violationDetails[1];
-        this.severity = violationDetails[2];
-        this.longDescription = violationDetails[3];
-        this.shortDescription = violationDetails[4];
+        ID = violationDetails[0];
+        type = violationDetails[1];
+        severity = violationDetails[2];
+        longDescription = violationDetails[3];
+        shortDescription = violationDetails[4];
     }
 
     public String getID() {
