@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -26,14 +27,27 @@ public class ViolationActivity extends AppCompatActivity implements ViolationAda
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_violation);
 
+        /** ===== SET BASIC INSPECTION INFO!!! DON'T DELETE THIS, RE-POINT ==== **/
+        TextView inspectionType = this.findViewById(R.id.inspection_type);
+        TextView numCritIssues = this.findViewById(R.id.num_crit_issues_details);
+        TextView numNonCritIssues = this.findViewById(R.id.num_noncrit_issues_details);
+
+        /** Somehow pass by info from the inspection clicked on previous activate and set the below **/
+        System.out.println("HERE");
+        inspectionType.setText("SET INSP INFO");
+        System.out.println("HERE2");
+        numCritIssues.setText("#");
+        numNonCritIssues.setText("#");
+        /** ============================================== **/
+
         /** == TEST == **/
         tester = new ArrayList<>();
-        tester.add(new TestViolation("Food", "Not Critical", "Poor food contamination protection", "May 5th, 2018"));
-        tester.add(new TestViolation("Operations", "Not Critical", "Operation does not follow regulations", "March 7th, 2018"));
-        tester.add(new TestViolation("Employee", "Critical", "Inadquate employee personal hygiene", "February 22nd, 2018"));
-        tester.add(new TestViolation("Pests", "Not Critical", "Allowed breeding of pests", "February 17th, 2018"));
-        tester.add(new TestViolation("Equipment", "Not Critical", "Lack of accurate thermometers", "January 21st, 2018"));
-        tester.add(new TestViolation("Food", "Critical", "Hazardous storage of cold food", "January 3rd, 2018"));
+        tester.add(new TestViolation("Food", "Not Critical", "Poor food contamination protection", "00000000000000000000"));
+        tester.add(new TestViolation("Operations", "Not Critical", "Operation does not follow regulations", "1111111111111111"));
+        tester.add(new TestViolation("Employee", "Critical", "Inadquate employee personal hygiene", "2222222222222222222"));
+        tester.add(new TestViolation("Pests", "Not Critical", "Allowed breeding of pests", "3333333333333333333"));
+        tester.add(new TestViolation("Equipment", "Not Critical", "Lack of accurate thermometers", "44444444444444444444"));
+        tester.add(new TestViolation("Food", "Critical", "Hazardous storage of cold food", "5555555555555555555"));
 
         myRecyclerView = findViewById(R.id.rv3);
         myRecyclerView.setHasFixedSize(true);
@@ -52,7 +66,8 @@ public class ViolationActivity extends AppCompatActivity implements ViolationAda
     /** == TEST == **/
     @Override
     public void onViolationClick(int position) {
-        Toast toast = Toast.makeText(this, "YOU CLICKED", Toast.LENGTH_SHORT);
+        String longDescription = tester.get(position).getlDesc();
+        Toast toast = Toast.makeText(this, longDescription, Toast.LENGTH_SHORT);
         toast.show();
     }
     /** == END TEST == **/
