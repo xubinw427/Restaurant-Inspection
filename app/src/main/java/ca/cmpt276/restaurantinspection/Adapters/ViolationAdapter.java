@@ -20,14 +20,16 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
 
     public static class ViolationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView violationIcon;
+        private ImageView criticalIcon;
         private TextView violationDesc;
 
         OnViolationListener myOnViolationListener;
 
         private ViolationViewHolder(@NonNull View itemView, OnViolationListener onViolationListener) {
             super(itemView);
-            violationIcon = itemView.findViewById(R.id.violIcon);
-            violationDesc = itemView.findViewById(R.id.violDesc);
+            violationIcon = itemView.findViewById(R.id.violation_icon);
+            criticalIcon = itemView.findViewById(R.id.critical_level_icon);
+            violationDesc = itemView.findViewById(R.id.violation_description);
 
             myOnViolationListener = onViolationListener;
             itemView.setOnClickListener(this);
@@ -71,9 +73,11 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
                 switch(currViolation.getSeverity()) {
                     case "Not Critical":
                         holder.violationIcon.setImageResource(R.drawable.employee_noncrit);
+                        holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
                         break;
                     case "Critical":
                         holder.violationIcon.setImageResource(R.drawable.employee_crit);
+                        holder.criticalIcon.setImageResource(R.drawable.violation_crit);
                         break;
                     default:
                         break;
@@ -83,9 +87,11 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
                 switch(currViolation.getSeverity()) {
                     case "Not Critical":
                         holder.violationIcon.setImageResource(R.drawable.equipment_noncrit);
+                        holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
                         break;
                     case "Critical":
                         holder.violationIcon.setImageResource(R.drawable.equipment_crit);
+                        holder.criticalIcon.setImageResource(R.drawable.violation_crit);
                         break;
                     default:
                         break;
@@ -95,9 +101,11 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
                 switch(currViolation.getSeverity()) {
                     case "Not Critical":
                         holder.violationIcon.setImageResource(R.drawable.food_noncrit);
+                        holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
                         break;
                     case "Critical":
                         holder.violationIcon.setImageResource(R.drawable.food_crit);
+                        holder.criticalIcon.setImageResource(R.drawable.violation_crit);
                         break;
                     default:
                         break;
@@ -105,9 +113,11 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
                 break;
             case "Operations":
                 holder.violationIcon.setImageResource(R.drawable.operations_noncrit);
+                holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
                 break;
             case "Pests":
                 holder.violationIcon.setImageResource(R.drawable.pest_noncrit);
+                holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
                 break;
             default:
                 break;

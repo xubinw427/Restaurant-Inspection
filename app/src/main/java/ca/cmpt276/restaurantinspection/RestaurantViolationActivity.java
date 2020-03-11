@@ -58,6 +58,7 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         if (inspection.getViolationsList() == null) {
             TextView noViolationsMsg = this.findViewById(R.id.no_violations_msg);
             noViolationsMsg.setText("There were no violations \nfound for this inspection.");
+            return;
         }
         else {
             violationList = inspection.getViolationsList();
