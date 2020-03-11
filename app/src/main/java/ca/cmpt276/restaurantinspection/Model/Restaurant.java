@@ -73,8 +73,7 @@ public class Restaurant implements Comparable<Restaurant>{
     public String getNumIssues() {
         if (this.inspections.size() > 0) {
             int num = inspections.get(0).getNumCritical() + inspections.get(0).getNumNonCritical();
-            String numInString = Integer.toString(num);
-            return numInString;
+            return Integer.toString(num);
         }
         return "0";
     }

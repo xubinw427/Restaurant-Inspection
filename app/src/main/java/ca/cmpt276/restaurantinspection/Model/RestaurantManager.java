@@ -17,7 +17,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private int currRestaurantPosition;
     private int currInspectionPosition;
 
-    //Private to prevent anyone else from instantiating.
+    /** Private to prevent anyone else from instantiating. **/
     private RestaurantManager(InputStream restaurantFile,
                               InputStream inspectionsFile) {
 
@@ -86,11 +86,10 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
         String line;
         try {
-            // Step over header
+            /** Step over header **/
             reader.readLine();
 
             while (((line = reader.readLine()) != null)) {
-                // Read the data
                 Restaurant newRestaurant = new Restaurant(line);
                 this.addNew(newRestaurant);
             }
@@ -113,7 +112,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         try {
             String line;
 
-            // Step over header
+            /** Step over header **/
             input.readLine();
 
             while ((line = input.readLine()) != null) {
@@ -122,7 +121,6 @@ public class RestaurantManager implements Iterable<Restaurant> {
                 Inspection currInspection = new Inspection(inspectionData, violationsMap);
 
                 String currRestaurantID = inspectionData[0];
-                /** PRINT OUT THE ID AND MAKE SURE ITS RIGHT!!!!!!!!! **/
 
                 for (Restaurant restaurant : restaurantsList) {
                     if (restaurant.getId().equals(currRestaurantID)) {

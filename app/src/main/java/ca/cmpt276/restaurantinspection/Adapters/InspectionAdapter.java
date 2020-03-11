@@ -12,12 +12,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ca.cmpt276.restaurantinspection.Model.Inspection;
-import ca.cmpt276.restaurantinspection.Model.TestInspection;
 import ca.cmpt276.restaurantinspection.R;
 
 public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
     private ArrayList<Inspection> inspectionList;
-    private OnInspectionListener myOnInspectionListener;
+    private OnInspectionListener onInspectionListener;
 
     public static class InspectionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView inspBackground;
@@ -25,7 +24,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
         private TextView numCritIssues;
         private TextView numNonCritIssues;
 
-        OnInspectionListener myOnInspectionListener;
+        OnInspectionListener onInspectionListener;
 
         private InspectionViewHolder(@NonNull View itemView, OnInspectionListener onInspectionListener) {
             super(itemView);
@@ -34,13 +33,13 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
             numCritIssues = itemView.findViewById(R.id.num_crit_issues);
             numNonCritIssues = itemView.findViewById(R.id.num_non_crit_issues);
 
-            myOnInspectionListener = onInspectionListener;
+            this.onInspectionListener = onInspectionListener;
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            myOnInspectionListener.onInspectionClick(getAdapterPosition());
+            onInspectionListener.onInspectionClick(getAdapterPosition());
         }
     }
 
@@ -50,7 +49,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
 
     public InspectionAdapter(ArrayList<Inspection> inspections, OnInspectionListener onInspectionListener) {
         inspectionList = inspections;
-        myOnInspectionListener = onInspectionListener;
+        this.onInspectionListener = onInspectionListener;
     }
 
     @NonNull
@@ -58,9 +57,8 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
     public InspectionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.inspection_layout, parent, false);
-        InspectionViewHolder ivh = new InspectionViewHolder(view, myOnInspectionListener);
 
-        return ivh;
+        return new InspectionViewHolder(view, onInspectionListener);
     }
 
     @Override

@@ -11,13 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+
 import ca.cmpt276.restaurantinspection.R;
 
-/** CHANGE ALL INSTANCES OF TestRestaurant to Restaurant after testing!!!!! **/
-
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
-    private RestaurantManager restaurantList;
-    private OnRestaurantListener myOnRestaurantListener;
+    private RestaurantManager restaurantManager;
+    private OnRestaurantListener onRestaurantListener;
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView btnBackground;
@@ -26,7 +25,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         private TextView inspectionDate;
         private TextView numIssues;
 
-        OnRestaurantListener myOnRestaurantListener;
+        OnRestaurantListener onRestaurantListener;
 
         private RestaurantViewHolder(@NonNull View itemView, OnRestaurantListener onRestaurantListener) {
             super(itemView);
@@ -36,14 +35,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             inspectionDate = itemView.findViewById(R.id.inspection_date);
             numIssues = itemView.findViewById(R.id.num_issues);
 
-            myOnRestaurantListener = onRestaurantListener;
+            this.onRestaurantListener = onRestaurantListener;
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            myOnRestaurantListener.onRestaurantClick(getAdapterPosition());
-
+            onRestaurantListener.onRestaurantClick(getAdapterPosition());
         }
     }
 
@@ -52,8 +50,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     }
 
     public RestaurantAdapter(RestaurantManager restaurants, OnRestaurantListener onRestaurantListener) {
-        restaurantList = restaurants;
-        myOnRestaurantListener = onRestaurantListener;
+        restaurantManager = restaurants;
+        this.onRestaurantListener = onRestaurantListener;
     }
 
     @NonNull
@@ -61,16 +59,15 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.restaurant_layout, parent, false);
-        RestaurantViewHolder rvh = new RestaurantViewHolder(view, myOnRestaurantListener);
 
-        return rvh;
+        return new RestaurantViewHolder(view, onRestaurantListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        Restaurant currRestaurant = restaurantList.getRestaurantAt(position);
+        Restaurant currRestaurant = restaurantManager.getRestaurantAt(position);
 
-        /** Check hazard level of rest, then switch statements to set background **/
+        /** Check hazard level of restaurant, then set corresponding background **/
         switch(currRestaurant.getHazard()) {
             case "High":
                 holder.btnBackground.setImageResource(R.drawable.button_red);
@@ -101,6 +98,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public int getItemCount() {
-        return restaurantList.getSize();
+        return restaurantManager.getSize();
     }
 }

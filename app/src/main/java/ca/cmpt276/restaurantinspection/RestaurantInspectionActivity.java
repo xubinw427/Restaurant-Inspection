@@ -1,9 +1,11 @@
 package ca.cmpt276.restaurantinspection;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
@@ -17,47 +19,28 @@ import ca.cmpt276.restaurantinspection.Adapters.InspectionAdapter;
 import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
-import ca.cmpt276.restaurantinspection.Model.TestInspection;
 
 /** TO-DO CHANGE NAME FROM tester
  *  Re-point TestInspection Data to ACTUAL Inspection data **/
 public class RestaurantInspectionActivity extends AppCompatActivity implements InspectionAdapter.OnInspectionListener {
-
-    private RestaurantManager manager = RestaurantManager.getInstance();
-    private RecyclerView myRecyclerView;
-    private RecyclerView.Adapter myAdapter;
-    private RecyclerView.LayoutManager myLayoutManager;
-    ArrayList<TestInspection> tester;
+    private RestaurantManager restaurantManager;
+    private Restaurant restaurant;
+    private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspection);
+
+        restaurantManager = RestaurantManager.getInstance();
+        index = restaurantManager.getCurrRestaurantPosition();
+        restaurant = restaurantManager.getList().get(index);
+
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Current Restaurant Name");
+        actionBar.setTitle(restaurant.getName());
         actionBar.setElevation(0);
 
-        Restaurant restaurant = manager.getList().get(0);
-
-        ArrayList<Inspection> inspectionList = restaurant.getInspections();
-
-        /** == TEST == **/
-//        tester = new ArrayList<>();
-//        tester.add(new TestInspection("low", "3", "6", "May 5th, 2018"));
-//        tester.add(new TestInspection("mod", "5", "9", "March 7th, 2018"));
-//        tester.add(new TestInspection("low", "2", "1", "February 22nd, 2018"));
-//        tester.add(new TestInspection("high", "5", "9", "February 17th, 2018"));
-//        tester.add(new TestInspection("mod", "5", "6", "January 21st, 2018"));
-//        tester.add(new TestInspection("high", "7", "4", "January 3rd, 2018"));
-
-        myRecyclerView = findViewById(R.id.rv2);
-        myRecyclerView.setHasFixedSize(true);
-        myLayoutManager = new LinearLayoutManager(this);
-        myAdapter = new InspectionAdapter(inspectionList, this);
-
-        myRecyclerView.setLayoutManager(myLayoutManager);
-        myRecyclerView.setAdapter(myAdapter);
-        /** == END TEST == **/
+        extractRestaurantInspections();
 
         /** ================= REPLACE INTENT FUNCTION BELOW ================**/
 
@@ -65,7 +48,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RestaurantInfoActivity.class);
+                Intent intent = makeRestaurantInfoIntent(getApplicationContext());
                 startActivity(intent);
                 finish();
             }
@@ -75,11 +58,38 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
     /** == TEST == **/
     @Override
     public void onInspectionClick(int position) {
-        Toast toast = Toast.makeText(this, "YOU CLICKED " + position + " inspection" , Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "YOU CLICKED " + position + " inspection" ,
+                        Toast.LENGTH_SHORT);
         toast.show();
+
+        restaurantManager.setCurrInspectionPosition(position);
     }
     /** == END TEST == **/
 
-    /** =========== INTENT LAUNCHER HERE >> findViewById(R.id.inspAct ============ **/
+    private void extractRestaurantInspections() {
+        RecyclerView inspectionRecyclerView;
+        RecyclerView.Adapter inspectionAdapter;
+        RecyclerView.LayoutManager inspectionLayoutManager;
 
+        ArrayList<Inspection> inspectionList = restaurant.getInspections();
+
+        inspectionRecyclerView = findViewById(R.id.rv2);
+        inspectionRecyclerView.setHasFixedSize(true);
+
+        inspectionLayoutManager = new LinearLayoutManager(this);
+        inspectionRecyclerView.setLayoutManager(inspectionLayoutManager);
+
+        inspectionAdapter = new InspectionAdapter(inspectionList, this);
+        inspectionRecyclerView.setAdapter(inspectionAdapter);
+
+        if (restaurant.getInspections().size() == 0) {
+            TextView noInspectionsMsg = this.findViewById(R.id.no_inspections_msg);
+            noInspectionsMsg.setText("There are currently no inspections for this restaurant.");
+        }
+    }
+
+    /** =========== INTENT LAUNCHER HERE >> findViewById(R.id.inspAct ============ **/
+    public static Intent makeRestaurantInfoIntent(Context c){
+        return new Intent(c, RestaurantInfoActivity.class);
+    }
 }

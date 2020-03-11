@@ -14,15 +14,9 @@ import android.view.MenuItem;
 
 import java.util.ArrayList;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.Toast;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 
 import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
@@ -30,16 +24,15 @@ import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
-import ca.cmpt276.restaurantinspection.Model.TestRestaurant;
 
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
-    private RestaurantManager restaurantList;
+    private RestaurantManager restaurantManager;
 
     /** == TESTING == **/
     private RecyclerView restaurantRecyclerView;
     private RecyclerView.Adapter restaurantAdapter;
     private RecyclerView.LayoutManager restaurantLayoutManager;
-    ArrayList<TestRestaurant> tester;
+
     /** == END TESTING == **/
 
     @Override
@@ -59,12 +52,12 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         ViolationsMap.init(violationsIn);
         RestaurantManager.init(restaurantsIn, inspectionsIn);
 
-        restaurantList = RestaurantManager.getInstance();
+        restaurantManager = RestaurantManager.getInstance();
 
 
         /** ================ TEST ===============**/
 
-        for (Restaurant res : restaurantList.getList()) {
+        for (Restaurant res : restaurantManager.getList()) {
             ArrayList<Inspection> ins = res.getInspections();
             System.out.println(res.getName() + ": " + ins.size());
             for(Inspection inspections : ins)
@@ -79,7 +72,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         restaurantRecyclerView = findViewById(R.id.rv);
         restaurantRecyclerView.setHasFixedSize(true);
         restaurantLayoutManager = new LinearLayoutManager(this);
-        restaurantAdapter = new RestaurantAdapter(restaurantList, this);
+        restaurantAdapter = new RestaurantAdapter(restaurantManager, this);
 
         restaurantRecyclerView.setLayoutManager(restaurantLayoutManager);
         restaurantRecyclerView.setAdapter(restaurantAdapter);
@@ -113,13 +106,13 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
     /** == TESTING == **/
     @Override
     public void onRestaurantClick(int position) {
-        Toast toast = Toast.makeText(this, "YOU CLICKED " + position + " Restaurant" , Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "YOU CLICKED " + position +
+                    " Restaurant" , Toast.LENGTH_SHORT);
         toast.show();
 
-        restaurantList.setCurrRestaurantPosition(position);
-        Intent intent = new Intent(this, RestaurantInfoActivity.class);
+        restaurantManager.setCurrRestaurantPosition(position);
 
-//        Intent intent = RestaurantInfoActivity.makeLaunchIntent(RestaurantActivity.this, position);
+        Intent intent = new Intent(this, RestaurantInfoActivity.class);
         startActivity(intent);
     }
     /** == END TESTING == **/
