@@ -56,25 +56,22 @@ public class Restaurant implements Comparable<Restaurant>{
         return inspections;
     }
 
-    public String getHazard()
-    {
-        if(this.inspections.size() > 0)
+    public String getHazard() {
+        if (this.inspections.size() > 0) {
             return inspections.get(0).getHazardRating();
+        }
         return "Low";
     }
 
-    public String getDate()
-    {
+    public String getDate() {
         if (this.inspections.size() > 0) {
             return inspections.get(0).getDateDisplay();
         }
         return "No Recent Inspection.";
     }
 
-    public String getNumIssues()
-    {
-        if(this.inspections.size() > 0) {
-
+    public String getNumIssues() {
+        if (this.inspections.size() > 0) {
             int num = inspections.get(0).getNumCritical() + inspections.get(0).getNumNonCritical();
             String numInString = Integer.toString(num);
             return numInString;
@@ -121,3 +118,5 @@ public class Restaurant implements Comparable<Restaurant>{
     }
 
 }
+
+
