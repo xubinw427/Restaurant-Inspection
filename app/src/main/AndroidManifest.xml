@@ -18,15 +18,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".RestaurantInspectionActivity"
+        <activity android:name=".RestaurantInspectionActivity"
             android:parentActivityName=".RestaurantActivity"
-            android:theme="@style/AppThemeCustom" />
+            android:theme="@style/AppThemeCustom"/>
         <activity
             android:name=".RestaurantInfoActivity"
             android:label="Restaurant Info"
             android:parentActivityName=".RestaurantActivity"
-            android:theme="@style/AppThemeCustom" />
+            android:theme="@style/AppThemeCustom"/>
     </application>
 
 </manifest>

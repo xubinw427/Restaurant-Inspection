@@ -62,9 +62,9 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return restaurantsList.size();
     }
 
-//    private void sortByAlphabet() {
-//        Arrays.sort(new ArrayList[]{restaurantsList});
-//    }
+    private void sortByAlphabet() {
+        Arrays.sort(new ArrayList[]{restaurantsList});
+    }
 
     private void readRestaurantData(InputStream file) {
         BufferedReader reader = new BufferedReader(
@@ -93,7 +93,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
             throw new RuntimeException("ERROR: Failed to close " + file);
         }
 
-        //this.sortByAlphabet();
+        this.sortByAlphabet();
     }
 
     private void populateInspections(InputStream file) {
