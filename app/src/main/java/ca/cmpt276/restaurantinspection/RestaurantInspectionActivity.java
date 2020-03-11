@@ -67,7 +67,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
     /** == TEST == **/
     @Override
     public void onInspectionClick(int position) {
-        Toast toast = Toast.makeText(this, "YOU CLICKED", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "YOU CLICKED " + position + " inspection" , Toast.LENGTH_SHORT);
         toast.show();
     }
     /** == END TEST == **/
