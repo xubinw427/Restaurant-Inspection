@@ -22,22 +22,20 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView btnBackground;
-        private ImageView icon;
+        private ImageView hazardIcon;
         private TextView restaurantName;
         private TextView inspectionDate;
         private TextView numIssues;
-        private TextView issues;
 
         OnRestaurantListener myOnRestaurantListener;
 
         private RestaurantViewHolder(@NonNull View itemView, OnRestaurantListener onRestaurantListener) {
             super(itemView);
             btnBackground = itemView.findViewById((R.id.restaurant_button));
-//            icon = itemView.findViewById(R.id.foodIcon);
+            hazardIcon = itemView.findViewById(R.id.haz_icon);
             restaurantName = itemView.findViewById(R.id.restaurant_name);
             inspectionDate = itemView.findViewById(R.id.inspection_date);
             numIssues = itemView.findViewById(R.id.num_issues);
-//            issues = itemView.findViewById(R.id.issues);
 
             myOnRestaurantListener = onRestaurantListener;
             itemView.setOnClickListener(this);
@@ -77,12 +75,15 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         switch(currRestaurant.getHazard()) {
             case "high":
                 holder.btnBackground.setImageResource(R.drawable.button_red);
+                holder.hazardIcon.setImageResource(R.drawable.restlist_high);
                 break;
             case "mod":
                 holder.btnBackground.setImageResource(R.drawable.button_yellow);
+                holder.hazardIcon.setImageResource(R.drawable.restlist_mod);
                 break;
             case "low":
                 holder.btnBackground.setImageResource(R.drawable.button_teal);
+                holder.hazardIcon.setImageResource(R.drawable.restlist_low);
                 break;
             default:
                 break;

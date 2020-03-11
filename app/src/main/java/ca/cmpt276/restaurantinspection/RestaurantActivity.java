@@ -46,6 +46,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         toolbar.setTitle("Restaurants List");
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
@@ -117,6 +118,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
     /** == TESTING == **/
     @Override
     public void onRestaurantClick(int position) {
+        /** Should use the position below to store clicked Restaurant as currRestaurant **/
         tester.get(position);
         Intent intent = new Intent(this, RestaurantInfoActivity.class);
 //        Intent intent = RestaurantInfoActivity.makeLaunchIntent(this, position);
