@@ -37,8 +37,6 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         actionBar.setTitle("Current Restaurant Name");
         actionBar.setElevation(0);
 
-
-
         Restaurant restaurant = manager.getList().get(0);
 
         ArrayList<Inspection> inspectionList = restaurant.getInspections();
@@ -67,8 +65,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RestaurantInfoActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                Intent intent = new Intent(getApplicationContext(), RestaurantInfoActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -78,7 +75,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
     /** == TEST == **/
     @Override
     public void onInspectionClick(int position) {
-        Toast toast = Toast.makeText(this, "YOU CLICKED", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "YOU CLICKED " + position + " inspection" , Toast.LENGTH_SHORT);
         toast.show();
     }
     /** == END TEST == **/

@@ -81,7 +81,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
                 break;
         }
 
-        holder.inspDate.setText(currInspection.getFullDate());
+        holder.inspDate.setText(currInspection.getDateDisplay());
         holder.numCritIssues.setText(Integer.toString(currInspection.getNumCritical()));
         holder.numNonCritIssues.setText(Integer.toString(currInspection.getNumNonCritical()));
 
