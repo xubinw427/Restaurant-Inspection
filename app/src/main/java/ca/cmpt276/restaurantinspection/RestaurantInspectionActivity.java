@@ -41,8 +41,8 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         actionBar.setElevation(0);
 
 
-
-        Restaurant restaurant = manager.getList().get(0);
+        int position = getIntent().getIntExtra(EXTRA, 0);
+        Restaurant restaurant = manager.getList().get(position);
 
         ArrayList<Inspection> inspectionList = restaurant.getInspections();
 
