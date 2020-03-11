@@ -30,7 +30,7 @@ public class Inspection {
 
         inspDate = inspectionDetails[1];
         getDateInformation();
-
+        getFullDateInformation();
 
         inspType = inspectionDetails[2];
 
@@ -139,7 +139,22 @@ public class Inspection {
         else {
             dateDisplay = getMonth.format(cal.getTime()) + " " + getYear.format(cal.getTime());
         }
-        fullDate = getMonth.format(cal.getTime())+" "+ getDay.format(cal.getTime())+ ", " +getYear.format(cal.getTime());
     }
+    private void getFullDateInformation(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.CANADA);
 
+        Date date;
+
+        try {
+           date = sdf.parse(inspDate);
+
+        }
+        catch (java.text.ParseException ex) {
+            throw new RuntimeException("ERROR: Failed to parse dates");
+        }
+
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        fullDate = localDate.getMonth()+ " "+localDate.getDayOfMonth() + ", "+ localDate.getYear();
+    }
 }
