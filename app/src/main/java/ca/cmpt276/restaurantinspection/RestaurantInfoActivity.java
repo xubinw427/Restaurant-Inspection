@@ -43,7 +43,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
         RestaurantManager restaurants = RestaurantManager.getInstance();
         int index = restaurants.getCurrRestaurantPosition();
-        restaurant = restaurants.getTheOneAt(index);
+        restaurant = restaurants.getRestaurantAt(index);
 
         System.out.println("Now we are processing " + index + " th Restaurant.");
 
