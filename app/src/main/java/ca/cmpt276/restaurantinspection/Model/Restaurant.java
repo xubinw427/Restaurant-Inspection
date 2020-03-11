@@ -21,7 +21,7 @@ public class Restaurant implements Comparable<Restaurant>{
         address = restaurantInfo[2] + ", " + restaurantInfo[3];
 
         coordinates = restaurantInfo[5] + ", " +
-                    restaurantInfo[6];
+                restaurantInfo[6];
         latitude = Double.parseDouble(restaurantInfo[5]);
         longitude = Double.parseDouble(restaurantInfo[6]);
 
@@ -29,36 +29,61 @@ public class Restaurant implements Comparable<Restaurant>{
     }
 
     public String getId() {
-            return id;
-        }
+        return id;
+    }
 
     public String getName() {
-            return name;
-        }
+        return name;
+    }
 
     public String getAddress() {
-            return address;
-        }
+        return address;
+    }
 
     public String getCoordinates() {
-            return coordinates;
-        }
+        return coordinates;
+    }
 
     public double getLatitude() {
-            return latitude;
-        }
+        return latitude;
+    }
 
     public double getLongitude() {
-            return longitude;
-        }
+        return longitude;
+    }
 
     public ArrayList<Inspection> getInspections() {
         return inspections;
     }
 
-    public void addInspection(Inspection inspection) {
-            inspections.add(inspection);
+    public String getHazard()
+    {
+        if(this.inspections.size() > 0)
+            return inspections.get(0).getHazardRating();
+        return "Low";
+    }
+
+    public String getDate()
+    {
+        if (this.inspections.size() > 0) {
+            return inspections.get(0).getDateDisplay();
         }
+        return "No Recent Inspection.";
+    }
+
+    public String getNumIssues()
+    {
+        if(this.inspections.size() > 0) {
+
+            int num = inspections.get(0).getNumCritical() + inspections.get(0).getNumNonCritical();
+            String numInString = Integer.toString(num);
+            return numInString;
+        }
+        return "0";
+    }
+    public void addInspection(Inspection inspection) {
+        inspections.add(inspection);
+    }
 
     @Override
     @NonNull
@@ -96,5 +121,3 @@ public class Restaurant implements Comparable<Restaurant>{
     }
 
 }
-
-
