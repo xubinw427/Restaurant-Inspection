@@ -41,8 +41,8 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         ImageView inspectionOverview = this.findViewById(R.id.inspection_overview);
         TextView dateAndLevel = this.findViewById(R.id.date_level);
         TextView inspectionType = this.findViewById(R.id.inspection_type);
-        TextView numCritIssues = this.findViewById(R.id.num_crit_issues_details);
         TextView numNonCritIssues = this.findViewById(R.id.num_noncrit_issues_details);
+        TextView numCritIssues = this.findViewById(R.id.num_crit_issues_details);
 
         switch(inspection.getHazardRating()) {
             case "High":
@@ -58,8 +58,8 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         dateAndLevel.setText(inspection.getFullDate() + " | " +
                 inspection.getHazardRating().toUpperCase());
         inspectionType.setText(inspection.getInspType());
-        numNonCritIssues.setText(Integer.toString(inspection.getNumNonCritical()));
         numCritIssues.setText(Integer.toString(inspection.getNumCritical()));
+        numNonCritIssues.setText(Integer.toString(inspection.getNumNonCritical()));
 
         extractInspectionViolations();
     }
@@ -72,7 +72,6 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         if (inspection.getViolationsList() == null) {
             TextView noViolationsMsg = this.findViewById(R.id.no_violations_msg);
             noViolationsMsg.setText("There were no violations \nfound for this inspection.");
-            return;
         }
         else {
             violationList = inspection.getViolationsList();
