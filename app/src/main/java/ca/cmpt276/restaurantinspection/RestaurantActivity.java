@@ -28,13 +28,6 @@ import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
     private RestaurantManager restaurantManager;
 
-    /** == TESTING == **/
-    private RecyclerView restaurantRecyclerView;
-    private RecyclerView.Adapter restaurantAdapter;
-    private RecyclerView.LayoutManager restaurantLayoutManager;
-
-    /** == END TESTING == **/
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,54 +47,51 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
 
         restaurantManager = RestaurantManager.getInstance();
 
+        extractRestaurants();
 
         /** ================ TEST ===============**/
-
         for (Restaurant res : restaurantManager.getList()) {
-            ArrayList<Inspection> ins = res.getInspections();
+            ArrayList<Inspection> ins = res.getInspectionsList();
             System.out.println(res.getName() + ": " + ins.size());
-            for(Inspection inspections : ins)
-            {
+            for(Inspection inspections : ins) {
                 System.out.println("\t\t" + inspections.getDateDisplay());
             }
-
         }
-
         /** ================ END TEST ===============**/
+    }
 
-        restaurantRecyclerView = findViewById(R.id.rv);
+    public void extractRestaurants() {
+        RecyclerView restaurantRecyclerView = findViewById(R.id.rv);
         restaurantRecyclerView.setHasFixedSize(true);
-        restaurantLayoutManager = new LinearLayoutManager(this);
-        restaurantAdapter = new RestaurantAdapter(restaurantManager, this);
+        RecyclerView.LayoutManager restaurantLayoutManager = new LinearLayoutManager(this);
+        RecyclerView.Adapter restaurantAdapter = new RestaurantAdapter
+                (restaurantManager, this);
 
         restaurantRecyclerView.setLayoutManager(restaurantLayoutManager);
         restaurantRecyclerView.setAdapter(restaurantAdapter);
-        /** == END TESTING == **/
-
-        //System.out.println("TESTING COMPLETE");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+//
+////    @Override
+////    public boolean onOptionsItemSelected(MenuItem item) {
+////        // Handle action bar item clicks here. The action bar will
+////        // automatically handle clicks on the Home/Up button, so long
+////        // as you specify a parent activity in AndroidManifest.xml.
+////        int id = item.getItemId();
+////
+////        //noinspection SimplifiableIfStatement
+////        if (id == R.id.action_settings) {
+////            return true;
+////        }
+////
+////        return super.onOptionsItemSelected(item);
+////    }
 
     /** == TESTING == **/
     @Override

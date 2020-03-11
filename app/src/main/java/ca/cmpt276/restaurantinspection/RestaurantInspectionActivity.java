@@ -20,8 +20,6 @@ import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 
-/** TO-DO CHANGE NAME FROM tester
- *  Re-point TestInspection Data to ACTUAL Inspection data **/
 public class RestaurantInspectionActivity extends AppCompatActivity implements InspectionAdapter.OnInspectionListener {
     private RestaurantManager restaurantManager;
     private Restaurant restaurant;
@@ -42,8 +40,6 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
 
         extractRestaurantInspections();
 
-        /** ================= REPLACE INTENT FUNCTION BELOW ================**/
-
         Button btn = findViewById(R.id.info_button_inact);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +51,6 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         });
     }
 
-    /** == TEST == **/
     @Override
     public void onInspectionClick(int position) {
         Toast toast = Toast.makeText(this, "YOU CLICKED " + position + " inspection" ,
@@ -63,15 +58,17 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         toast.show();
 
         restaurantManager.setCurrInspectionPosition(position);
+
+        Intent intent = new Intent(getApplicationContext(), RestaurantViolationActivity.class);
+        startActivity(intent);
     }
-    /** == END TEST == **/
 
     private void extractRestaurantInspections() {
         RecyclerView inspectionRecyclerView;
         RecyclerView.Adapter inspectionAdapter;
         RecyclerView.LayoutManager inspectionLayoutManager;
 
-        ArrayList<Inspection> inspectionList = restaurant.getInspections();
+        ArrayList<Inspection> inspectionList = restaurant.getInspectionsList();
 
         inspectionRecyclerView = findViewById(R.id.rv2);
         inspectionRecyclerView.setHasFixedSize(true);
@@ -82,7 +79,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         inspectionAdapter = new InspectionAdapter(inspectionList, this);
         inspectionRecyclerView.setAdapter(inspectionAdapter);
 
-        if (restaurant.getInspections().size() == 0) {
+        if (restaurant.getInspectionsList().size() == 0) {
             TextView noInspectionsMsg = this.findViewById(R.id.no_inspections_msg);
             noInspectionsMsg.setText("There are currently no inspections for this restaurant.");
         }

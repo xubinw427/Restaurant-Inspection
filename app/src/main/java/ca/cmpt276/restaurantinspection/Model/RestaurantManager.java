@@ -12,7 +12,7 @@ import java.util.Iterator;
 
 public class RestaurantManager implements Iterable<Restaurant> {
     private ArrayList<Restaurant> restaurantsList = new ArrayList<>();
-    private static RestaurantManager INSTANCE;
+    private static RestaurantManager instance;
     private ViolationsMap violationsMap;
     private int currRestaurantPosition;
     private int currInspectionPosition;
@@ -29,22 +29,22 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 
     public static RestaurantManager getInstance() {
-        if(INSTANCE == null) {
+        if(instance == null) {
             throw new AssertionError(
                     "RestaurantManager.init(InputStream file) must be called first.");
         }
 
-        return INSTANCE;
+        return instance;
     }
 
     public static RestaurantManager init(InputStream restaurantFile,
                                          InputStream inspectionsFile) {
-        if (INSTANCE != null) {
+        if (instance != null) {
             return null;
         }
 
-        INSTANCE = new RestaurantManager(restaurantFile, inspectionsFile);
-        return INSTANCE;
+        instance = new RestaurantManager(restaurantFile, inspectionsFile);
+        return instance;
     }
 
     public ArrayList<Restaurant> getList() {

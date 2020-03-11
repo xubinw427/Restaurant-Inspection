@@ -1,8 +1,6 @@
 package ca.cmpt276.restaurantinspection.Model;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
