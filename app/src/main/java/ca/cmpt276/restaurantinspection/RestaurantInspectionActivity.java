@@ -1,5 +1,6 @@
 package ca.cmpt276.restaurantinspection;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -18,6 +19,8 @@ import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.TestInspection;
+
+import static ca.cmpt276.restaurantinspection.RestaurantInfoActivity.EXTRA;
 
 /** TO-DO CHANGE NAME FROM tester
  *  Re-point TestInspection Data to ACTUAL Inspection data **/
@@ -43,14 +46,6 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
 
         ArrayList<Inspection> inspectionList = restaurant.getInspections();
 
-        /** == TEST == **/
-//        tester = new ArrayList<>();
-//        tester.add(new TestInspection("low", "3", "6", "May 5th, 2018"));
-//        tester.add(new TestInspection("mod", "5", "9", "March 7th, 2018"));
-//        tester.add(new TestInspection("low", "2", "1", "February 22nd, 2018"));
-//        tester.add(new TestInspection("high", "5", "9", "February 17th, 2018"));
-//        tester.add(new TestInspection("mod", "5", "6", "January 21st, 2018"));
-//        tester.add(new TestInspection("high", "7", "4", "January 3rd, 2018"));
 
         myRecyclerView = findViewById(R.id.rv2);
         myRecyclerView.setHasFixedSize(true);
@@ -59,7 +54,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
 
         myRecyclerView.setLayoutManager(myLayoutManager);
         myRecyclerView.setAdapter(myAdapter);
-        /** == END TEST == **/
+
 
         /** ================= REPLACE INTENT FUNCTION BELOW ================**/
 
@@ -84,5 +79,9 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
     /** == END TEST == **/
 
     /** =========== INTENT LAUNCHER HERE >> findViewById(R.id.inspAct ============ **/
-
+    public static Intent makeIntent(Context c, int index){
+        Intent intent = new Intent(c, RestaurantInspectionActivity.class);
+        intent.putExtra(EXTRA, index);
+        return intent;
+    }
 }

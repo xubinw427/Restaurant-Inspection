@@ -30,8 +30,9 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RestaurantInspectionActivity.class)
+                Intent intent = RestaurantInspectionActivity.makeIntent(RestaurantInfoActivity.this, index)
                         .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+
                 startActivity(intent);
                 finish();
             }
@@ -53,7 +54,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 //    }
 
     public static Intent makeLaunchIntent(Context c, int index){
-        Intent intent = new Intent(c, RestaurantInspectionActivity.class);
+        Intent intent = new Intent(c, RestaurantInfoActivity.class);
         intent.putExtra(EXTRA, index);
         return intent;
     }
