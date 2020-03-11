@@ -1,6 +1,8 @@
 package ca.cmpt276.restaurantinspection.Model;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -12,6 +14,7 @@ public class Inspection {
     private String inspDate;
     private int daysAgo;
     private String dateDisplay;
+    private String fullDate;
 
     private String inspType;
     private int numCritical;
@@ -27,6 +30,7 @@ public class Inspection {
 
         inspDate = inspectionDetails[1];
         getDateInformation();
+        getFullDateInformation();
 
         inspType = inspectionDetails[2];
 
@@ -77,6 +81,10 @@ public class Inspection {
 
     public String getDateDisplay() {
         return dateDisplay;
+    }
+
+    public String getFullDate() {
+        return fullDate;
     }
 
     public String getInspType() {
@@ -131,5 +139,22 @@ public class Inspection {
         else {
             dateDisplay = getMonth.format(cal.getTime()) + " " + getYear.format(cal.getTime());
         }
+    }
+    private void getFullDateInformation(){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.CANADA);
+
+        Date date;
+
+        try {
+           date = sdf.parse(inspDate);
+
+        }
+        catch (java.text.ParseException ex) {
+            throw new RuntimeException("ERROR: Failed to parse dates");
+        }
+
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+        fullDate = localDate.getMonth()+ " "+localDate.getDayOfMonth() + ", "+ localDate.getYear();
     }
 }
