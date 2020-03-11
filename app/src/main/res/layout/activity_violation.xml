@@ -73,6 +73,7 @@
         android:id="@+id/date_level"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
         android:text="May 18, 2018 | HIGH"
         android:textColor="@android:color/white"
         android:textSize="18sp"

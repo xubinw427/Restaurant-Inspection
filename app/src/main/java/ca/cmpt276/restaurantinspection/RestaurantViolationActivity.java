@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +21,7 @@ import ca.cmpt276.restaurantinspection.Model.Violation;
 public class RestaurantViolationActivity extends AppCompatActivity implements ViolationAdapter.OnViolationListener {
     private Inspection inspection;
     ArrayList<Violation> violationList;
+    Toast toast;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +38,22 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         actionBar.setTitle(restaurant.getName());
         actionBar.setElevation(0);
 
+        ImageView inspectionOverview = this.findViewById(R.id.inspection_overview);
         TextView dateAndLevel = this.findViewById(R.id.date_level);
         TextView inspectionType = this.findViewById(R.id.inspection_type);
         TextView numCritIssues = this.findViewById(R.id.num_crit_issues_details);
         TextView numNonCritIssues = this.findViewById(R.id.num_noncrit_issues_details);
+
+        switch(inspection.getHazardRating()) {
+            case "High":
+                inspectionOverview.setImageResource(R.drawable.inspection_det_high);
+                break;
+            case "Moderate":
+                inspectionOverview.setImageResource(R.drawable.inspection_det_med);
+                break;
+            case "Low":
+                inspectionOverview.setImageResource(R.drawable.inspection_det_low);
+        }
 
         dateAndLevel.setText(inspection.getFullDate() + " | " +
                 inspection.getHazardRating().toUpperCase());
@@ -75,8 +89,12 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
 
     @Override
     public void onViolationClick(int position) {
+        if (toast != null) {
+            toast.cancel();
+        }
+
         String longDescription = violationList.get(position).getLongDescription();
-        Toast toast = Toast.makeText(this, longDescription, Toast.LENGTH_LONG);
+        toast = Toast.makeText(this, longDescription, Toast.LENGTH_LONG);
         toast.show();
     }
 
