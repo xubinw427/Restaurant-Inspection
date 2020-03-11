@@ -22,9 +22,6 @@ public class RestaurantInfoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_info);
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Current Restaurant Name");
-        actionBar.setElevation(0);
         extractRestaurantData();
 
         /** ================= REPLACE INTENT FUNCTION BELOW ================**/
@@ -33,18 +30,14 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RestaurantInspectionActivity.class)
-                        .addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+                Intent intent = new Intent(getApplicationContext(), RestaurantInspectionActivity.class);
                 startActivity(intent);
-                //finish();
+                finish();
             }
         });
-
-
     }
 
-    private void extractRestaurantData()
-    {
+    private void extractRestaurantData() {
         Intent intent = getIntent();
         int index = intent.getIntExtra(EXTRA, 0);
 
@@ -52,6 +45,10 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
         RestaurantManager restaurants = RestaurantManager.getInstance();
         restaurant = restaurants.getTheOneAt(index);
+
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(restaurant.getName());
+        actionBar.setElevation(0);
 
         TextView location = (TextView) findViewById(R.id.text_location);
         location.setText(" " + restaurant.getAddress());
@@ -61,7 +58,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         double latitude = restaurant.getLatitude();
         double longitude = restaurant.getLongitude();
 
-        String coordinateInString = latitude + " " + longitude;
+        String coordinateInString = latitude + ",  " + longitude;
 
         coordinate.setText(" " + coordinateInString);
     }
