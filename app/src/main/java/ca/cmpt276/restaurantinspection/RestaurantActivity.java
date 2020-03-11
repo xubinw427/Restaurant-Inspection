@@ -47,6 +47,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         toolbar.setTitle("Restaurants List");
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);

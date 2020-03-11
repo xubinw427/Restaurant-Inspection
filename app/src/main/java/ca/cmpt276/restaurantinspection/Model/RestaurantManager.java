@@ -39,7 +39,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
     public static RestaurantManager init(InputStream restaurantFile,
                                          InputStream inspectionsFile) {
         if (INSTANCE != null) {
-            throw new AssertionError("RestaurantManager has already been initialized.");
+            return null;
         }
 
         INSTANCE = new RestaurantManager(restaurantFile, inspectionsFile);

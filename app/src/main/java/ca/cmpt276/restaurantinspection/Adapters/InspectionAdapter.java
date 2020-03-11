@@ -11,11 +11,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.TestInspection;
 import ca.cmpt276.restaurantinspection.R;
 
 public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
-    private ArrayList<TestInspection> inspectionList;
+    private ArrayList<Inspection> inspectionList;
     private OnInspectionListener myOnInspectionListener;
 
     public static class InspectionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -47,7 +48,7 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
         void onInspectionClick(int position);
     }
 
-    public InspectionAdapter(ArrayList<TestInspection> inspections, OnInspectionListener onInspectionListener) {
+    public InspectionAdapter(ArrayList<Inspection> inspections, OnInspectionListener onInspectionListener) {
         inspectionList = inspections;
         myOnInspectionListener = onInspectionListener;
     }
@@ -64,25 +65,25 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
 
     @Override
     public void onBindViewHolder(@NonNull InspectionViewHolder holder, int position) {
-        TestInspection currInspection = inspectionList.get(position);
+        Inspection currInspection = inspectionList.get(position);
 
-        switch(currInspection.getHazard()) {
-            case "high":
+        switch(currInspection.getHazardRating()) {
+            case "High":
                 holder.inspBackground.setImageResource(R.drawable.inspection_high);
                 break;
-            case "mod":
+            case "Moderate":
                 holder.inspBackground.setImageResource(R.drawable.inspection_mod);
                 break;
-            case "low":
+            case "Low":
                 holder.inspBackground.setImageResource(R.drawable.inspection_low);
                 break;
             default:
                 break;
         }
 
-        holder.inspDate.setText(currInspection.getDate());
-        holder.numCritIssues.setText(currInspection.getNumCrit());
-        holder.numNonCritIssues.setText(currInspection.getNumNonCrit());
+        holder.inspDate.setText(currInspection.getFullDate());
+        holder.numCritIssues.setText(Integer.toString(currInspection.getNumCritical()));
+        holder.numNonCritIssues.setText(Integer.toString(currInspection.getNumNonCritical()));
 
     }
 

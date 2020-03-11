@@ -14,11 +14,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ca.cmpt276.restaurantinspection.Adapters.InspectionAdapter;
+import ca.cmpt276.restaurantinspection.Model.Inspection;
+import ca.cmpt276.restaurantinspection.Model.Restaurant;
+import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.TestInspection;
 
 /** TO-DO CHANGE NAME FROM tester
  *  Re-point TestInspection Data to ACTUAL Inspection data **/
 public class RestaurantInspectionActivity extends AppCompatActivity implements InspectionAdapter.OnInspectionListener {
+
+    private RestaurantManager manager = RestaurantManager.getInstance();
     private RecyclerView myRecyclerView;
     private RecyclerView.Adapter myAdapter;
     private RecyclerView.LayoutManager myLayoutManager;
@@ -32,19 +37,25 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         actionBar.setTitle("Current Restaurant Name");
         actionBar.setElevation(0);
 
+
+
+        Restaurant restaurant = manager.getList().get(0);
+
+        ArrayList<Inspection> inspectionList = restaurant.getInspections();
+
         /** == TEST == **/
-        tester = new ArrayList<>();
-        tester.add(new TestInspection("low", "3", "6", "May 5th, 2018"));
-        tester.add(new TestInspection("mod", "5", "9", "March 7th, 2018"));
-        tester.add(new TestInspection("low", "2", "1", "February 22nd, 2018"));
-        tester.add(new TestInspection("high", "5", "9", "February 17th, 2018"));
-        tester.add(new TestInspection("mod", "5", "6", "January 21st, 2018"));
-        tester.add(new TestInspection("high", "7", "4", "January 3rd, 2018"));
+//        tester = new ArrayList<>();
+//        tester.add(new TestInspection("low", "3", "6", "May 5th, 2018"));
+//        tester.add(new TestInspection("mod", "5", "9", "March 7th, 2018"));
+//        tester.add(new TestInspection("low", "2", "1", "February 22nd, 2018"));
+//        tester.add(new TestInspection("high", "5", "9", "February 17th, 2018"));
+//        tester.add(new TestInspection("mod", "5", "6", "January 21st, 2018"));
+//        tester.add(new TestInspection("high", "7", "4", "January 3rd, 2018"));
 
         myRecyclerView = findViewById(R.id.rv2);
         myRecyclerView.setHasFixedSize(true);
         myLayoutManager = new LinearLayoutManager(this);
-        myAdapter = new InspectionAdapter(tester, this);
+        myAdapter = new InspectionAdapter(inspectionList, this);
 
         myRecyclerView.setLayoutManager(myLayoutManager);
         myRecyclerView.setAdapter(myAdapter);
