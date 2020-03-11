@@ -9,11 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
-import ca.cmpt276.restaurantinspection.Model.TestRestaurant;
 import ca.cmpt276.restaurantinspection.R;
 
 /** CHANGE ALL INSTANCES OF TestRestaurant to Restaurant after testing!!!!! **/
@@ -104,6 +101,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public int getItemCount() {
-        return restaurantList.getsize();
+        return restaurantList.getSize();
     }
 }

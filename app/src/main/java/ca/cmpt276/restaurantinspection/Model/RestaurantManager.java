@@ -8,13 +8,14 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 
 public class RestaurantManager implements Iterable<Restaurant> {
     private ArrayList<Restaurant> restaurantsList = new ArrayList<>();
     private static RestaurantManager INSTANCE;
     private ViolationsMap violationsMap;
+    private int currRestaurantPosition;
+    private int currInspectionPosition;
 
     //Private to prevent anyone else from instantiating.
     private RestaurantManager(InputStream restaurantFile,
@@ -50,21 +51,33 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return restaurantsList;
     }
 
-    private void addNew(Restaurant restaurant) {
-        restaurantsList.add(restaurant);
-    }
-
     public Restaurant getTheOneAt(int index) {
         return restaurantsList.get(index);
     }
 
-    public int getsize() {
+    public int getSize() {
         return restaurantsList.size();
     }
 
-//    private void sortByAlphabet() {
-//        Arrays.sort(new ArrayList[]{restaurantsList});
-//    }
+    public int getCurrRestaurantPosition() {
+        return currRestaurantPosition;
+    }
+
+    public int getCurrInspectionPosition() {
+        return currInspectionPosition;
+    }
+
+    public void setCurrRestaurantPosition(int position) {
+        currRestaurantPosition = position;
+    }
+
+    public void setCurrInspectionPosition(int position) {
+        currInspectionPosition = position;
+    }
+
+    private void addNew(Restaurant restaurant) {
+        restaurantsList.add(restaurant);
+    }
 
     private void readRestaurantData(InputStream file) {
         BufferedReader reader = new BufferedReader(
@@ -92,8 +105,6 @@ public class RestaurantManager implements Iterable<Restaurant> {
         catch (IOException ex) {
             throw new RuntimeException("ERROR: Failed to close " + file);
         }
-
-        //this.sortByAlphabet();
     }
 
     private void populateInspections(InputStream file) {

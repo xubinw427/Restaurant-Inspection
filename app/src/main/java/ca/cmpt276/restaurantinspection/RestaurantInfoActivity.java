@@ -39,12 +39,13 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
     private void extractRestaurantData() {
         Intent intent = getIntent();
-        int index = intent.getIntExtra(EXTRA, 0);
-
-        System.out.println("Now we are processing " + index + " th Restaurant.");
+//        int index = intent.getIntExtra(EXTRA, 0);
 
         RestaurantManager restaurants = RestaurantManager.getInstance();
+        int index = restaurants.getCurrRestaurantPosition();
         restaurant = restaurants.getTheOneAt(index);
+
+        System.out.println("Now we are processing " + index + " th Restaurant.");
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(restaurant.getName());

@@ -116,7 +116,10 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         Toast toast = Toast.makeText(this, "YOU CLICKED " + position + " Restaurant" , Toast.LENGTH_SHORT);
         toast.show();
 
-        Intent intent = RestaurantInfoActivity.makeLaunchIntent(RestaurantActivity.this, position);
+        restaurantList.setCurrRestaurantPosition(position);
+        Intent intent = new Intent(this, RestaurantInfoActivity.class);
+
+//        Intent intent = RestaurantInfoActivity.makeLaunchIntent(RestaurantActivity.this, position);
         startActivity(intent);
     }
     /** == END TESTING == **/
