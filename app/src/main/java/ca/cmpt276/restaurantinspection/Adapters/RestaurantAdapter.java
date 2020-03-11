@@ -11,15 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-import ca.cmpt276.restaurantinspection.Model.Restaurant;
-import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.TestRestaurant;
 import ca.cmpt276.restaurantinspection.R;
 
 /** CHANGE ALL INSTANCES OF TestRestaurant to Restaurant after testing!!!!! **/
 
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
-    private RestaurantManager restaurantList;
+    private ArrayList<TestRestaurant> restaurantList;
     private OnRestaurantListener myOnRestaurantListener;
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -54,7 +52,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         void onRestaurantClick(int position);
     }
 
-    public RestaurantAdapter(RestaurantManager restaurants, OnRestaurantListener onRestaurantListener) {
+    public RestaurantAdapter(ArrayList<TestRestaurant> restaurants, OnRestaurantListener onRestaurantListener) {
         restaurantList = restaurants;
         myOnRestaurantListener = onRestaurantListener;
     }
@@ -71,19 +69,19 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        Restaurant currRestaurant = restaurantList.getTheOneAt(position);
+        TestRestaurant currRestaurant = restaurantList.get(position);
 
         /** Check hazard level of rest, then switch statements to set background **/
         switch(currRestaurant.getHazard()) {
-            case "High":
+            case "high":
                 holder.btnBackground.setImageResource(R.drawable.button_red);
                 holder.hazardIcon.setImageResource(R.drawable.restlist_high);
                 break;
-            case "Moderate":
+            case "mod":
                 holder.btnBackground.setImageResource(R.drawable.button_yellow);
                 holder.hazardIcon.setImageResource(R.drawable.restlist_mod);
                 break;
-            case "Low":
+            case "low":
                 holder.btnBackground.setImageResource(R.drawable.button_teal);
                 holder.hazardIcon.setImageResource(R.drawable.restlist_low);
                 break;
@@ -104,6 +102,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public int getItemCount() {
-        return restaurantList.getsize();
+        return restaurantList.size();
     }
 }
