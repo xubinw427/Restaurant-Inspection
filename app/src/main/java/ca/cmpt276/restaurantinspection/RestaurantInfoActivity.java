@@ -32,8 +32,6 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
         extractRestaurantInfo();
 
-        /** ================= REPLACE INTENT FUNCTION BELOW ================**/
-
         Button btn = findViewById(R.id.inspection_button_inact);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,19 +44,15 @@ public class RestaurantInfoActivity extends AppCompatActivity {
     }
 
     private void extractRestaurantInfo() {
-        System.out.println("Now we are processing " + index + " th Restaurant.");
-
         TextView location = findViewById(R.id.text_location);
-        location.setText(" " + restaurant.getAddress());
+        location.setText(restaurant.getAddress());
 
         TextView coordinate = findViewById(R.id.text_coordinate);
-
         double latitude = restaurant.getLatitude();
         double longitude = restaurant.getLongitude();
 
         String coordinateInString = latitude + ",  " + longitude;
-
-        coordinate.setText(" " + coordinateInString);
+        coordinate.setText(coordinateInString);
     }
 
     public static Intent makeRestaurantInspectionIntent(Context c){

@@ -38,7 +38,6 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
         @Override
         public void onClick(View v) {
             onViolationListener.onViolationClick(getAdapterPosition());
-
         }
     }
 
@@ -61,7 +60,6 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
 
     @Override
     public void onBindViewHolder(@NonNull ViolationViewHolder holder, int position) {
-        /** Set information below for current violation **/
         Violation currViolation = violationList.get(position);
 
         /** Check violation type & crit/non-crit of rest, then switch statements to set icon **/

@@ -23,7 +23,6 @@ import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 public class RestaurantInspectionActivity extends AppCompatActivity implements InspectionAdapter.OnInspectionListener {
     private RestaurantManager restaurantManager;
     private Restaurant restaurant;
-    private int index;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         setContentView(R.layout.activity_inspection);
 
         restaurantManager = RestaurantManager.getInstance();
-        index = restaurantManager.getCurrRestaurantPosition();
+        int index = restaurantManager.getCurrRestaurantPosition();
         restaurant = restaurantManager.getList().get(index);
 
         ActionBar actionBar = getSupportActionBar();
@@ -53,10 +52,6 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
 
     @Override
     public void onInspectionClick(int position) {
-        Toast toast = Toast.makeText(this, "YOU CLICKED " + position + " inspection" ,
-                        Toast.LENGTH_SHORT);
-        toast.show();
-
         restaurantManager.setCurrInspectionPosition(position);
 
         Intent intent = new Intent(getApplicationContext(), RestaurantViolationActivity.class);
@@ -81,11 +76,10 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
 
         if (restaurant.getInspectionsList().size() == 0) {
             TextView noInspectionsMsg = this.findViewById(R.id.no_inspections_msg);
-            noInspectionsMsg.setText("There are currently no inspections for this restaurant.");
+            noInspectionsMsg.setText(R.string.str_no_inspections);
         }
     }
 
-    /** =========== INTENT LAUNCHER HERE >> findViewById(R.id.inspAct ============ **/
     public static Intent makeRestaurantInfoIntent(Context c){
         return new Intent(c, RestaurantInfoActivity.class);
     }

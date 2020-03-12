@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     app:cardBackgroundColor="@android:color/transparent"
     app:cardElevation="0dp"
     app:cardMaxElevation="0dp"
@@ -30,6 +31,7 @@
             android:layout_marginEnd="0dp"
             android:layout_marginBottom="0dp"
             android:gravity="center"
+            tools:ignore="ContentDescription"
             app:srcCompat="@drawable/inspection_high" />
 
         <TextView
@@ -48,7 +50,7 @@
             android:lineSpacingExtra="5dp"
             android:maxLines="4"
             android:singleLine="false"
-            android:text="# Non-critical Issues: \n# Critical Issues: "
+            android:text="@string/string_insp_layout_issue_labels"
             android:textSize="14sp"
             android:textStyle="bold"
             android:textColor="@color/fontColour"/>
@@ -65,7 +67,7 @@
             android:layout_marginTop="91dp"
             android:layout_marginEnd="78dp"
             android:layout_marginBottom="70dp"
-            android:text="8"
+            android:text="@string/str_insp_layout_test_noncrit"
             android:textSize="14sp"
             android:textColor="@color/fontColour"/>
 
@@ -81,7 +83,7 @@
             android:layout_marginTop="113dp"
             android:layout_marginEnd="89dp"
             android:layout_marginBottom="49dp"
-            android:text="8"
+            android:text="@string/str_insp_layout_test_crit"
             android:textSize="14sp"
             android:textColor="@color/fontColour"/>
 
@@ -98,7 +100,7 @@
             android:layout_marginEnd="0dp"
             android:layout_marginBottom="117dp"
             android:gravity="center"
-            android:text="Date HERE"
+            android:text="@string/str_insp_layout_date"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:textStyle="bold" />

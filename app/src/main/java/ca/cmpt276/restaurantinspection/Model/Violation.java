@@ -8,7 +8,6 @@ public class Violation {
     private String shortDescription;
 
     /** String[]: [0: ID, 1: Type, 2: Severity, 3: LongDescription, 4: ShortDescription]**/
-
     public Violation(String[] violationDetails) {
         ID = violationDetails[0];
         type = violationDetails[1];
