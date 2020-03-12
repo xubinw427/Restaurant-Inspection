@@ -76,5 +76,3 @@ public class Restaurant {
         inspectionsList.add(inspection);
     }
 }
-
-

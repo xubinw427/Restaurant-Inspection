@@ -51,8 +51,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         double latitude = restaurant.getLatitude();
         double longitude = restaurant.getLongitude();
 
-        String coordinateInString = latitude + ",  " + longitude;
-        coordinate.setText(coordinateInString);
+        coordinate.setText(getString(R.string.str_coordinates, latitude, longitude));
     }
 
     public static Intent makeRestaurantInspectionIntent(Context c){
