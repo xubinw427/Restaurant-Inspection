@@ -15,15 +15,15 @@ import ca.cmpt276.restaurantinspection.Model.Violation;
 import ca.cmpt276.restaurantinspection.R;
 
 public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.ViolationViewHolder> {
-    private ArrayList<Violation> ViolationList;
-    private OnViolationListener myOnViolationListener;
+    private ArrayList<Violation> violationList;
+    private OnViolationListener violationListener;
 
     public static class ViolationViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView violationIcon;
         private ImageView criticalIcon;
         private TextView violationDesc;
 
-        OnViolationListener myOnViolationListener;
+        OnViolationListener onViolationListener;
 
         private ViolationViewHolder(@NonNull View itemView, OnViolationListener onViolationListener) {
             super(itemView);
@@ -31,13 +31,13 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
             criticalIcon = itemView.findViewById(R.id.critical_level_icon);
             violationDesc = itemView.findViewById(R.id.violation_description);
 
-            myOnViolationListener = onViolationListener;
+            this.onViolationListener = onViolationListener;
             itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            myOnViolationListener.onViolationClick(getAdapterPosition());
+            onViolationListener.onViolationClick(getAdapterPosition());
 
         }
     }
@@ -47,8 +47,8 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
     }
 
     public ViolationAdapter(ArrayList<Violation> Violations, OnViolationListener onViolationListener) {
-        ViolationList = Violations;
-        myOnViolationListener = onViolationListener;
+        violationList = Violations;
+        violationListener = onViolationListener;
     }
 
     @NonNull
@@ -56,20 +56,17 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
     public ViolationViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.violation_layout, parent, false);
-        ViolationViewHolder rvh = new ViolationViewHolder(view, myOnViolationListener);
-
-        return rvh;
+        return new ViolationViewHolder(view, violationListener);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViolationViewHolder holder, int position) {
         /** Set information below for current violation **/
-
-        Violation currViolation = ViolationList.get(position);
+        Violation currViolation = violationList.get(position);
 
         /** Check violation type & crit/non-crit of rest, then switch statements to set icon **/
         switch(currViolation.getType()) {
-            case "Employee":
+            case "Employees":
                 switch(currViolation.getSeverity()) {
                     case "Not Critical":
                         holder.violationIcon.setImageResource(R.drawable.employee_noncrit);
@@ -128,6 +125,6 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
 
     @Override
     public int getItemCount() {
-        return ViolationList.size();
+        return violationList.size();
     }
 }
