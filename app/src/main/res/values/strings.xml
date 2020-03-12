@@ -26,4 +26,7 @@
     <string name="str_rest_layout_num_issues">10</string>
     <string name="str_rest_layout_issues">Issues</string>
     <string name="str_viol_layout_short_descrip">Short Violation Description Here</string>
+    <string name="str_coordinates">%1$.8f, %2$.8f</string>
+    <string name="str_num_issues">%1$d</string>
+    <string name="str_date_level">%1$s | %2$s</string>
 </resources>

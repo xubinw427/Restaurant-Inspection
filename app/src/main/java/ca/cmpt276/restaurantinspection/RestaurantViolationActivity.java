@@ -56,14 +56,11 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
                 inspectionOverview.setImageResource(R.drawable.inspection_det_low);
         }
 
-        String dateLevel = inspection.getFullDate() + " | " +
-                            inspection.getHazardRating().toUpperCase();
-        dateAndLevel.setText(dateLevel);
+        dateAndLevel.setText(getString(R.string.str_date_level, inspection.getFullDate(),
+                                        inspection.getHazardRating().toUpperCase()));
         inspectionType.setText(inspection.getInspType());
-        numCritIssues.setText(String.format(Locale.CANADA, "%d",
-                                            inspection.getNumCritical()));
-        numNonCritIssues.setText(String.format(Locale.CANADA, "%d",
-                                            inspection.getNumNonCritical()));
+        numCritIssues.setText(getString(R.string.str_num_issues, inspection.getNumCritical()));
+        numNonCritIssues.setText(getString(R.string.str_num_issues, inspection.getNumNonCritical()));
 
         extractInspectionViolations();
     }
