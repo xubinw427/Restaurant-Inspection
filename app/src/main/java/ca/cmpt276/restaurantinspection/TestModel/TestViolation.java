@@ -1,4 +1,4 @@
-package ca.cmpt276.restaurantinspection.Model;
+package ca.cmpt276.restaurantinspection.TestModel;
 
 public class TestViolation {
     private String type;

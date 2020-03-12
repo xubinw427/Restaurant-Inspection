@@ -10,7 +10,6 @@ public class Inspection {
     private String trackingNumber;
 
     private String inspDate;
-    private int daysAgo;
     private String dateDisplay;
     private String fullDate;
 
@@ -22,10 +21,9 @@ public class Inspection {
     private ArrayList<Violation> violationsList;
 
     /** String[] = [0: TrackingNum, 1: Date, 2: InspType, 3: NumCrit, 4: NumNonCrit, 5: HazRating, 6: ViolLump] **/
-    /** ViolLump is currently a long string of all violations; need to split by '|' **/
+    /** ViolLump is currently a long string of all violations to be split by '|' **/
     public Inspection(String[] inspectionDetails, ViolationsMap map) {
         trackingNumber = inspectionDetails[0];
-
         inspDate = inspectionDetails[1];
         getDateInformation();
 
@@ -43,19 +41,14 @@ public class Inspection {
 
         if (inspectionDetails.length < 7) { return; }
 
-        /** Deal with Violation Lump here **/
         violationsList = new ArrayList<>();
-
         String violLump = inspectionDetails[6];
         String[] violations = violLump.split("\\|");
 
-        /** ["ID,...,...,...", "ID,...,...,..."] **/
         for (String violation : violations) {
             String[] currViolation = violation.split(",");
-            /** ["ID", "...", "...", ...] **/
-            String violationID = currViolation[0];
 
-            /** Look-up key and get violation details from ViolationsMap **/
+            String violationID = currViolation[0];
             String[] violationInfo = ViolationsMap.getViolationFromMap(violationID);
 
             /** ID not found **/
@@ -66,10 +59,6 @@ public class Inspection {
 
             violationsList.add(newViolation);
         }
-    }
-
-    public String getTrackingNumber() {
-        return trackingNumber;
     }
 
     public String getDateDisplay() {
@@ -104,9 +93,11 @@ public class Inspection {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd", Locale.CANADA);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, 1);
+        int daysAgo;
 
         String today = sdf.format(cal.getTime());
 
+        /** Find number of days between today and inspection date **/
         try {
             Date startDate = sdf.parse(inspDate);
             Date endDate = sdf.parse(today);
@@ -132,6 +123,7 @@ public class Inspection {
         else {
             dateDisplay = getMonth.format(cal.getTime()) + " " + getYear.format(cal.getTime());
         }
+
         fullDate = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime()) +
                 ", " + getYear.format(cal.getTime());
     }

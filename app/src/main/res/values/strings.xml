@@ -3,4 +3,27 @@
     <string name="action_settings">Settings</string>
     <string name="title_activity_restaurant_info">RestaurantInfoActivity</string>
     <string name="title_activity_inspection_detail">InspectionDetail</string>
+    <string name="str_no_inspections">There are currently no inspections for this restaurant.</string>
+    <string name="str_no_violation">"There were no violations \nfound for this inspection."</string>
+    <string name="str_insp_inspection">INSPECTIONS</string>
+    <string name="str_insp_information">Information</string>
+    <string name="str_violation_violations">Violations</string>
+    <string name="str_violation_test_date_level">May 18, 2018 | HIGH</string>
+    <string name="str_violation_issue_header"># Non-critical Issues:  \n# Critical Issues:</string>
+    <string name="str_violation_inspection_details">INSPECTION DETAILS</string>
+    <string name="str_violation_inspection_type">Inspection Type:</string>
+    <string name="str_violation_followup">Follow-Up</string>
+    <string name="str_violation_test_noncrit">3</string>
+    <string name="str_violation_test_crit">5</string>
+    <string name="str_info_information">Information</string>
+    <string name="str_info_inspections">INSPECTIONS</string>
+    <string name="string_insp_layout_issue_labels"># Non-critical Issues: \n# Critical Issues:</string>
+    <string name="str_insp_layout_test_noncrit">8</string>
+    <string name="str_insp_layout_test_crit">8</string>
+    <string name="str_insp_layout_date">Date HERE</string>
+    <string name="str_rest_layout_restaurant_name">RESTAURANT  NAME</string>
+    <string name="str_rest_layout_date">Date HERE</string>
+    <string name="str_rest_layout_num_issues">10</string>
+    <string name="str_rest_layout_issues">Issues</string>
+    <string name="str_viol_layout_short_descrip">Short Violation Description Here</string>
 </resources>

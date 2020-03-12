@@ -12,7 +12,7 @@ public class ViolationsMap {
     private static Map<String, String[]> violationsLookup;
 
     private ViolationsMap(InputStream file) {
-        violationsLookup = this.readViolationsData(file);
+        violationsLookup = readViolationsData(file);
     }
 
     public static ViolationsMap getInstance() {
@@ -38,11 +38,6 @@ public class ViolationsMap {
         return violationsLookup.get(key);
     }
 
-    /** Returning ENTIRE MAP **/
-    public static Map<String, String[]> getMap() {
-        return violationsLookup;
-    }
-
     /** REFERENCE: https://stackoverflow.com/questions/38415680/how-to-parse-csv-file-into-an-array-in-android-studio **/
     private static Map<String, String[]> readViolationsData(InputStream file) {
         Map<String, String[]> violationsLookup = new HashMap<>();
@@ -54,7 +49,6 @@ public class ViolationsMap {
 
             while ((violation = input.readLine()) != null) {
                 String[] line = violation.split(",");
-                /** For some reason there's a pre-trailing " in front of key so I had to trim it below **/
                 line[0] = line[0].substring(1);
 
                 violationsLookup.put(line[0], line);

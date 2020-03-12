@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.R;
@@ -80,9 +81,10 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
         }
 
         holder.inspDate.setText(currInspection.getDateDisplay());
-        holder.numCritIssues.setText(Integer.toString(currInspection.getNumCritical()));
-        holder.numNonCritIssues.setText(Integer.toString(currInspection.getNumNonCritical()));
-
+        holder.numCritIssues.setText(String.format(Locale.CANADA,
+                                        "%d",currInspection.getNumCritical()));
+        holder.numNonCritIssues.setText(String.format(Locale.CANADA,
+                                        "%d",currInspection.getNumNonCritical()));
     }
 
     @Override

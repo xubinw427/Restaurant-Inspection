@@ -1,14 +1,11 @@
 package ca.cmpt276.restaurantinspection.Model;
 
-import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
 
 public class Restaurant {
     private String id;
     private String name;
     private String address;
-    private String coordinates;
     private double latitude;
     private double longitude;
     private ArrayList<Inspection> inspectionsList;
@@ -19,9 +16,6 @@ public class Restaurant {
         id = restaurantInfo[0];
         name = restaurantInfo[1];
         address = restaurantInfo[2] + ", " + restaurantInfo[3];
-
-        coordinates = restaurantInfo[5] + ", " +
-                restaurantInfo[6];
         latitude = Double.parseDouble(restaurantInfo[5]);
         longitude = Double.parseDouble(restaurantInfo[6]);
 
@@ -77,21 +71,9 @@ public class Restaurant {
         }
         return "0";
     }
+
     public void addInspection(Inspection inspection) {
         inspectionsList.add(inspection);
-    }
-
-    @Override
-    @NonNull
-    public String toString() {
-        return "Restaurant{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", address='" + address + '\'' +
-                ", coordinates='" + coordinates + '\'' +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
     }
 }
 

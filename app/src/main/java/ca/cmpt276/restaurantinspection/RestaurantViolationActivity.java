@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import ca.cmpt276.restaurantinspection.Adapters.ViolationAdapter;
 import ca.cmpt276.restaurantinspection.Model.Inspection;
@@ -55,11 +56,14 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
                 inspectionOverview.setImageResource(R.drawable.inspection_det_low);
         }
 
-        dateAndLevel.setText(inspection.getFullDate() + " | " +
-                inspection.getHazardRating().toUpperCase());
+        String dateLevel = inspection.getFullDate() + " | " +
+                            inspection.getHazardRating().toUpperCase();
+        dateAndLevel.setText(dateLevel);
         inspectionType.setText(inspection.getInspType());
-        numCritIssues.setText(Integer.toString(inspection.getNumCritical()));
-        numNonCritIssues.setText(Integer.toString(inspection.getNumNonCritical()));
+        numCritIssues.setText(String.format(Locale.CANADA, "%d",
+                                            inspection.getNumCritical()));
+        numNonCritIssues.setText(String.format(Locale.CANADA, "%d",
+                                            inspection.getNumNonCritical()));
 
         extractInspectionViolations();
     }
@@ -71,7 +75,7 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
 
         if (inspection.getViolationsList() == null) {
             TextView noViolationsMsg = this.findViewById(R.id.no_violations_msg);
-            noViolationsMsg.setText("There were no violations \nfound for this inspection.");
+            noViolationsMsg.setText(R.string.str_no_violation);
         }
         else {
             violationList = inspection.getViolationsList();
