@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Restaurant Inspection</string>
+    <string name="app_name">Restaurants List</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_restaurant_info">RestaurantInfoActivity</string>
     <string name="title_activity_inspection_detail">InspectionDetail</string>

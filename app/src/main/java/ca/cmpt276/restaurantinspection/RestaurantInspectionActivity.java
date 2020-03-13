@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,7 +38,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
 
         extractRestaurantInspections();
 
-        Button btn = findViewById(R.id.info_button_inact);
+        Button btn = findViewById(R.id.map_button_inact);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -13,7 +13,7 @@
     tools:showIn="@layout/activity_restaurant_info">
 
     <TextView
-        android:id="@+id/background_info"
+        android:id="@+id/map_background"
         android:layout_width="361dp"
         android:layout_height="414dp"
         android:background="@drawable/box_info"
@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.677" />
 
     <ImageView
-        android:id="@+id/info_button_background"
+        android:id="@+id/list_button_background"
         android:layout_width="360dp"
         android:layout_height="59dp"
         tools:ignore="ContentDescription"
@@ -37,7 +37,7 @@
         app:srcCompat="@drawable/button_box" />
 
     <Button
-        android:id="@+id/inspection_button_inact"
+        android:id="@+id/restaurants_button_inact"
         android:layout_width="165dp"
         android:layout_height="38dp"
         android:background="@drawable/button_insp_inactive"
@@ -52,7 +52,7 @@
         app:layout_constraintVertical_bias="0.0685" />
 
     <Button
-        android:id="@+id/information_button_act"
+        android:id="@+id/map_button_act"
         android:layout_width="165dp"
         android:layout_height="38dp"
         android:background="@drawable/button_info_active"
@@ -103,7 +103,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/info_button_background"
+        app:layout_constraintTop_toBottomOf="@+id/list_button_background"
         app:layout_constraintVertical_bias="0.6" />
 
     <TextView

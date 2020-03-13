@@ -32,7 +32,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
         extractRestaurantInfo();
 
-        Button btn = findViewById(R.id.inspection_button_inact);
+        Button btn = findViewById(R.id.restaurants_button_inact);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
