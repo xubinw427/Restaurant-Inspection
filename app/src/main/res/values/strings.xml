@@ -29,4 +29,5 @@
     <string name="str_coordinates">%1$.8f, %2$.7f</string>
     <string name="str_num_issues">%1$d</string>
     <string name="str_date_level">%1$s | %2$s</string>
+    <string name="title_activity_maps">Map</string>
 </resources>
