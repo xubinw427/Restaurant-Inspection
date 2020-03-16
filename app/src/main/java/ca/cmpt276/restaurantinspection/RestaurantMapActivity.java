@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -29,6 +30,7 @@ import com.google.android.gms.tasks.Task;
 
 import java.io.InputStream;
 
+import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
@@ -82,15 +84,25 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
     }
     private void markRestaurantLocations(GoogleMap mMap){
+        mMap.setInfoWindowAdapter(new RestaurantInfoWindowAdapter(RestaurantMapActivity.this));
         for (Restaurant restaurant : restaurantManager){
-            String title = restaurant.getName();
-            LatLng location = new LatLng(restaurant.getLatitude(),
-                    restaurant.getLongitude());
+            if (restaurant!=null) {
+                try {
+                    LatLng location = new LatLng(restaurant.getLatitude(),
+                            restaurant.getLongitude());
 
-            MarkerOptions options = new MarkerOptions()
-                    .position(location)
-                    .title(title);
-            mMap.addMarker(options);
+                    String snippet = "Address: " + restaurant.getAddress() +"\n" +
+                            "Hazard Level: " + restaurant.getHazard() + "\n";
+
+                    MarkerOptions options = new MarkerOptions()
+                            .position(location)
+                            .title(restaurant.getName())
+                            .snippet(snippet);
+                    mMap.addMarker(options);
+                } catch (NullPointerException e) {
+                    Log.e("","markRestaurantLocations: NullPointerException: "+e.getMessage());
+                }
+            }
         }
     }
     private void moveCamera(LatLng latLng, float zoom){
