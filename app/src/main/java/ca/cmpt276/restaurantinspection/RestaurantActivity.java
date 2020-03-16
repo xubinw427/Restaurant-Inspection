@@ -41,6 +41,10 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
 
         extractRestaurants();
 
+        mapView();
+    }
+
+    private void mapView() {
         Button btn = findViewById(R.id.map_button_inact);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

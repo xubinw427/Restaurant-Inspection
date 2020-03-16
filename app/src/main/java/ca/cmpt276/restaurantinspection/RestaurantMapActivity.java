@@ -103,7 +103,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         mMap = googleMap;
 
         getDeviceLocation();
-
+        mMap.setMyLocationEnabled(true);
         // Add a marker in Sydney and move the camera
 //        LatLng sydney = new LatLng(-34, 151);
 //        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
