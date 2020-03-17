@@ -29,7 +29,7 @@ import com.google.maps.android.clustering.ClusterManager;
 import java.io.InputStream;
 
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
-import ca.cmpt276.restaurantinspection.Model.Mark;
+import ca.cmpt276.restaurantinspection.Model.CustomMarker;
 import ca.cmpt276.restaurantinspection.Model.OwnIconRendered;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
@@ -39,7 +39,7 @@ import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 public class RestaurantMapActivity extends AppCompatActivity implements OnMapReadyCallback{
 
     private RestaurantManager restaurantManager;
-    ClusterManager <Mark> mClusterManager;
+    ClusterManager <CustomMarker> mClusterManager;
     private static final float DEFAULT_ZOOM =15f;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
@@ -121,18 +121,16 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-
-
-
         mMap.setMyLocationEnabled(true);
         getDeviceLocation();
+
         //add markers
         setUpClusterer();
     }
 
     private void setUpClusterer() {
         //Initialize the manager with context and the map
-        mClusterManager = new ClusterManager<Mark>(this,mMap);
+        mClusterManager = new ClusterManager<CustomMarker>(this,mMap);
 
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
@@ -156,7 +154,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     String snippet = "Address: " + restaurant.getAddress() +"\n" +
                             "Hazard Level: " + hazard + "\n";
 
-                    Mark location = new Mark(lat, lng, title, snippet, hazard);
+                    CustomMarker location = new CustomMarker(lat, lng, title, snippet, hazard);
 
 
                     mClusterManager.addItem(location);

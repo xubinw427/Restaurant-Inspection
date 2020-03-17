@@ -7,23 +7,23 @@ import com.google.maps.android.clustering.ClusterItem;
 
 import ca.cmpt276.restaurantinspection.R;
 
-public class Mark implements ClusterItem {
+public class CustomMarker implements ClusterItem {
     private final LatLng mPosition;
     private String mTitle;
     private String mSnippet;
 
     private BitmapDescriptor mIcon;
 
-    public Mark(double lat, double lng){
+    public CustomMarker(double lat, double lng){
         mPosition = new LatLng(lat, lng);
     }
 
-    public Mark(double lat, double lng, String title, String snippet) {
+    public CustomMarker(double lat, double lng, String title, String snippet) {
         mPosition = new LatLng(lat, lng);
         mTitle = title;
         mSnippet = snippet;
     }
-    public Mark(double lat, double lng, String title, String snippet, String hazard) {
+    public CustomMarker(double lat, double lng, String title, String snippet, String hazard) {
         mPosition = new LatLng(lat, lng);
         mTitle = title;
         mSnippet = snippet;

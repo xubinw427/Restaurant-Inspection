@@ -7,15 +7,15 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
-public class OwnIconRendered extends DefaultClusterRenderer<Mark> {
+public class OwnIconRendered extends DefaultClusterRenderer<CustomMarker> {
 
     public OwnIconRendered(Context context, GoogleMap map,
-                           ClusterManager<Mark> clusterManager) {
+                           ClusterManager<CustomMarker> clusterManager) {
         super(context, map, clusterManager);
     }
 
     @Override
-    protected void onBeforeClusterItemRendered(Mark item, MarkerOptions markerOptions) {
+    protected void onBeforeClusterItemRendered(CustomMarker item, MarkerOptions markerOptions) {
         markerOptions.icon(item.getIcon());
         markerOptions.snippet(item.getSnippet());
         markerOptions.title(item.getTitle());
