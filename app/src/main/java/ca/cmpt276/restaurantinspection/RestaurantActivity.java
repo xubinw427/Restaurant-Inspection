@@ -31,12 +31,6 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
 
-//        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
-//        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
-//        InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
-//
-//        ViolationsMap.init(violationsIn);
-//        RestaurantManager.init(restaurantsIn, inspectionsIn);
         restaurantManager = RestaurantManager.getInstance();
 
         extractRestaurants();
