@@ -48,7 +48,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_map);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Restaurants Map");
+        actionBar.setTitle(getString(R.string.title_restaurant_map));
         actionBar.setElevation(0);
 
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
@@ -77,7 +77,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
         getDeviceLocation();
-        //add markers
+
         setUpCluster();
     }
 
@@ -126,7 +126,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                 restaurantManager.setCurrRestaurantPosition(position);
                 Intent intent = new Intent(RestaurantMapActivity.this, RestaurantInfoActivity.class);
                 startActivity(intent);
-
             }
         });
 
@@ -135,20 +134,19 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private void addMapItems() {
         mClusterManager.getMarkerCollection().setInfoWindowAdapter(new RestaurantInfoWindowAdapter(RestaurantMapActivity.this));
         for (Restaurant restaurant : restaurantManager){
-            if (restaurant!=null) {
+            if (restaurant != null) {
                 try {
-                    double lat = restaurant.getLatitude();
-                    double lng = restaurant.getLongitude();
+                    double latitude = restaurant.getLatitude();
+                    double longitude = restaurant.getLongitude();
                     String title = restaurant.getName();
                     String hazard = restaurant.getHazard();
-                    String snippet = "\n" + "Address: " + restaurant.getAddress() +"\n" +
-                            "Hazard Level: " + hazard + "\n";
+                    String snippet = getString(R.string.str_map_snippet, restaurant.getAddress(), hazard);
 
-                    CustomMarker location = new CustomMarker(lat, lng, title, snippet, hazard);
+                    CustomMarker location = new CustomMarker(latitude, longitude, title, snippet, hazard);
                     mClusterManager.addItem(location);
                 }
                 catch (NullPointerException e) {
-                    Log.e("","markRestaurantLocations: NullPointerException: "+e.getMessage());
+                    Log.e("","markRestaurantLocations: NullPointerException: " + e.getMessage());
                 }
             }
         }
@@ -173,12 +171,11 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private int getRestaurantPosition(LatLng position){
         double lat = position.latitude;
         double lng = position.longitude;
-        for (int i =0; i<restaurantManager.getList().size(); i++){
+        for (int i = 0; i<restaurantManager.getList().size(); i++){
             Restaurant restaurant = restaurantManager.getList().get(i);
             if (restaurant.getLatitude() == lat && restaurant.getLongitude() == lng){
                 return i;
             }
-
         }
         return -1;
     }

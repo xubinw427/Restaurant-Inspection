@@ -13,8 +13,6 @@ public class CustomMarker implements ClusterItem {
     private String mSnippet;
     private BitmapDescriptor mIcon;
 
-
-
     public CustomMarker(double latitude, double longitude, String title, String snippet, String hazard) {
         mPosition = new LatLng(latitude, longitude);
         mTitle = title;
@@ -50,6 +48,4 @@ public class CustomMarker implements ClusterItem {
     public String getSnippet() {
         return mSnippet;
     }
-
-
 }
