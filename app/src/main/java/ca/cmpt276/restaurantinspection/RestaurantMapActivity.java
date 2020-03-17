@@ -124,7 +124,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private void addMapItems() {
         mClusterManager.getMarkerCollection().setInfoWindowAdapter(new RestaurantInfoWindowAdapter(RestaurantMapActivity.this));
         mClusterManager.getClusterMarkerCollection().setInfoWindowAdapter(new RestaurantInfoWindowAdapter(RestaurantMapActivity.this));
-//        mMap.setInfoWindowAdapter(new RestaurantInfoWindowAdapter(RestaurantMapActivity.this));
         for (Restaurant restaurant : restaurantManager){
             if (restaurant!=null) {
                 try {

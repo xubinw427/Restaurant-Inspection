@@ -13,15 +13,7 @@ public class CustomMarker implements ClusterItem {
     private String mSnippet;
     private BitmapDescriptor mIcon;
 
-//    public CustomMarker(double latitude, double longitude){
-//        mPosition = new LatLng(latitude, longitude);
-//    }
-//
-//    public CustomMarker(double latitude, double longitude, String title, String snippet) {
-//        mPosition = new LatLng(latitude, longitude);
-//        mTitle = title;
-//        mSnippet = snippet;
-//    }
+
     public CustomMarker(double latitude, double longitude, String title, String snippet, String hazard) {
         mPosition = new LatLng(latitude, longitude);
         mTitle = title;
@@ -42,7 +34,7 @@ public class CustomMarker implements ClusterItem {
         }
     }
 
-    public BitmapDescriptor getIcon(){ return mIcon;}
+    private BitmapDescriptor getIcon(){ return mIcon;}
     @Override
     public LatLng getPosition() {
         return mPosition;
@@ -58,21 +50,5 @@ public class CustomMarker implements ClusterItem {
         return mSnippet;
     }
 
-//    public void setIcon(String hazard) {
-//        switch(hazard){
-//            case "Low":
-//                mIcon = BitmapDescriptorFactory.fromResource(R.drawable.smile);
-//                break;
-//            case "Moderate":
-//                mIcon = BitmapDescriptorFactory.fromResource(R.drawable.serious);
-//                break;
-//            case "High":
-//                mIcon = BitmapDescriptorFactory.fromResource(R.drawable.mad);
-//                break;
-//            default:
-//                break;
-//
-//        }
-//
-//    }
+
 }
