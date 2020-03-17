@@ -20,7 +20,7 @@ import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
 
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
-    private RestaurantManager restaurantManager = RestaurantManager.getInstance();;
+    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

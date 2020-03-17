@@ -14,6 +14,7 @@ public class CustomMarker implements ClusterItem {
     private BitmapDescriptor mIcon;
 
 
+
     public CustomMarker(double latitude, double longitude, String title, String snippet, String hazard) {
         mPosition = new LatLng(latitude, longitude);
         mTitle = title;

@@ -21,6 +21,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.maps.android.clustering.ClusterManager;
@@ -59,7 +60,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         restaurantManager = RestaurantManager.getInstance();
 
         initMap();
-
         startRestaurantListActivity();
     }
 
@@ -77,7 +77,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
         getDeviceLocation();
-
         //add markers
         setUpCluster();
     }
@@ -119,6 +118,18 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         addMapItems();
         mClusterManager.setRenderer(new OwnIconRendered(RestaurantMapActivity.this, mMap, mClusterManager));
+        
+        mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<CustomMarker>() {
+            @Override
+            public void onClusterItemInfoWindowClick(CustomMarker marker) {
+                int position = getRestaurantPosition(marker.getPosition());
+                restaurantManager.setCurrRestaurantPosition(position);
+                Intent intent = new Intent(RestaurantMapActivity.this, RestaurantInfoActivity.class);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
     private void addMapItems() {
@@ -159,6 +170,20 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     public static Intent makeRestaurantListIntent(Context c){
         return new Intent(c, RestaurantActivity.class);
     }
+
+    private int getRestaurantPosition(LatLng position){
+        double lat = position.latitude;
+        double lng = position.longitude;
+        for (int i =0; i<restaurantManager.getList().size(); i++){
+            Restaurant restaurant = restaurantManager.getList().get(i);
+            if (restaurant.getLatitude() == lat && restaurant.getLongitude() == lng){
+                return i;
+            }
+
+        }
+        return -1;
+    }
+
 
 }
 
