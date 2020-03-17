@@ -118,7 +118,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         addMapItems();
         mClusterManager.setRenderer(new OwnIconRendered(RestaurantMapActivity.this, mMap, mClusterManager));
-        
+
         mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<CustomMarker>() {
             @Override
             public void onClusterItemInfoWindowClick(CustomMarker marker) {
@@ -134,7 +134,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
     private void addMapItems() {
         mClusterManager.getMarkerCollection().setInfoWindowAdapter(new RestaurantInfoWindowAdapter(RestaurantMapActivity.this));
-        mClusterManager.getClusterMarkerCollection().setInfoWindowAdapter(new RestaurantInfoWindowAdapter(RestaurantMapActivity.this));
         for (Restaurant restaurant : restaurantManager){
             if (restaurant!=null) {
                 try {
@@ -142,7 +141,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     double lng = restaurant.getLongitude();
                     String title = restaurant.getName();
                     String hazard = restaurant.getHazard();
-                    String snippet = "\n" + "Address: " + restaurant.getAddress() +"\n\n" +
+                    String snippet = "\n" + "Address: " + restaurant.getAddress() +"\n" +
                             "Hazard Level: " + hazard + "\n";
 
                     CustomMarker location = new CustomMarker(lat, lng, title, snippet, hazard);
