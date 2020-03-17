@@ -30,6 +30,7 @@ import java.io.InputStream;
 
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
 import ca.cmpt276.restaurantinspection.Model.Mark;
+import ca.cmpt276.restaurantinspection.Model.OwnIconRendered;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
@@ -122,9 +123,9 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         mMap = googleMap;
 
 
-        getDeviceLocation();
-        mMap.setMyLocationEnabled(true);
 
+        mMap.setMyLocationEnabled(true);
+        getDeviceLocation();
         //add markers
         setUpClusterer();
     }
@@ -137,6 +138,8 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         mMap.setOnMarkerClickListener(mClusterManager);
 
         addItems();
+        mClusterManager.setRenderer(new OwnIconRendered(RestaurantMapActivity.this, mMap, mClusterManager));
+
     }
 
     private void addItems() {
@@ -149,10 +152,13 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     double lat = restaurant.getLatitude();
                     double lng = restaurant.getLongitude();
                     String title = restaurant.getName();
+                    String hazard = restaurant.getHazard();
                     String snippet = "Address: " + restaurant.getAddress() +"\n" +
-                            "Hazard Level: " + restaurant.getHazard() + "\n";
+                            "Hazard Level: " + hazard + "\n";
 
-                    Mark location = new Mark(lat, lng, title, snippet);
+                    Mark location = new Mark(lat, lng, title, snippet, hazard);
+
+
                     mClusterManager.addItem(location);
 
                 } catch (NullPointerException e) {
