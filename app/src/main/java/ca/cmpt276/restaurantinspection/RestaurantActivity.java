@@ -1,8 +1,11 @@
 package ca.cmpt276.restaurantinspection;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -22,7 +25,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_list);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
@@ -37,6 +40,20 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         restaurantManager = RestaurantManager.getInstance();
 
         extractRestaurants();
+
+        mapView();
+    }
+
+    private void mapView() {
+        Button btn = findViewById(R.id.map_button_inact);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = makeRestaurantMapIntent(getApplicationContext());
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     public void extractRestaurants() {
@@ -56,5 +73,9 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
 
         Intent intent = new Intent(this, RestaurantInfoActivity.class);
         startActivity(intent);
+    }
+
+    public static Intent makeRestaurantMapIntent(Context c){
+        return new Intent(c, RestaurantMapActivity.class);
     }
 }
