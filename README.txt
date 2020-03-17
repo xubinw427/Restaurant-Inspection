@@ -5,3 +5,7 @@ CardView and RecyclerView Adapter: https://www.youtube.com/watch?v=Nw9JF55LDzE&t
 [IMAGE RESOURCES]
 Activity Icons: https://www.figma.com/resources/assets/material-icons-outline/
 App Icon: https://static.allongeorgia.com/wp-content/uploads/2018/04/Restaurant-Inspection-696x517.jpeg
+
+[Required Android Version]
+Target SDK Version: 29
+Emulated on: Nexus 5X
