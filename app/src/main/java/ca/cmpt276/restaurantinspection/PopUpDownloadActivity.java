@@ -36,6 +36,11 @@ public class PopUpDownloadActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        //TODO: Cancel download
+        moveTaskToBack(true);
+    }
 
     public static Intent makeRestaurantInfoIntent(Context c){
         return new Intent(c, RestaurantMapActivity.class);
