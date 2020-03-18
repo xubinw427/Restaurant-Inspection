@@ -8,4 +8,5 @@
     <color name="mapFontColour">#797E87</color>
     <color name="bgColour">#FAFAFA</color>
     <color name="borderColorLightBlue">#32CBDC</color>
+    <color name="backgroundColorLightBlue">#80eae5</color>
 </resources>
