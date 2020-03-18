@@ -27,9 +27,17 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.8),(int)(height*.6));
 
-
+        Button btn = findViewById(R.id.btn_cancel);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
     }
 
 
-
+    public static Intent makeRestaurantInfoIntent(Context c){
+        return new Intent(c, RestaurantMapActivity.class);
+    }
 }
