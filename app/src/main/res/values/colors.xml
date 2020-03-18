@@ -7,5 +7,5 @@
     <color name="fontColour">#858B95</color>
     <color name="mapFontColour">#797E87</color>
     <color name="bgColour">#FAFAFA</color>
-    <color name="colorLightBlue">#32CBDC</color>
+    <color name="borderColorLightBlue">#32CBDC</color>
 </resources>
