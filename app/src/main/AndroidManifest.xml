@@ -57,6 +57,13 @@
             android:parentActivityName=".RestaurantActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeCustom" />
+        <activity android:name=".PopUpDownloadActivity"
+            android:theme="@style/AppTheme.CustomTheme"
+
+            ></activity>
+
+
     </application>
+
 
 </manifest>
