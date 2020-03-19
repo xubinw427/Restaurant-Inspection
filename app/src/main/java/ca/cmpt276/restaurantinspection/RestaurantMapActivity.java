@@ -25,8 +25,13 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.algo.Algorithm;
+import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
+import com.google.maps.android.clustering.view.ClusterRenderer;
+import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
 import java.io.InputStream;
+import java.util.Collection;
 
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
 import ca.cmpt276.restaurantinspection.Model.CustomMarker;
@@ -37,11 +42,15 @@ import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
 public class RestaurantMapActivity extends AppCompatActivity implements OnMapReadyCallback
 {
+    private Algorithm <CustomMarker> clusterManagerAlgorithm;
     private RestaurantManager restaurantManager;
-    ClusterManager <CustomMarker> mClusterManager;
+    private ClusterManager <CustomMarker> mClusterManager;
     private static final float DEFAULT_ZOOM = 15f;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Collection<CustomMarker> items;
+    private DefaultClusterRenderer<CustomMarker> mRenderer;
+    Marker mark;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +69,11 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         restaurantManager = RestaurantManager.getInstance();
 
         initMap();
+
+
         startRestaurantListActivity();
     }
+
 
     /**
      * Manipulates the map once available.
@@ -79,6 +91,43 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         getDeviceLocation();
 
         setUpCluster();
+
+        if (getCallingActivity() != null) {
+            if (getCallingActivity().getClassName().equals("ca.cmpt276.restaurantinspection.RestaurantInfoActivity")) {
+
+                Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantManager.getCurrRestaurantPosition());
+                LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
+                items = clusterManagerAlgorithm.getItems();
+
+
+                for (CustomMarker marker : items){
+                    mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+                    Task location = mFusedLocationProviderClient.getLastLocation();
+                    location.addOnCompleteListener(new OnCompleteListener() {
+                        @Override
+                        public void onComplete(@NonNull Task task) {
+                            if (task.isSuccessful()){
+                                Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantManager.getCurrRestaurantPosition());
+                                LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
+                                moveCamera(position, DEFAULT_ZOOM);
+
+                            }
+                            else {
+                                Toast.makeText(RestaurantMapActivity.this, "Unable to get restaurant location", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
+
+
+                    if (marker.getPosition().equals(position)){
+                        mClusterManager.getMarkerCollection();
+
+                    }
+                }
+            }
+
+        }
+
     }
 
     private void getDeviceLocation() {
@@ -112,12 +161,14 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private void setUpCluster() {
         //Initialize the manager with context and the map
         mClusterManager = new ClusterManager<>(this,mMap);
+        clusterManagerAlgorithm = new NonHierarchicalDistanceBasedAlgorithm();
+        mClusterManager.setAlgorithm(clusterManagerAlgorithm);
 
         mMap.setOnCameraIdleListener(mClusterManager);
         mMap.setOnMarkerClickListener(mClusterManager);
 
         addMapItems();
-        mClusterManager.setRenderer(new OwnIconRendered(RestaurantMapActivity.this, mMap, mClusterManager));
+        mClusterManager.setRenderer( new OwnIconRendered(RestaurantMapActivity.this, mMap, mClusterManager));
 
         mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<CustomMarker>() {
             @Override
@@ -128,6 +179,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                 startActivity(intent);
             }
         });
+
 
     }
 

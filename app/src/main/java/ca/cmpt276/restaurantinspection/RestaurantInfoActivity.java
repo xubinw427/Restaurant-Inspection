@@ -14,6 +14,7 @@ import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 
 public class RestaurantInfoActivity extends AppCompatActivity {
+    private static final int LAUNCH_MAP_ACTIVITY = 1;
     private Restaurant restaurant;
     private int index;
 
@@ -56,5 +57,13 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
     public static Intent makeRestaurantInspectionIntent(Context c){
         return new Intent(c, RestaurantInspectionActivity.class);
+    }
+    public void onClick(View v) {
+        Intent intent = makeRestaurantMapIntent(getApplicationContext());
+        RestaurantInfoActivity.this.startActivityForResult(intent, LAUNCH_MAP_ACTIVITY);
+        finish();
+    }
+    public static Intent makeRestaurantMapIntent(Context c){
+        return new Intent(c, RestaurantMapActivity.class);
     }
 }

@@ -21,4 +21,5 @@ public class OwnIconRendered extends DefaultClusterRenderer<CustomMarker> {
         markerOptions.title(item.getTitle());
         super.onBeforeClusterItemRendered(item, markerOptions);
     }
+
 }
