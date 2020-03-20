@@ -34,8 +34,5 @@ public class OwnIconRendered extends DefaultClusterRenderer<CustomMarker> {
         if (item.getPosition().equals(pos)) {
             getMarker(item).showInfoWindow();
         }
-
     }
-
-
 }

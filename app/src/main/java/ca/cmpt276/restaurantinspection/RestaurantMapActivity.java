@@ -28,7 +28,6 @@ import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.algo.Algorithm;
 import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
 
-
 import java.io.InputStream;
 import java.util.Collection;
 
@@ -39,8 +38,7 @@ import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
-public class RestaurantMapActivity extends AppCompatActivity implements OnMapReadyCallback
-{
+public class RestaurantMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private Algorithm <CustomMarker> clusterManagerAlgorithm;
     private RestaurantManager restaurantManager;
     private ClusterManager <CustomMarker> mClusterManager;
@@ -67,7 +65,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         initMap();
 
-
         startRestaurantListActivity();
     }
 
@@ -89,7 +86,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         setUpCluster();
         startMapActivityFromRestaurantInfo();
-
     }
 
     private void startMapActivityFromRestaurantInfo() {
@@ -111,7 +107,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     }
                 });
             }
-
         }
     }
 
@@ -169,8 +164,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                 startActivity(intent);
             }
         });
-
-
     }
 
     private void addMapItems() {
@@ -213,16 +206,15 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private int getRestaurantPosition(LatLng position){
         double lat = position.latitude;
         double lng = position.longitude;
-        for (int i = 0; i<restaurantManager.getList().size(); i++){
+        for (int i = 0; i < restaurantManager.getList().size(); i++){
             Restaurant restaurant = restaurantManager.getList().get(i);
             if (restaurant.getLatitude() == lat && restaurant.getLongitude() == lng){
                 return i;
             }
         }
+
         return -1;
     }
-
-
 }
 
 
