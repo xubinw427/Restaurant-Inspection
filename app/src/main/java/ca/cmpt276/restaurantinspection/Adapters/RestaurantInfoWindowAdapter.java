@@ -48,4 +48,5 @@ public class RestaurantInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
         renderWindowText(marker, mWindow);
         return mWindow;
     }
+
 }
