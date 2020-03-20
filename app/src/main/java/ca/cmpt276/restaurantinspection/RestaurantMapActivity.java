@@ -21,14 +21,13 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.algo.Algorithm;
 import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
-import com.google.maps.android.clustering.view.ClusterRenderer;
-import com.google.maps.android.clustering.view.DefaultClusterRenderer;
+
 
 import java.io.InputStream;
 import java.util.Collection;
@@ -48,9 +47,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private static final float DEFAULT_ZOOM = 15f;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
-    private Collection<CustomMarker> items;
-    private DefaultClusterRenderer<CustomMarker> mRenderer;
-    Marker mark;
+    OwnIconRendered mRender;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,43 +88,31 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         getDeviceLocation();
 
         setUpCluster();
+        startMapActivityFromRestaurantInfo();
 
+    }
+
+    private void startMapActivityFromRestaurantInfo() {
         if (getCallingActivity() != null) {
             if (getCallingActivity().getClassName().equals("ca.cmpt276.restaurantinspection.RestaurantInfoActivity")) {
-
-                Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantManager.getCurrRestaurantPosition());
-                LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
-                items = clusterManagerAlgorithm.getItems();
-
-
-                for (CustomMarker marker : items){
-                    mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-                    Task location = mFusedLocationProviderClient.getLastLocation();
-                    location.addOnCompleteListener(new OnCompleteListener() {
-                        @Override
-                        public void onComplete(@NonNull Task task) {
-                            if (task.isSuccessful()){
-                                Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantManager.getCurrRestaurantPosition());
-                                LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
-                                moveCamera(position, DEFAULT_ZOOM);
-
-                            }
-                            else {
-                                Toast.makeText(RestaurantMapActivity.this, "Unable to get restaurant location", Toast.LENGTH_SHORT).show();
-                            }
+                mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+                Task location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        if (task.isSuccessful()){
+                            Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantManager.getCurrRestaurantPosition());
+                            LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
+                            moveCamera(position, DEFAULT_ZOOM);
                         }
-                    });
-
-
-                    if (marker.getPosition().equals(position)){
-                        mClusterManager.getMarkerCollection();
-
+                        else {
+                            Toast.makeText(RestaurantMapActivity.this, "Unable to get restaurant location", Toast.LENGTH_SHORT).show();
+                        }
                     }
-                }
+                });
             }
 
         }
-
     }
 
     private void getDeviceLocation() {
@@ -138,7 +123,9 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()){
                     Location currentLocation = (Location) task.getResult();
-                    moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()),DEFAULT_ZOOM);
+                    if (currentLocation !=  null) {
+                        moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
+                    }
                 }
                 else {
                     Toast.makeText(RestaurantMapActivity.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
@@ -155,7 +142,9 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        if (mapFragment!=null) {
+            mapFragment.getMapAsync(this);
+        }
     }
 
     private void setUpCluster() {
@@ -168,7 +157,8 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         mMap.setOnMarkerClickListener(mClusterManager);
 
         addMapItems();
-        mClusterManager.setRenderer( new OwnIconRendered(RestaurantMapActivity.this, mMap, mClusterManager));
+        mRender = new OwnIconRendered(RestaurantMapActivity.this, mMap, mClusterManager);
+        mClusterManager.setRenderer( mRender);
 
         mClusterManager.setOnClusterItemInfoWindowClickListener(new ClusterManager.OnClusterItemInfoWindowClickListener<CustomMarker>() {
             @Override
