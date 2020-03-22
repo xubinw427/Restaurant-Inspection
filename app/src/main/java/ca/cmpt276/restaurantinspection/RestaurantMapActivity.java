@@ -51,7 +51,10 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         actionBar.setTitle(getString(R.string.title_restaurant_map));
         actionBar.setElevation(0);
 
-        startActivity(new Intent(RestaurantMapActivity.this,PopUpDownloadActivity.class));
+        /*
+        Start this activity when there is an update available
+         */
+        startActivity(new Intent(RestaurantMapActivity.this,PopUpUpdateActivity.class));
 
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
         InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
