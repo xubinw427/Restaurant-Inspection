@@ -147,6 +147,21 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
 
                             Scanner scanner = new Scanner(secondResponse);
 
+
+                            String filename = "myfile";
+                            String fileContents = "Hello world!";
+                            FileOutputStream outputStream;
+
+                            try {
+                                outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+                                outputStream.write(fileContents.getBytes());
+                                outputStream.close();
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+
+
                             // Make sure we get the right number of restaurants.
                             int count = 0;
                             while(scanner.hasNextLine())
