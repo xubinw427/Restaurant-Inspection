@@ -12,11 +12,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.io.InputStream;
-
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
-import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
-
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
 
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
@@ -64,6 +60,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
     @Override
     public void onRestaurantClick(int position) {
         restaurantManager.setCurrRestaurantPosition(position);
+        restaurantManager.setFromList(1);
 
         Intent intent = new Intent(this, RestaurantInfoActivity.class);
         startActivity(intent);
