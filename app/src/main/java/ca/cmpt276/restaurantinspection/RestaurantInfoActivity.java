@@ -15,6 +15,7 @@ import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 
 public class RestaurantInfoActivity extends AppCompatActivity {
     private static final int LAUNCH_MAP_ACTIVITY = 1;
+    RestaurantManager restaurantManager = RestaurantManager.getInstance();
     private Restaurant restaurant;
     private int index;
 
@@ -23,7 +24,6 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_info);
 
-        RestaurantManager restaurantManager = RestaurantManager.getInstance();
         index = restaurantManager.getCurrRestaurantPosition();
         restaurant = restaurantManager.getRestaurantAt(index);
 
@@ -42,6 +42,11 @@ public class RestaurantInfoActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    @Override
+    public Intent getParentActivityIntent() {
+        return getParentActivityIntentImplement();
     }
 
     private void extractRestaurantInfo() {
@@ -67,5 +72,24 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
     public static Intent makeRestaurantMapIntent(Context c){
         return new Intent(c, RestaurantMapActivity.class);
+    }
+
+    private Intent getParentActivityIntentImplement() {
+        Intent intent = null;
+
+        if (restaurantManager.getFromList() == 1) {
+            intent = new Intent(this, RestaurantActivity.class);
+            restaurantManager.setFromList(0);
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        }
+        else if (restaurantManager.getFromMap() == 1) {
+            intent = new Intent(this, RestaurantMapActivity.class);
+            restaurantManager.setFromMap(0);
+
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        }
+
+        return intent;
     }
 }
