@@ -54,7 +54,7 @@
         <activity
             android:name=".RestaurantInfoActivity"
             android:label="Restaurant Info"
-            android:parentActivityName=".RestaurantMapActivity"
+            android:parentActivityName=".RestaurantActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppThemeCustom" />
     </application>
