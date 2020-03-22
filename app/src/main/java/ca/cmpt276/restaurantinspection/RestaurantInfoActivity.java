@@ -66,6 +66,9 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
     public void onClick(View v) {
         Intent intent = makeRestaurantMapIntent(getApplicationContext());
+
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+
         RestaurantInfoActivity.this.startActivityForResult(intent, LAUNCH_MAP_ACTIVITY);
         finish();
     }
