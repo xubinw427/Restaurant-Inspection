@@ -6,17 +6,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.PopupWindow;
 
-public class PopUpDownloadActivity extends AppCompatActivity {
+public class PopUpUpdateActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_pop_up_download);
+        setContentView(R.layout.activity_pop_up_update);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -26,10 +24,12 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.8),(int)(height*.6));
 
-        Button btn = findViewById(R.id.btn_cancel);
+        Button btn = findViewById(R.id.btn_proceed);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = makePopUpDownloadIntent(getApplicationContext());
+                startActivity(intent);
                 finish();
             }
         });
@@ -41,4 +41,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
         moveTaskToBack(true);
     }
 
+    public static Intent makePopUpDownloadIntent(Context c){
+        return new Intent(c, PopUpDownloadActivity.class);
+    }
 }
