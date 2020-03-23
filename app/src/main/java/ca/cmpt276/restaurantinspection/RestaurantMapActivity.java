@@ -88,8 +88,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         RestaurantManager.init(restaurantsIn, inspectionsIn);
         restaurantManager = RestaurantManager.getInstance();
 
-
-
         initMap();
         startRestaurantListActivity();
         ViolationsMap.init(violationsIn);
