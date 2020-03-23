@@ -148,17 +148,11 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
                             Scanner scanner = new Scanner(secondResponse);
 
 
-                            String filename = "myfile";
-                            String fileContents = "Hello world!";
-                            FileOutputStream outputStream;
+                            String filename = "update_restaurant";
 
-                            try {
-                                outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-                                outputStream.write(fileContents.getBytes());
-                                outputStream.close();
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
+                            FileOutputStream outputStream;
+                            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+
 
 
 
@@ -167,8 +161,15 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
                             while(scanner.hasNextLine())
                             {
                                 String line = scanner.nextLine();
+                                line = line + '\r';
+                                try {
+                                    outputStream.write(line.getBytes());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 count++;
                             }
+                            outputStream.close();
                             Log.d(TAG, "There are " + count + " Restaurants.");
                             scanner.close();
 
@@ -248,12 +249,24 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
 
                             Scanner scanner = new Scanner(secondResponse);
 
+                            String filename = "update_inspection";
+
+                            FileOutputStream outputStream;
+                            outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
+                            // Make sure we get the right number of inspections.
                             int count = 0;
                             while(scanner.hasNextLine())
                             {
                                 String line = scanner.nextLine();
+                                line = line + '\r';
+                                try {
+                                    outputStream.write(line.getBytes());
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
                                 count++;
                             }
+                            outputStream.close();
                             Log.d(TAG, "There are " + count + " Inspections.");
                             scanner.close();
 
