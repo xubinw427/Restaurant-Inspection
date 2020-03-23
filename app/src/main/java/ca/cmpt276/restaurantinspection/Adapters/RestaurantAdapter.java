@@ -70,25 +70,25 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         /** Check 10 icon of restaurant(5 of them have 4 stores or more), then set corresponding background **/
         String restaurantName = currRestaurant.getName();
         if(restaurantName.contains("7-Eleven")){
-            holder.restaurantLogoIcon.setImageResource(R.drawable.seveneleven_logo);
+            holder.restaurantLogoIcon.setImageResource(R.drawable.logo_seveneleven);
         }else if(restaurantName.contains("Royal Canadian Legion")){
-            holder.restaurantLogoIcon.setImageResource(R.drawable.royalcanadianlegion_logo);
+            holder.restaurantLogoIcon.setImageResource(R.drawable.logo_royalcanadianlegion);
         }else if(restaurantName.contains("Boston Pizza")){
-            holder.restaurantLogoIcon.setImageResource(R.drawable.bostonpizza_logo);
+            holder.restaurantLogoIcon.setImageResource(R.drawable.logo_bostonpizza);
         }else if(restaurantName.contains("Blenz")){
-            holder.restaurantLogoIcon.setImageResource(R.drawable.blenzcoffee_logo);
+            holder.restaurantLogoIcon.setImageResource(R.drawable.logo_blenzcoffee);
         }else if(restaurantName.contains("OPA")){
-            holder.restaurantLogoIcon.setImageResource(R.drawable.opaofgreece_logo);
+            holder.restaurantLogoIcon.setImageResource(R.drawable.logo_opaofgreece);
         }else if(restaurantName.contains("Papa John's")){
-            holder.restaurantLogoIcon.setImageResource(R.drawable.papajohnspizza_logo);
+            holder.restaurantLogoIcon.setImageResource(R.drawable.logo_papajohnspizza);
         }else if(restaurantName.contains("Panago")){
-            holder.restaurantLogoIcon.setImageResource(R.drawable.panago_logo);
+            holder.restaurantLogoIcon.setImageResource(R.drawable.logo_panago);
         }else if(restaurantName.contains("Pizza Hut")){
-            holder.restaurantLogoIcon.setImageResource(R.drawable.pizzahut_logo);
+            holder.restaurantLogoIcon.setImageResource(R.drawable.logo_pizzahut);
         }else if(restaurantName.contains("Starbucks")){
-            holder.restaurantLogoIcon.setImageResource(R.drawable.starbuckscoffee_logo);
+            holder.restaurantLogoIcon.setImageResource(R.drawable.logo_starbuckscoffee);
         }else if(restaurantName.contains("Burger King")){
-            holder.restaurantLogoIcon.setImageResource(R.drawable.burgerking_logo);
+            holder.restaurantLogoIcon.setImageResource(R.drawable.logo_burgerking);
         }
 
 
