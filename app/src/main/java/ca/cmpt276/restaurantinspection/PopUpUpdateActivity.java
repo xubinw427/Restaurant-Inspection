@@ -24,12 +24,20 @@ public class PopUpUpdateActivity extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.8),(int)(height*.6));
 
-        Button btn = findViewById(R.id.btn_proceed);
-        btn.setOnClickListener(new View.OnClickListener() {
+        Button btn_proceed = findViewById(R.id.btn_proceed);
+        btn_proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = makePopUpDownloadIntent(getApplicationContext());
                 startActivity(intent);
+                finish();
+            }
+        });
+
+        Button btn_cancel = findViewById(R.id.btn_cancel);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
                 finish();
             }
         });
@@ -43,5 +51,9 @@ public class PopUpUpdateActivity extends AppCompatActivity {
 
     public static Intent makePopUpDownloadIntent(Context c){
         return new Intent(c, PopUpDownloadActivity.class);
+    }
+
+    public static Intent makeRestaurantMapIntent(Context c){
+        return new Intent(c, RestaurantMapActivity.class);
     }
 }

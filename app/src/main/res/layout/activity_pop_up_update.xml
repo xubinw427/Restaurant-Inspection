@@ -20,8 +20,32 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.224"
+        app:layout_constraintVertical_bias="0.185"
         tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="81dp"
+        android:layout_height="40dp"
+        android:background="@drawable/button_canceldownload"
+        android:text="Cancel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.87" />
+
+    <Button
+        android:id="@+id/btn_proceed"
+        android:layout_width="81dp"
+        android:layout_height="40dp"
+        android:background="@drawable/button_proceeddownload"
+        android:text="Proceed"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.738" />
 
     <ImageView
         android:id="@+id/image_download"
@@ -34,18 +58,7 @@
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.451"
         tools:ignore="MissingConstraints" />
-
-    <Button
-        android:id="@+id/btn_proceed"
-        android:layout_width="81dp"
-        android:layout_height="40dp"
-        android:background="@drawable/button_proceeddownload"
-        android:text="Proceed"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.804" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
