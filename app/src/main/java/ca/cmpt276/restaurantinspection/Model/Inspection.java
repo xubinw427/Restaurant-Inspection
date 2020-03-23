@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class Inspection {
+public class Inspection implements Comparable<Inspection>{
     private String trackingNumber;
 
     private String inspDate;
@@ -59,6 +59,9 @@ public class Inspection {
 
             violationsList.add(newViolation);
         }
+    }
+    public String getInspDate() {
+        return inspDate;
     }
 
     public String getDateDisplay() {
@@ -126,5 +129,17 @@ public class Inspection {
 
         fullDate = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime()) +
                 ", " + getYear.format(cal.getTime());
+    }
+
+
+    @Override
+    public int compareTo(Inspection inspection) {
+        int thisDate = Integer.parseInt(this.inspDate);
+        int comparedDate = Integer.parseInt(inspection.getInspDate());
+
+        if(thisDate >= comparedDate)
+            return comparedDate - thisDate;
+        else
+            return thisDate - comparedDate;
     }
 }

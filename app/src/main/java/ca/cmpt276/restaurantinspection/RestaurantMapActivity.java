@@ -60,6 +60,9 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     OwnIconRendered mRender;
     private static final String TAG = "MainActivity";
 
+    // Following is fot test
+    private RestaurantManager testList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,13 +81,29 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
         InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
 
+        InputStream testrestaurantsIn = getResources().openRawResource(R.raw.update_restaurants);
+
+
         ViolationsMap.init(violationsIn);
         RestaurantManager.init(restaurantsIn, inspectionsIn);
         restaurantManager = RestaurantManager.getInstance();
 
+
+
         initMap();
 
+
         startRestaurantListActivity();
+
+        ViolationsMap.init(violationsIn);
+        RestaurantManager.init(testrestaurantsIn, inspectionsIn);
+        testList = RestaurantManager.getInstance();
+        testList.sortRestaurants();
+
+        for(Restaurant restaurants : testList)
+        {
+            Log.d(TAG, restaurants.getName());
+        }
     }
 
 
@@ -168,18 +187,10 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                         }
                         else {
                             final String secondResponse = response.body().string();
-
                             Scanner scanner = new Scanner(secondResponse);
-
-
                             String filename = "update_restaurant";
-
                             FileOutputStream outputStream;
                             outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
-
-
-
-
                             // Make sure we get the right number of restaurants.
                             int count = 0;
                             while(scanner.hasNextLine())
@@ -230,8 +241,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                 {
                     final String myResponse = response.body().string();
                     try {
-
-
                         JSONObject jsonObject = new JSONObject(myResponse);
                         JSONObject result = jsonObject.getJSONObject("result");
                         JSONArray jsonArray = (JSONArray) result.get("resources");
@@ -270,11 +279,8 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                         }
                         else {
                             final String secondResponse = response.body().string();
-
                             Scanner scanner = new Scanner(secondResponse);
-
                             String filename = "update_inspection";
-
                             FileOutputStream outputStream;
                             outputStream = openFileOutput(filename, Context.MODE_PRIVATE);
                             // Make sure we get the right number of inspections.
@@ -450,5 +456,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         return -1;
     }
 }
+
 
 

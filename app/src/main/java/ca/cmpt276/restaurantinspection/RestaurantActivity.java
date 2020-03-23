@@ -34,8 +34,6 @@ import okhttp3.Response;
 
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
-    private static final String filename = "Update Restaurants";
-    // For Debugging
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +49,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         extractRestaurants();
 
         mapView();
-
-
-
-
-
-
     }
-
-
-
-
-
-
-
     private void mapView() {
         Button btn = findViewById(R.id.map_button_inact);
         btn.setOnClickListener(new View.OnClickListener() {
