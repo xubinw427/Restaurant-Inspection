@@ -47,10 +47,6 @@ public class DataManager {
         return instance;
     }
 
-    public void setFileContext(Context context) {
-
-    }
-
     private void readTheFirstURL() {
         // Create okHttp to make get request
         OkHttpClient client = new OkHttpClient();
@@ -187,10 +183,6 @@ public class DataManager {
                         String url2 = csv.get("url").toString();
                         String updateURL2 = url2.replace("http", "https");
                         String lastModified = csv.get("last_modified").toString();
-
-
-
-
 
                         Log.d(TAG, updateURL2);
                         Log.d(TAG, lastModified);
