@@ -21,6 +21,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView btnBackground;
         private ImageView hazardIcon;
+        private ImageView restaurantLogoIcon;
         private TextView restaurantName;
         private TextView inspectionDate;
         private TextView numIssues;
@@ -34,7 +35,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             restaurantName = itemView.findViewById(R.id.restaurant_name);
             inspectionDate = itemView.findViewById(R.id.inspection_date);
             numIssues = itemView.findViewById(R.id.num_issues);
-
+            restaurantLogoIcon = itemView.findViewById(R.id.food_icon);
             this.onRestaurantListener = onRestaurantListener;
             itemView.setOnClickListener(this);
         }
@@ -66,6 +67,30 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
         Restaurant currRestaurant = restaurantManager.getRestaurantAt(position);
+        /** Check 10 icon of restaurant(5 of them have 4 stores or more), then set corresponding background **/
+        String restaurantName = currRestaurant.getName();
+        if(restaurantName.contains("7-Eleven")){
+            holder.restaurantLogoIcon.setImageResource(R.drawable.seveneleven_logo);
+        }else if(restaurantName.contains("Royal Canadian Legion")){
+            holder.restaurantLogoIcon.setImageResource(R.drawable.royalcanadianlegion_logo);
+        }else if(restaurantName.contains("Boston Pizza")){
+            holder.restaurantLogoIcon.setImageResource(R.drawable.bostonpizza_logo);
+        }else if(restaurantName.contains("Blenz")){
+            holder.restaurantLogoIcon.setImageResource(R.drawable.blenzcoffee_logo);
+        }else if(restaurantName.contains("OPA")){
+            holder.restaurantLogoIcon.setImageResource(R.drawable.opaofgreece_logo);
+        }else if(restaurantName.contains("Papa John's")){
+            holder.restaurantLogoIcon.setImageResource(R.drawable.papajohnspizza_logo);
+        }else if(restaurantName.contains("Panago")){
+            holder.restaurantLogoIcon.setImageResource(R.drawable.panago_logo);
+        }else if(restaurantName.contains("Pizza Hut")){
+            holder.restaurantLogoIcon.setImageResource(R.drawable.pizzahut_logo);
+        }else if(restaurantName.contains("Starbucks")){
+            holder.restaurantLogoIcon.setImageResource(R.drawable.starbuckscoffee_logo);
+        }else if(restaurantName.contains("Burger King")){
+            holder.restaurantLogoIcon.setImageResource(R.drawable.burgerking_logo);
+        }
+
 
         /** Check hazard level of restaurant, then set corresponding background **/
         switch(currRestaurant.getHazard()) {
@@ -95,6 +120,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             holder.itemView.setLayoutParams(lp);
         }
     }
+
 
     @Override
     public int getItemCount() {
