@@ -16,15 +16,15 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private ViolationsMap violationsMap;
     private int currRestaurantPosition;
     private int currInspectionPosition;
+    private int fromMap = 0;
+    private int fromList = 0;
 
     /** Private to prevent anyone else from instantiating. **/
     private RestaurantManager(InputStream restaurantFile,
                               InputStream inspectionsFile) {
 
         readRestaurantData(restaurantFile);
-
         violationsMap = ViolationsMap.getInstance();
-
         populateInspections(inspectionsFile);
     }
 
@@ -75,6 +75,22 @@ public class RestaurantManager implements Iterable<Restaurant> {
         currInspectionPosition = position;
     }
 
+    public int getFromList() {
+        return this.fromList;
+    }
+
+    public int getFromMap() {
+        return this.fromMap;
+    }
+
+    public void setFromList(int i) {
+        this.fromList = i;
+    }
+
+    public void setFromMap(int i) {
+        this.fromMap = i;
+    }
+
     private void addNew(Restaurant restaurant) {
         restaurantsList.add(restaurant);
     }
@@ -95,7 +111,6 @@ public class RestaurantManager implements Iterable<Restaurant> {
             }
         }
         catch (IOException e) {
-
             e.printStackTrace();
         }
         try {
