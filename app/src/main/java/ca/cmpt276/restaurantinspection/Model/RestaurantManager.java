@@ -133,11 +133,10 @@ public class RestaurantManager implements Iterable<Restaurant> {
             while ((line = input.readLine()) != null) {
                 String[] inspectionLump = line.split(",\"");
 
-                Inspection currInspection = new Inspection(inspectionLump, violationsMap);
-
                 String[] firstHalf = inspectionLump[0].split(",");
-
                 String currRestaurantID = firstHalf[0];
+
+                Inspection currInspection = new Inspection(inspectionLump, violationsMap);
 
                 System.out.println("*****");
                 System.out.println(currRestaurantID);
