@@ -2,6 +2,7 @@ package ca.cmpt276.restaurantinspection;
 
 import androidx.annotation.NonNull;
 
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
@@ -9,7 +10,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -41,6 +41,7 @@ import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 import ca.cmpt276.restaurantinspection.Model.DataManager;
 
 public class RestaurantMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private UpdateManager updateManager;
     private DataManager dataManager;
     private Algorithm <CustomMarker> clusterManagerAlgorithm;
     private RestaurantManager restaurantManager;
@@ -62,6 +63,11 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         UpdateManager.init(this);
         DataManager.init(this);
         dataManager = DataManager.getInstance();
+        /** === CHECKING FOR UPDATES === **/
+        updateManager = UpdateManager.getInstance();
+        updateManager.twentyHrsSinceUpdate();
+        System.out.println(updateManager.checkUpdateNeeded());
+        /** === END CHECKING === **/
 
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
         InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);

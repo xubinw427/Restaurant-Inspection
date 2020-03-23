@@ -3,6 +3,8 @@ package ca.cmpt276.restaurantinspection.Model;
 import android.content.Context;
 import android.util.Log;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -60,12 +62,12 @@ public class DataManager {
         // Make get request
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(!response.isSuccessful()) {
                     throw new IOException("Unexpected code " +  response);
                 }
@@ -112,12 +114,12 @@ public class DataManager {
 
                 client2.newCall(requestForRestaurantData).enqueue(new Callback() {
                     @Override
-                    public void onFailure(Call call, IOException e) {
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         e.printStackTrace();
                     }
 
                     @Override
-                    public void onResponse(Call call, Response response) throws IOException {
+                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         if(!response.isSuccessful()) {
                             throw new IOException("Unexpected code " +  response);
                         }
@@ -164,12 +166,12 @@ public class DataManager {
 
         client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 e.printStackTrace();
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(!response.isSuccessful()) {
                     throw new IOException("Unexpected code " +  response);
                 }
@@ -187,11 +189,16 @@ public class DataManager {
                         /** On first load, save modified dates as last updated & last modified **/
                         UpdateManager updateManager = UpdateManager.getInstance();
                         if (updateManager.getLastUpdatedDate() == null) {
-                            updateManager.setLastUpdatedDate(lastModified);
+                            System.out.println(lastModified);
+                            updateManager.setLastUpdatedDatePrefs(lastModified);
                         }
                         if (updateManager.getLastModifiedInspections() == null) {
-                            updateManager.setLastModifiedInspections(lastModified);
+                            System.out.println(lastModified);
+                            updateManager.setLastModifiedInspectionsPrefs(lastModified);
                         }
+
+                        updateManager.setLastModifiedInspections(lastModified);
+                        /** === END UPDATE MANAGER === **/
 
                         Log.d(TAG, updateURL2);
                         Log.d(TAG, lastModified);
@@ -212,12 +219,12 @@ public class DataManager {
 
                 client2.newCall(requestForInspectionData).enqueue(new Callback() {
                     @Override
-                    public void onFailure(Call call, IOException e) {
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         e.printStackTrace();
                     }
 
                     @Override
-                    public void onResponse(Call call, Response response) throws IOException {
+                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         if(!response.isSuccessful()) {
                             throw new IOException("Unexpected code " +  response);
                         }
