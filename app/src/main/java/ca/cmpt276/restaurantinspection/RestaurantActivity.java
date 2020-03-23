@@ -18,8 +18,6 @@ import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
 
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
-    private static final String filename = "Update Restaurants";
-    // For Debugging
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,19 +33,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         extractRestaurants();
 
         mapView();
-
-
-
-
-
-
     }
-
-
-
-
-
-
 
     private void mapView() {
         Button btn = findViewById(R.id.map_button_inact);
@@ -75,6 +61,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
     @Override
     public void onRestaurantClick(int position) {
         restaurantManager.setCurrRestaurantPosition(position);
+        restaurantManager.setFromList(1);
 
         Intent intent = new Intent(this, RestaurantInfoActivity.class);
         startActivity(intent);
