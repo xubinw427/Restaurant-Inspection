@@ -47,10 +47,6 @@ public class DataManager {
         return instance;
     }
 
-    public void setFileContext(Context context) {
-
-    }
-
     private void readTheFirstURL() {
         // Create okHttp to make get request
         OkHttpClient client = new OkHttpClient();
@@ -188,9 +184,14 @@ public class DataManager {
                         String updateURL2 = url2.replace("http", "https");
                         String lastModified = csv.get("last_modified").toString();
 
-
-
-
+                        /** On first load, save modified dates as last updated & last modified **/
+                        UpdateManager updateManager = UpdateManager.getInstance();
+                        if (updateManager.getLastUpdatedDate() == null) {
+                            updateManager.setLastUpdatedDate(lastModified);
+                        }
+                        if (updateManager.getLastModifiedInspections() == null) {
+                            updateManager.setLastModifiedInspections(lastModified);
+                        }
 
                         Log.d(TAG, updateURL2);
                         Log.d(TAG, lastModified);

@@ -36,6 +36,7 @@ import ca.cmpt276.restaurantinspection.Model.CustomMarker;
 import ca.cmpt276.restaurantinspection.Model.OwnIconRendered;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 import ca.cmpt276.restaurantinspection.Model.DataManager;
 
@@ -58,6 +59,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         actionBar.setTitle(getString(R.string.title_restaurant_map));
         actionBar.setElevation(0);
 
+        UpdateManager.init(this);
         DataManager.init(this);
         dataManager = DataManager.getInstance();
 
