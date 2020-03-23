@@ -173,6 +173,8 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             public void onClusterItemInfoWindowClick(CustomMarker marker) {
                 int position = getRestaurantPosition(marker.getPosition());
                 restaurantManager.setCurrRestaurantPosition(position);
+                restaurantManager.setFromMap(1);
+
                 Intent intent = new Intent(RestaurantMapActivity.this, RestaurantInfoActivity.class);
                 startActivity(intent);
             }
