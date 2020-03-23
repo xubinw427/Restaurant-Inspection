@@ -9,4 +9,6 @@
     <color name="bgColour">#FAFAFA</color>
     <color name="borderColorLightBlue">#32CBDC</color>
     <color name="backgroundColorLightBlue">#80eae5</color>
+    <color name="backgroundRed">#DB7474</color>
+    <color name="backgroundTeal">#35CD96</color>
 </resources>
