@@ -20,54 +20,40 @@ public class Inspection {
 
     private ArrayList<Violation> violationsList;
 
-    /** String[] is either
+    /** inspectionLump is either
      * [0: Inspection (as is, there were no violations)] >> length = 1
-     * or
+     * OR
      * [0: First half of Inspection, 1: Violations & Hazard Rating] >> length = 2 **/
     /** ViolLump is currently a long string of all violations to be split by '|' **/
     public Inspection(String[] inspectionLump, ViolationsMap map) {
         violationsList = new ArrayList<>();
 
+        String[] inspectionDetails = inspectionLump[0].split(",");
+        /** [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit, 5: NULL, 6: HazardLevel] if len 1
+         * OR
+         * [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit] if len 2 **/
+
+        trackingNumber = inspectionDetails[0];
+        inspDate = inspectionDetails[1];
+        getDateInformation();
+
+        inspType = inspectionDetails[2];
+
+        try {
+            numCritical = Integer.parseInt(inspectionDetails[3].trim());
+            numNonCritical = Integer.parseInt(inspectionDetails[4].trim());
+        }
+        catch (NumberFormatException ex) {
+            throw new RuntimeException("ERROR: Failed number conversion.");
+        }
+
         if (inspectionLump.length == 1) {
-            String[] inspectionDetails = inspectionLump[0].split(",");
-            /** [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit, 5: NULL, 6: HazardLevel] **/
-
-            trackingNumber = inspectionDetails[0];
-            inspDate = inspectionDetails[1];
-            getDateInformation();
-
-            inspType = inspectionDetails[2];
-
-            try {
-                numCritical = Integer.parseInt(inspectionDetails[3].trim());
-                numNonCritical = Integer.parseInt(inspectionDetails[4].trim());
-            }
-            catch (NumberFormatException ex) {
-                throw new RuntimeException("ERROR: Failed number conversion.");
-            }
-
             hazardRating = inspectionDetails[6];
         }
 
         else {
-            String[] inspectionDetails = inspectionLump[0].split(",");
-            /** [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit] **/
             String[] separateViolationsAndHazard = inspectionLump[1].split("\",");
             /** [0: Violations, 1: 1: HazardLevel] **/
-
-            trackingNumber = inspectionDetails[0];
-            inspDate = inspectionDetails[1];
-            getDateInformation();
-
-            inspType = inspectionDetails[2];
-
-            try {
-                numCritical = Integer.parseInt(inspectionDetails[3].trim());
-                numNonCritical = Integer.parseInt(inspectionDetails[4].trim());
-            }
-            catch (NumberFormatException ex) {
-                throw new RuntimeException("ERROR: Failed number conversion.");
-            }
 
             hazardRating = separateViolationsAndHazard[1];
 
