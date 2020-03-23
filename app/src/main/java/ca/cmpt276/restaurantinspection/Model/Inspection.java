@@ -20,44 +20,76 @@ public class Inspection {
 
     private ArrayList<Violation> violationsList;
 
-    /** String[] = [0: TrackingNum, 1: Date, 2: InspType, 3: NumCrit, 4: NumNonCrit, 5: HazRating, 6: ViolLump] **/
+    /** String[] is either
+     * [0: Inspection (as is, there were no violations)] >> length = 1
+     * or
+     * [0: First half of Inspection, 1: Violations & Hazard Rating] >> length = 2 **/
     /** ViolLump is currently a long string of all violations to be split by '|' **/
-    public Inspection(String[] inspectionDetails, ViolationsMap map) {
-        trackingNumber = inspectionDetails[0];
-        inspDate = inspectionDetails[1];
-        getDateInformation();
-
-        inspType = inspectionDetails[2];
-
-        try {
-            numCritical = Integer.parseInt(inspectionDetails[3].trim());
-            numNonCritical = Integer.parseInt(inspectionDetails[4].trim());
-        }
-        catch (NumberFormatException ex) {
-            throw new RuntimeException("ERROR: Failed number conversion.");
-        }
-
-        hazardRating = inspectionDetails[5];
-
-        if (inspectionDetails.length < 7) { return; }
-
+    public Inspection(String[] inspectionLump, ViolationsMap map) {
         violationsList = new ArrayList<>();
-        String violLump = inspectionDetails[6];
-        String[] violations = violLump.split("\\|");
 
-        for (String violation : violations) {
-            String[] currViolation = violation.split(",");
+        if (inspectionLump.length == 1) {
+            String[] inspectionDetails = inspectionLump[0].split(",");
+            /** [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit, 5: NULL, 6: HazardLevel] **/
 
-            String violationID = currViolation[0];
-            String[] violationInfo = ViolationsMap.getViolationFromMap(violationID);
+            trackingNumber = inspectionDetails[0];
+            inspDate = inspectionDetails[1];
+            getDateInformation();
 
-            /** ID not found **/
-            if (violationInfo == null) { return; }
+            inspType = inspectionDetails[2];
 
-            /** Create new data from info retrieved **/
-            Violation newViolation = new Violation(violationInfo);
+            try {
+                numCritical = Integer.parseInt(inspectionDetails[3].trim());
+                numNonCritical = Integer.parseInt(inspectionDetails[4].trim());
+            }
+            catch (NumberFormatException ex) {
+                throw new RuntimeException("ERROR: Failed number conversion.");
+            }
 
-            violationsList.add(newViolation);
+            hazardRating = inspectionDetails[6];
+        }
+
+        else {
+            String[] inspectionDetails = inspectionLump[0].split(",");
+            /** [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit] **/
+            String[] separateViolationsAndHazard = inspectionLump[1].split("\",");
+            /** [0: Violations, 1: 1: HazardLevel] **/
+
+            trackingNumber = inspectionDetails[0];
+            inspDate = inspectionDetails[1];
+            getDateInformation();
+
+            inspType = inspectionDetails[2];
+
+            try {
+                numCritical = Integer.parseInt(inspectionDetails[3].trim());
+                numNonCritical = Integer.parseInt(inspectionDetails[4].trim());
+            }
+            catch (NumberFormatException ex) {
+                throw new RuntimeException("ERROR: Failed number conversion.");
+            }
+
+            hazardRating = separateViolationsAndHazard[1];
+
+            String violLump = separateViolationsAndHazard[0];
+            String[] violations = violLump.split("\\|");
+
+            for (String violation : violations) {
+                String[] currViolation = violation.split(",");
+
+                String violationID = currViolation[0];
+                String[] violationInfo = ViolationsMap.getViolationFromMap(violationID);
+
+                /** ID not found **/
+                if (violationInfo == null) {
+                    return;
+                }
+
+                /** Create new data from info retrieved **/
+                Violation newViolation = new Violation(violationInfo);
+
+                violationsList.add(newViolation);
+            }
         }
     }
 
