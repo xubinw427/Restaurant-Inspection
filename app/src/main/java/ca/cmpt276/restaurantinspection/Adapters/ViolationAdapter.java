@@ -125,4 +125,14 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
     public int getItemCount() {
         return violationList.size();
     }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 }
