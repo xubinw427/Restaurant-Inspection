@@ -2,6 +2,7 @@
 Data Parsing: https://stackoverflow.com/questions/38415680/how-to-parse-csv-file-into-an-array-in-android-studio
 CardView and RecyclerView Adapter: https://www.youtube.com/watch?v=Nw9JF55LDzE&t=1s
 Dynamic Parent Activity: https://www.youtube.com/watch?v=suWIljV1AxI
+Calculate Difference in Hours Between Dates: https://mkyong.com/java/how-to-calculate-date-time-difference-in-java/
 
 [IMAGE RESOURCES]
 Activity Icons: https://www.figma.com/resources/assets/material-icons-outline/

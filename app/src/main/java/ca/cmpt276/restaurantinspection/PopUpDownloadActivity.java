@@ -41,7 +41,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //TODO: Cancel download
+        //TO DO: Cancel download
         moveTaskToBack(true);
     }
 
