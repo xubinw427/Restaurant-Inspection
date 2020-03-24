@@ -7,5 +7,8 @@
     <color name="fontColour">#858B95</color>
     <color name="mapFontColour">#797E87</color>
     <color name="bgColour">#FAFAFA</color>
-    <color name="colorLightBlue">#32CBDC</color>
+    <color name="borderColorLightBlue">#32CBDC</color>
+    <color name="backgroundColorLightBlue">#80eae5</color>
+    <color name="backgroundRed">#DB7474</color>
+    <color name="backgroundTeal">#35CD96</color>
 </resources>
