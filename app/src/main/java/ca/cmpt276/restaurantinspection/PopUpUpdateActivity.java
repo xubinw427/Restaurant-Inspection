@@ -24,20 +24,28 @@ public class PopUpUpdateActivity extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.8),(int)(height*.6));
 
+        proceedBtnPressed();
+
+        cancelBtnPressed();
+    }
+
+    private void cancelBtnPressed() {
+        Button btn_cancel = findViewById(R.id.btn_cancel);
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+    }
+
+    private void proceedBtnPressed() {
         Button btn_proceed = findViewById(R.id.btn_proceed);
         btn_proceed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = makePopUpDownloadIntent(getApplicationContext());
                 startActivity(intent);
-                finish();
-            }
-        });
-
-        Button btn_cancel = findViewById(R.id.btn_cancel);
-        btn_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
                 finish();
             }
         });

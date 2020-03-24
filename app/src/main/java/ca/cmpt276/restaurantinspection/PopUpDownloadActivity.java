@@ -26,6 +26,10 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.8),(int)(height*.6));
 
+        cancelBtnPressed();
+    }
+
+    private void cancelBtnPressed() {
         Button btn = findViewById(R.id.btn_cancel);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
