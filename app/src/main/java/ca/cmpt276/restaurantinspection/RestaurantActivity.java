@@ -28,6 +28,8 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
 
+
+
         restaurantManager = RestaurantManager.getInstance();
 
         extractRestaurants();

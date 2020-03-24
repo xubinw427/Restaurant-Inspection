@@ -31,6 +31,7 @@ import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgor
 
 import java.io.InputStream;
 
+
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
 import ca.cmpt276.restaurantinspection.Model.CustomMarker;
 import ca.cmpt276.restaurantinspection.Model.OwnIconRendered;
@@ -60,6 +61,11 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         DataManager.init(this);
         dataManager = DataManager.getInstance();
+
+        /*
+        Start this activity when there is an update available
+         */
+        startActivity(new Intent(RestaurantMapActivity.this,PopUpUpdateActivity.class));
 
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
         InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
