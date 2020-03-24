@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -29,7 +30,7 @@ import com.google.maps.android.clustering.algo.Algorithm;
 import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
 
 import java.io.InputStream;
-import java.util.Collection;
+
 
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
 import ca.cmpt276.restaurantinspection.Model.CustomMarker;
@@ -37,8 +38,10 @@ import ca.cmpt276.restaurantinspection.Model.OwnIconRendered;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
+import ca.cmpt276.restaurantinspection.Model.DataManager;
 
 public class RestaurantMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private DataManager dataManager;
     private Algorithm <CustomMarker> clusterManagerAlgorithm;
     private RestaurantManager restaurantManager;
     private ClusterManager <CustomMarker> mClusterManager;
@@ -46,6 +49,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     OwnIconRendered mRender;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +58,9 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.title_restaurant_map));
         actionBar.setElevation(0);
+
+        DataManager.init(this);
+        dataManager = DataManager.getInstance();
 
         /*
         Start this activity when there is an update available
@@ -72,7 +79,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         startRestaurantListActivity();
     }
-
 
     /**
      * Manipulates the map once available.
