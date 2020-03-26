@@ -63,7 +63,6 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
                     String today = sdf.format(cal.getTime());
 
-                    editor.putString("last_updated", today);
                     editor.putString("last_modified_restaurants_by_server",
                             updateManager.getLastModifiedRestaurants());
                     editor.putString("last_modified_inspections_by_server",

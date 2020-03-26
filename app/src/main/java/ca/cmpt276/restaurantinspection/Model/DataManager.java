@@ -114,8 +114,11 @@ public class DataManager {
 
                         String lastModified = csv.get("last_modified").toString();
 
+                        SharedPreferences pref = fileContext.getSharedPreferences("UpdatePref", 0);
+                        String rawDate = pref.getString("last_updated", null);
+
                         /** On first load, save modified dates as last updated & last modified **/
-                        if (updateManager.getLastUpdatedDate() == null) {
+                        if (rawDate == null) {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
                             Calendar cal = Calendar.getInstance();
                             String today = sdf.format(cal.getTime());

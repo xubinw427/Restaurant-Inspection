@@ -67,16 +67,15 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         /** === CHECKING FOR UPDATES === **/
         updateManager = UpdateManager.getInstance();
         updateManager.twentyHrsSinceUpdate();
-        System.out.println(updateManager.checkUpdateNeeded());
         /** === END CHECKING === **/
 
-//        if (updateManager.twentyHrsSinceUpdate()) {
+        if (updateManager.twentyHrsSinceUpdate()) {
 //            /** and if an update exists then **/
 //            if (updateManager.checkUpdateNeeded()) {
                 startActivity(new Intent(RestaurantMapActivity.this,
                         PopUpUpdateActivity.class));
 //            }
-//        }
+        }
 
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
         InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
