@@ -16,6 +16,8 @@ public class PopUpUpdateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pop_up_update);
 
+        setFinishOnTouchOutside(false);
+
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -59,9 +61,5 @@ public class PopUpUpdateActivity extends AppCompatActivity {
 
     public static Intent makePopUpDownloadIntent(Context c){
         return new Intent(c, PopUpDownloadActivity.class);
-    }
-
-    public static Intent makeRestaurantMapIntent(Context c){
-        return new Intent(c, RestaurantMapActivity.class);
     }
 }

@@ -13,6 +13,9 @@ public class UpdateManager {
     private Context context;
     private String lastUpdatedDate;
     private String lastModifiedInspections;
+    private String lastModifiedRestaurants;
+
+    private int updated = -1;
 
     private UpdateManager(Context context) {
         this.context = context;
@@ -23,8 +26,10 @@ public class UpdateManager {
         SharedPreferences.Editor editor = pref.edit();
 
         editor.putString("last_updated", null);
-        editor.putString("last_modified_by_server", null);
-        editor.commit();
+
+        editor.putString("last_modified_restaurants_by_server", null);
+        editor.putString("last_modified_inspections_by_server", null);
+        editor.apply();
     }
 
     public static UpdateManager getInstance() {
@@ -45,6 +50,14 @@ public class UpdateManager {
         return instance;
     }
 
+    public void setUpdated(int i) {
+        this.updated = i;
+    }
+
+    public int getUpdated() {
+        return updated;
+    }
+
     public String getLastModifiedInspections() {
         return lastModifiedInspections;
     }
@@ -55,12 +68,32 @@ public class UpdateManager {
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
         SharedPreferences.Editor editor = pref.edit();
 
-        editor.putString("last_modified_by_server", lastModifiedDate);
+        editor.putString("last_modified_inspections_by_server", lastModifiedDate);
         editor.apply();
     }
 
     public void setLastModifiedInspections(String lastModifiedDate) {
         this.lastModifiedInspections = lastModifiedDate;
+    }
+
+
+    public String getLastModifiedRestaurants() {
+        return lastModifiedRestaurants;
+    }
+
+    public void setLastModifiedRestaurantsPrefs(String lastModifiedDate) {
+        this.lastModifiedRestaurants = lastModifiedDate;
+
+        SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putString("last_modified_restaurants_by_server", lastModifiedDate);
+        editor.apply();
+
+    }
+
+    public void setLastModifiedRestaurants(String lastModifiedDate) {
+        this.lastModifiedRestaurants = lastModifiedDate;
     }
 
     public String getLastUpdatedDate() {
@@ -130,18 +163,22 @@ public class UpdateManager {
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
 
         try {
-            while (pref.getString("last_modified_by_server", null) == null) {
+            while (pref.getString("last_modified_inspections_by_server", null) == null
+                    || pref.getString("last_modified_restaurants_by_server", null) == null) {
                 Thread.sleep(10);
             }
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
-        String savedDate = pref.getString("last_modified_by_server", null);
+        String savedRestaurantsDate = pref.getString("last_modified_restaurants_by_server",
+                                                    null);
+        String savedInspectionsDate = pref.getString("last_modified_inspections_by_server",
+                                                    null);
 
-        if (!this.lastModifiedInspections.equals(savedDate)) {
-            return true;
-        }
+        if (!this.lastModifiedRestaurants.equals(savedRestaurantsDate)) { return true; }
+
+        if (!this.lastModifiedInspections.equals(savedInspectionsDate)) { return true; }
 
         return false;
     }
