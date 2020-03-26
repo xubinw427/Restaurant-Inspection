@@ -2,6 +2,7 @@ package ca.cmpt276.restaurantinspection;
 
 import androidx.annotation.NonNull;
 
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
@@ -29,16 +30,20 @@ import com.google.maps.android.clustering.algo.Algorithm;
 import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
 
 import java.io.InputStream;
-import java.util.Collection;
+
 
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
 import ca.cmpt276.restaurantinspection.Model.CustomMarker;
 import ca.cmpt276.restaurantinspection.Model.OwnIconRendered;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
+import ca.cmpt276.restaurantinspection.Model.DataManager;
 
 public class RestaurantMapActivity extends AppCompatActivity implements OnMapReadyCallback {
+    private UpdateManager updateManager;
+    private DataManager dataManager;
     private Algorithm <CustomMarker> clusterManagerAlgorithm;
     private RestaurantManager restaurantManager;
     private ClusterManager <CustomMarker> mClusterManager;
@@ -46,6 +51,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     OwnIconRendered mRender;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +60,20 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(getString(R.string.title_restaurant_map));
         actionBar.setElevation(0);
+
+        UpdateManager.init(this);
+        DataManager.init(this);
+        dataManager = DataManager.getInstance();
+        /** === CHECKING FOR UPDATES === **/
+        updateManager = UpdateManager.getInstance();
+        updateManager.twentyHrsSinceUpdate();
+        System.out.println(updateManager.checkUpdateNeeded());
+        /** === END CHECKING === **/
+
+        /*
+        Start this activity when there is an update available
+         */
+        startActivity(new Intent(RestaurantMapActivity.this,PopUpUpdateActivity.class));
 
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
         InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
@@ -67,7 +87,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         startRestaurantListActivity();
     }
-
 
     /**
      * Manipulates the map once available.
@@ -160,6 +179,8 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             public void onClusterItemInfoWindowClick(CustomMarker marker) {
                 int position = getRestaurantPosition(marker.getPosition());
                 restaurantManager.setCurrRestaurantPosition(position);
+                restaurantManager.setFromMap(1);
+
                 Intent intent = new Intent(RestaurantMapActivity.this, RestaurantInfoActivity.class);
                 startActivity(intent);
             }
