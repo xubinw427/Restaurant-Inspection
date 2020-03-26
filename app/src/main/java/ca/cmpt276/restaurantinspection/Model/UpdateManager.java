@@ -16,6 +16,7 @@ public class UpdateManager {
     private String lastModifiedRestaurants;
 
     private int updated = -1;
+    private int cancelled = 0;
 
     private UpdateManager(Context context) {
         this.context = context;
@@ -56,6 +57,14 @@ public class UpdateManager {
 
     public int getUpdated() {
         return updated;
+    }
+
+    public void setCancelled(int i) {
+        this.cancelled = i;
+    }
+
+    public int getCancelled() {
+        return cancelled;
     }
 
     public String getLastModifiedInspections() {

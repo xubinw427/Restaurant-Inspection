@@ -2,16 +2,12 @@ package ca.cmpt276.restaurantinspection;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.PopupWindow;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -23,6 +19,7 @@ import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 public class PopUpDownloadActivity extends AppCompatActivity {
     UpdateManager updateManager = UpdateManager.getInstance();
     DataManager dataManager = DataManager.getInstance();
+    Thread download;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,38 +36,46 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
         getWindow().setLayout((int)(width*.8),(int)(height*.6));
 
-        dataManager.readSecondURLForRestaurantData();
-        dataManager.readSecondURLForInspectionData();
+        SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
+        final SharedPreferences.Editor editor = pref.edit();
 
         cancelBtnPressed();
 
-        /** Will exit busy loop on cancel (0), or when data is done updating (1) **/
-        while (updateManager.getUpdated() == -1);
-
-        /** SAVE NEW UPDATED TIME!!!
-         *  AND REST PREF
-         *  AND INSP PREF **/
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
-        Calendar cal = Calendar.getInstance();
-
-        String today = sdf.format(cal.getTime());
-
-        SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putString("last_updated", today);
-        editor.putString("last_modified_restaurants_by_server",
-                            updateManager.getLastModifiedRestaurants());
-        editor.putString("last_modified_inspections_by_server",
-                            updateManager.getLastModifiedInspections());
-        editor.apply();
-
-        Handler handler = new Handler();
-
-        handler.postDelayed(new Runnable() {
+        download = new Thread(new Runnable() {
+            @Override
             public void run() {
+                dataManager.readSecondURLForRestaurantData();
+                dataManager.readSecondURLForInspectionData();
+
+                /** Will exit sleep once update is complete (set to 1) **/
+                try {
+                    while (updateManager.getUpdated() != 1) {
+                        Thread.sleep(10);
+                    }
+                } catch(InterruptedException ex) {
+                    Thread.currentThread().interrupt();
+                }
+
+                if (updateManager.getCancelled() != 1) {
+                    /** SAVE: Updated Time, Last Modified Restaurant/Inspection Time (by server) **/
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
+                    Calendar cal = Calendar.getInstance();
+
+                    String today = sdf.format(cal.getTime());
+
+                    editor.putString("last_updated", today);
+                    editor.putString("last_modified_restaurants_by_server",
+                            updateManager.getLastModifiedRestaurants());
+                    editor.putString("last_modified_inspections_by_server",
+                            updateManager.getLastModifiedInspections());
+                    editor.apply();
+                }
+
                 finish();
             }
-        }, 3000);
+        });
+
+        download.start();
     }
 
     private void cancelBtnPressed() {
@@ -78,8 +83,8 @@ public class PopUpDownloadActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TO DO: Cancel download
-                updateManager.setUpdated(0);
+                download.interrupt();
+                updateManager.setCancelled(1);
                 finish();
             }
         });
@@ -87,9 +92,8 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //TO DO: Cancel download
+        download.interrupt();
+        updateManager.setCancelled(1);
         finish();
-//        moveTaskToBack(true);
     }
-
 }

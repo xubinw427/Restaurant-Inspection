@@ -218,8 +218,13 @@ public class DataManager {
                     FileOutputStream outputStream;
                     outputStream = fileContext.openFileOutput(filename, Context.MODE_PRIVATE);
 
-                    while(scanner.hasNextLine()) {
+                    System.out.println("**********");
+                    System.out.println(updateManager.getCancelled());
+                    System.out.println("**********");
+
+                    while(scanner.hasNextLine() && updateManager.getCancelled() != 1) {
                         String line = scanner.nextLine();
+                        System.out.println(line);
                         line = line + '\r';
 
                         try {
@@ -262,8 +267,9 @@ public class DataManager {
                     FileOutputStream outputStream;
                     outputStream = fileContext.openFileOutput(filename, Context.MODE_PRIVATE);
 
-                    while(scanner.hasNextLine()) {
+                    while(scanner.hasNextLine() && updateManager.getCancelled() != 1) {
                         String line = scanner.nextLine();
+                        System.out.println(line);
                         line = line + '\r';
 
                         try {
@@ -275,35 +281,39 @@ public class DataManager {
 
                     outputStream.close();
                     scanner.close();
+
+                    if (updateManager.getCancelled() == 1) {
+                        return;
+                    }
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
+                    Calendar cal = Calendar.getInstance();
+
+                    String today = sdf.format(cal.getTime());
+
+                    SharedPreferences pref = fileContext.getSharedPreferences("UpdatePref", 0);
+                    SharedPreferences.Editor editor = pref.edit();
+
+                    editor.putString("last_updated", today);
+                    editor.putString("last_modified_restaurants_by_server",
+                            updateManager.getLastModifiedRestaurants());
+                    editor.putString("last_modified_inspections_by_server",
+                            updateManager.getLastModifiedInspections());
+                    editor.apply();
+
+                    fileContext.deleteFile("update_restaurant");
+                    File oldRestaurantFile = fileContext.getFileStreamPath("new_update_restaurant");
+                    File newRestaurantFile = fileContext.getFileStreamPath("update_restaurant");
+                    oldRestaurantFile.renameTo(newRestaurantFile);
+
+                    fileContext.deleteFile("update_inspection");
+                    File oldInspectionFile = fileContext.getFileStreamPath("new_update_inspection");
+                    File newInspectionFile = fileContext.getFileStreamPath("update_inspection");
+                    oldInspectionFile.renameTo(newInspectionFile);
+
+                    updateManager.setUpdated(1);
                 }
             }
         });
-
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
-        Calendar cal = Calendar.getInstance();
-
-        String today = sdf.format(cal.getTime());
-
-        SharedPreferences pref = fileContext.getSharedPreferences("UpdatePref", 0);
-        SharedPreferences.Editor editor = pref.edit();
-
-        editor.putString("last_updated", today);
-        editor.putString("last_modified_restaurants_by_server",
-                updateManager.getLastModifiedRestaurants());
-        editor.putString("last_modified_inspections_by_server",
-                updateManager.getLastModifiedInspections());
-        editor.apply();
-
-        fileContext.deleteFile("update_restaurant");
-        File oldRestaurantFile = fileContext.getFileStreamPath("new_update_restaurant");
-        File newRestaurantFile = fileContext.getFileStreamPath("update_restaurant");
-        oldRestaurantFile.renameTo(newRestaurantFile);
-
-        fileContext.deleteFile("update_inspection");
-        File oldInspectionFile = fileContext.getFileStreamPath("new_update_inspection");
-        File newInspectionFile = fileContext.getFileStreamPath("update_inspection");
-        oldInspectionFile.renameTo(newInspectionFile);
-
-        updateManager.setUpdated(1);
     }
 }

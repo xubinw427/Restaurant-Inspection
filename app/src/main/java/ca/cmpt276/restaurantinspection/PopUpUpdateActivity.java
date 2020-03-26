@@ -55,8 +55,7 @@ public class PopUpUpdateActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //TO DO: Cancel download
-        moveTaskToBack(true);
+        finish();
     }
 
     public static Intent makePopUpDownloadIntent(Context c){
