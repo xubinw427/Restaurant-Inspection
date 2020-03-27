@@ -24,7 +24,8 @@ import static android.content.ContentValues.TAG;
 public class DataManager {
     private static DataManager instance;
     private Context fileContext;
-
+    private final String filenameForRestaurant = "update_restaurant";
+    private final String filenameForInspection = "update_inspection";
     private DataManager(Context context) {
         this.fileContext = context;
         readTheFirstURL();
@@ -93,8 +94,8 @@ public class DataManager {
                         String updateURL2 = url2.replace("http", "https");
 
                         String lastModified = csv.get("last_modified").toString();
-                        Log.d(TAG, updateURL2);
-                        Log.d(TAG, lastModified);
+                        //Log.d(TAG, updateURL2);
+                        //Log.d(TAG, lastModified);
 
                         // To read real data
                         readSecondURLForRestaurantData(updateURL2,lastModified);
@@ -128,10 +129,10 @@ public class DataManager {
 
                             Scanner scanner = new Scanner(secondResponse);
 
-                            String filename = "update_restaurant";
+
 
                             FileOutputStream outputStream;
-                            outputStream = fileContext.openFileOutput(filename, Context.MODE_PRIVATE);
+                            outputStream = fileContext.openFileOutput(filenameForRestaurant, Context.MODE_PRIVATE);
 
                             // Make sure we get the right number of restaurants.
                             int count = 0;
@@ -147,7 +148,7 @@ public class DataManager {
                                 count++;
                             }
                             outputStream.close();
-                            Log.d(TAG, "There are " + count + " Restaurants.");
+                            //Log.d(TAG, "There are " + count + " Restaurants.");
                             scanner.close();
                         }
                     }
@@ -200,8 +201,8 @@ public class DataManager {
                         updateManager.setLastModifiedInspections(lastModified);
                         /** === END UPDATE MANAGER === **/
 
-                        Log.d(TAG, updateURL2);
-                        Log.d(TAG, lastModified);
+                        //Log.d(TAG, updateURL2);
+                        //Log.d(TAG, lastModified);
 
                         readSecondURLForRestaurantData(updateURL2,lastModified);
 
@@ -233,11 +234,11 @@ public class DataManager {
 
                             Scanner scanner = new Scanner(secondResponse);
 
-                            String filename = "update_inspection";
+
 
                             FileOutputStream outputStream;
 
-                            outputStream = fileContext.openFileOutput(filename, Context.MODE_PRIVATE);
+                            outputStream = fileContext.openFileOutput(filenameForInspection, Context.MODE_PRIVATE);
                             // Make sure we get the right number of inspections.
                             int count = 0;
                             while(scanner.hasNextLine()) {
@@ -251,7 +252,7 @@ public class DataManager {
                                 count++;
                             }
                             outputStream.close();
-                            Log.d(TAG, "There are " + count + " Inspections.");
+                            //Log.d(TAG, "There are " + count + " Inspections.");
                             scanner.close();
                         }
                     }

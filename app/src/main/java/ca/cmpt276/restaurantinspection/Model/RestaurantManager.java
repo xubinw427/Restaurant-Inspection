@@ -1,5 +1,7 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
@@ -124,7 +126,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
             throw new RuntimeException("ERROR: Failed to close " + file);
         }
 
-        //this.sortRestaurants();
+        this.sortRestaurants();
     }
 
     private void populateInspections(InputStream file) {
@@ -139,7 +141,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
             while ((line = input.readLine()) != null) {
                 String[] inspectionLump = line.split(",\"");
 
-                if (inspectionLump[0].contains("***")) {
+                if (inspectionLump[0].contains(",,,")) {
                     continue;
                 }
 
@@ -167,8 +169,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
             throw new RuntimeException("ERROR: Failed to close " + file);
         }
     }
-    public void sortRestaurants()
-    {
+
+    public void sortRestaurants() {
         Collections.sort(restaurantsList, new SortRestaurantsByNameAplhabet());
     }
 
@@ -179,18 +181,14 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 }
 
-class SortRestaurantsByNameAplhabet implements Comparator<Restaurant>
-{
-
+class SortRestaurantsByNameAplhabet implements Comparator<Restaurant> {
     @Override
     public int compare(Restaurant o1, Restaurant o2) {
         return o1.compareTo(o2);
     }
 }
 
-class SortInspectionsByDate implements  Comparator<Inspection>
-{
-
+class SortInspectionsByDate implements  Comparator<Inspection> {
     @Override
     public int compare(Inspection o1, Inspection o2) {
         return o1.compareTo(o2);
