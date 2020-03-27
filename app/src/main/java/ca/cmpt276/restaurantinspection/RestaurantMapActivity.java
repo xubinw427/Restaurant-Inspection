@@ -66,13 +66,16 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         /** === CHECKING FOR UPDATES === **/
         updateManager = UpdateManager.getInstance();
         updateManager.twentyHrsSinceUpdate();
-        System.out.println(updateManager.checkUpdateNeeded());
         /** === END CHECKING === **/
 
-        /*
-        Start this activity when there is an update available
-         */
-        startActivity(new Intent(RestaurantMapActivity.this,PopUpUpdateActivity.class));
+        if (updateManager.twentyHrsSinceUpdate()) {
+            /** and if an update exists then **/
+            /** UNCOMMENT AFTER TESTING -- NO NEW DATA so pop-up won't show up **/
+//            if (updateManager.checkUpdateNeeded()) {
+                startActivity(new Intent(RestaurantMapActivity.this,
+                        PopUpUpdateActivity.class));
+//            }
+        }
 
         /** CHANGE RESTAURANT FILE AFTER TESTING **/
         InputStream restaurantsIn = getResources().openRawResource(R.raw.update_restaurants);
@@ -159,7 +162,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
-        if (mapFragment!=null) {
+        if (mapFragment != null) {
             mapFragment.getMapAsync(this);
         }
     }
