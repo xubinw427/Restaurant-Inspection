@@ -108,6 +108,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 
     private void readRestaurantData(InputStream file) {
+        if (file == null) { return; }
+
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(file, Charset.forName("UTF-8"))
         );
@@ -149,6 +151,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 
     private void populateInspections(InputStream file) {
+        if (file == null) { return; }
+        
         BufferedReader input = new BufferedReader(new InputStreamReader(file));
 
         String line;

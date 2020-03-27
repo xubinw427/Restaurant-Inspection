@@ -137,6 +137,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             }
             getLocation();
         }
+
         mMap = googleMap;
         mMap.setMyLocationEnabled(true);
         getDeviceLocation();
