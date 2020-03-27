@@ -31,7 +31,6 @@ import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgor
 
 import java.io.InputStream;
 
-
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
 import ca.cmpt276.restaurantinspection.Model.CustomMarker;
 import ca.cmpt276.restaurantinspection.Model.OwnIconRendered;
@@ -238,5 +237,3 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         return -1;
     }
 }
-
-
