@@ -10,7 +10,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import ca.cmpt276.restaurantinspection.Model.UpdateManager;
+
 public class PopUpUpdateActivity extends AppCompatActivity {
+    UpdateManager updateManager = UpdateManager.getInstance();
     private final int REQUEST_CODE = 500;
 
     @Override
@@ -38,6 +41,7 @@ public class PopUpUpdateActivity extends AppCompatActivity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                updateManager.setCancelled(1);
                 finish();
             }
         });
@@ -56,6 +60,7 @@ public class PopUpUpdateActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
+        updateManager.setCancelled(1);
         finish();
     }
 
@@ -73,6 +78,8 @@ public class PopUpUpdateActivity extends AppCompatActivity {
             finish();
         }
         else if (requestCode == REQUEST_CODE && resultCode == RESULT_CANCELED) {
+            updateManager.setCancelled(1);
+
             Intent backToMap = new Intent();
             setResult(PopUpDownloadActivity.RESULT_CANCELED, backToMap);
             finish();
