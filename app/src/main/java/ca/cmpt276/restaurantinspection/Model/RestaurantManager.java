@@ -101,6 +101,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         );
 
         String line;
+
         try {
             /** Step over header **/
             reader.readLine();
@@ -113,6 +114,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         catch (IOException e) {
             e.printStackTrace();
         }
+
         try {
             file.close();
         }
@@ -124,18 +126,23 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private void populateInspections(InputStream file) {
         BufferedReader input = new BufferedReader(new InputStreamReader(file));
 
-        try {
-            String line;
+        String line;
 
+        try {
             /** Step over header **/
             input.readLine();
 
             while ((line = input.readLine()) != null) {
-                String[] inspectionData = line.split("\\*");
+                String[] inspectionLump = line.split(",\"");
 
-                Inspection currInspection = new Inspection(inspectionData, violationsMap);
+                if (inspectionLump[0].contains("***")) {
+                    continue;
+                }
 
-                String currRestaurantID = inspectionData[0];
+                String[] firstHalf = inspectionLump[0].split(",");
+                String currRestaurantID = firstHalf[0].trim();
+
+                Inspection currInspection = new Inspection(inspectionLump, violationsMap);
 
                 for (Restaurant restaurant : restaurantsList) {
                     if (restaurant.getId().equals(currRestaurantID)) {
@@ -148,6 +155,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         catch (IOException ex) {
             throw new RuntimeException("ERROR: Failed to read in " + file);
         }
+
         try {
             file.close();
         }
