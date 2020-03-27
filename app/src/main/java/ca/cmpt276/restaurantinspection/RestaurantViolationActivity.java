@@ -54,6 +54,10 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
                 break;
             case "Low":
                 inspectionOverview.setImageResource(R.drawable.inspection_det_low);
+                break;
+            case "None":
+                inspectionOverview.setImageResource(R.drawable.inspection_det_none);
+                break;
         }
 
         dateAndLevel.setText(getString(R.string.str_date_level, inspection.getFullDate(),

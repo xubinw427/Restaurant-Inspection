@@ -1,16 +1,23 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 public class Restaurant {
     private String id;
-    private String name;
+    private String name = "";
     private String address;
     private double latitude;
     private double longitude;
     private ArrayList<Inspection> inspectionsList;
+    private final String TAG = "Writting";
 
     public Restaurant(String restaurantLump) {
+        restaurantLump = restaurantLump.replaceAll(", ", " ");
+        restaurantLump = restaurantLump.replaceAll("\"", "");
+
+        System.out.println(restaurantLump);
         String[] restaurantInfo = restaurantLump.split(",");
         /** [0: ID, 1: Name, 2: PhysAddress, 3: PhysCity, 4: Factype, 5: Latitude, 6: Longitude] **/
         id = restaurantInfo[0];
