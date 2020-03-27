@@ -76,6 +76,8 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
             case "Low":
                 holder.inspBackground.setImageResource(R.drawable.inspection_low);
                 break;
+            case "None":
+                holder.inspBackground.setImageResource(R.drawable.inspection_det_none);
             default:
                 break;
         }

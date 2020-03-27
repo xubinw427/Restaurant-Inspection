@@ -113,9 +113,10 @@ public class RestaurantManager implements Iterable<Restaurant> {
             reader.readLine();
             int count = 1;
             while (((line = reader.readLine()) != null)) {
-                Log.d(TAG, "The " + count + " Restaurant is: " + line);
+//                Log.d(TAG, "The " + count + " Restaurant is: " + line);
                 count++;
                 Restaurant newRestaurant = new Restaurant(line);
+//                System.out.println(newRestaurant.getName());
                 this.addNew(newRestaurant);
             }
         }
@@ -143,7 +144,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
             while ((line = input.readLine()) != null) {
                 String[] inspectionLump = line.split(",\"");
 
-                if (inspectionLump[0].contains("***")) {
+                if (inspectionLump[0].contains(",,,")) {
                     continue;
                 }
 

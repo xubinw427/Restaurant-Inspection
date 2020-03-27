@@ -14,30 +14,18 @@ public class Restaurant {
     private final String TAG = "Writting";
 
     public Restaurant(String restaurantLump) {
-        String[] restaurantInfo = restaurantLump.split(",Restaurant,");
+        restaurantLump = restaurantLump.replaceAll(", ", " ");
+        restaurantLump = restaurantLump.replaceAll("\"", "");
+
+        System.out.println(restaurantLump);
+        String[] restaurantInfo = restaurantLump.split(",");
         /** [0: ID, 1: Name, 2: PhysAddress, 3: PhysCity, 4: Factype, 5: Latitude, 6: Longitude] **/
-//        id = restaurantInfo[0];
-//        Log.d(TAG, "ID is: " + restaurantInfo[0] + " Name is: " + restaurantInfo[1] + " Address is: " + restaurantInfo[2] + ", " + restaurantInfo[3]
-//                + " Factype is: " + restaurantInfo[4] + " coordinate is: " + restaurantInfo[5] + "," + restaurantInfo[6]);
-//        name = restaurantInfo[1];
-//        address = restaurantInfo[2] + ", " + restaurantInfo[3];
-//        latitude = Double.parseDouble(restaurantInfo[5]);
-//        longitude = Double.parseDouble(restaurantInfo[6]);
+        id = restaurantInfo[0];
+        name = restaurantInfo[1];
+        address = restaurantInfo[2] + ", " + restaurantInfo[3];
+        latitude = Double.parseDouble(restaurantInfo[5]);
+        longitude = Double.parseDouble(restaurantInfo[6]);
 
-        String[] firstPart = restaurantInfo[0].split(",");
-        String[] coordinate = restaurantInfo[1].split(",");
-        int startindex = 1;
-        int finishindex = firstPart.length - 1;
-        id = firstPart[0];
-        address = firstPart[finishindex - 1] + ", " + firstPart[finishindex];
-        finishindex = finishindex - 3;
-        for(int i = startindex; i <= finishindex; i++)
-            name = name + firstPart[i];
-
-
-
-        latitude = Double.parseDouble(coordinate[0]);
-        longitude = Double.parseDouble(coordinate[1]);
         inspectionsList = new ArrayList<>();
     }
 

@@ -48,14 +48,20 @@ public class Inspection {
         }
 
         if (inspectionLump.length == 1) {
-            hazardRating = inspectionDetails[6];
+            if (inspectionDetails.length == 7) {
+                hazardRating = inspectionDetails[6];
+            }
+            else { hazardRating = "None"; }
         }
 
         else {
             String[] separateViolationsAndHazard = inspectionLump[1].split("\",");
             /** [0: Violations, 1: 1: HazardLevel] **/
 
-            hazardRating = separateViolationsAndHazard[1];
+            if (separateViolationsAndHazard.length == 2) {
+                hazardRating = separateViolationsAndHazard[1];
+            }
+            else { hazardRating = "None"; }
 
             String violLump = separateViolationsAndHazard[0];
             String[] violations = violLump.split("\\|");
@@ -133,7 +139,7 @@ public class Inspection {
         cal.add(Calendar.DATE, - daysAgo);
 
         if (daysAgo < 31) {
-            dateDisplay = daysAgo + "days ago";
+            dateDisplay = daysAgo + " days ago";
         }
         else if (daysAgo < 366) {
             dateDisplay = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime());
