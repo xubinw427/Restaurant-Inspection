@@ -48,12 +48,10 @@ public class Inspection {
         }
 
         if (inspectionLump.length == 1) {
-//            System.out.println(inspectionLump.length);
-//            System.out.println(inspectionDetails.length);
             if (inspectionDetails.length == 7) {
                 hazardRating = inspectionDetails[6];
             }
-            hazardRating = "None";
+            else { hazardRating = "None"; }
         }
 
         else {
@@ -141,7 +139,7 @@ public class Inspection {
         cal.add(Calendar.DATE, - daysAgo);
 
         if (daysAgo < 31) {
-            dateDisplay = daysAgo + "days ago";
+            dateDisplay = daysAgo + " days ago";
         }
         else if (daysAgo < 366) {
             dateDisplay = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime());
