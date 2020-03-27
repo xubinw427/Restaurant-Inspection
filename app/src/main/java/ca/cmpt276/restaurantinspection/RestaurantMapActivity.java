@@ -257,6 +257,9 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             case REQUEST_CODE_ASK_PERMISSIONS:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getLocation();
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
                 } else {
                     // Permission Denied
                     Toast.makeText(this, "your message", Toast.LENGTH_SHORT)
