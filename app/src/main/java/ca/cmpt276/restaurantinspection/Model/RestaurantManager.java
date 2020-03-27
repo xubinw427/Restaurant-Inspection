@@ -1,5 +1,7 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
@@ -8,6 +10,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class RestaurantManager implements Iterable<Restaurant> {
@@ -101,6 +105,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         );
 
         String line;
+
         try {
             /** Step over header **/
             reader.readLine();
@@ -113,29 +118,37 @@ public class RestaurantManager implements Iterable<Restaurant> {
         catch (IOException e) {
             e.printStackTrace();
         }
+
         try {
             file.close();
         }
         catch (IOException ex) {
             throw new RuntimeException("ERROR: Failed to close " + file);
         }
+
+        this.sortRestaurants();
     }
 
     private void populateInspections(InputStream file) {
         BufferedReader input = new BufferedReader(new InputStreamReader(file));
 
-        try {
-            String line;
+        String line;
 
+        try {
             /** Step over header **/
             input.readLine();
 
             while ((line = input.readLine()) != null) {
-                String[] inspectionData = line.split("\\*");
+                String[] inspectionLump = line.split(",\"");
 
-                Inspection currInspection = new Inspection(inspectionData, violationsMap);
+                if (inspectionLump[0].contains(",,,")) {
+                    continue;
+                }
 
-                String currRestaurantID = inspectionData[0];
+                String[] firstHalf = inspectionLump[0].split(",");
+                String currRestaurantID = firstHalf[0].trim();
+
+                Inspection currInspection = new Inspection(inspectionLump, violationsMap);
 
                 for (Restaurant restaurant : restaurantsList) {
                     if (restaurant.getId().equals(currRestaurantID)) {
@@ -148,6 +161,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         catch (IOException ex) {
             throw new RuntimeException("ERROR: Failed to read in " + file);
         }
+
         try {
             file.close();
         }
@@ -156,9 +170,27 @@ public class RestaurantManager implements Iterable<Restaurant> {
         }
     }
 
+    public void sortRestaurants() {
+        Collections.sort(restaurantsList, new SortRestaurantsByNameAplhabet());
+    }
+
     @Override
     @NonNull
     public Iterator<Restaurant> iterator() {
         return restaurantsList.iterator();
+    }
+}
+
+class SortRestaurantsByNameAplhabet implements Comparator<Restaurant> {
+    @Override
+    public int compare(Restaurant o1, Restaurant o2) {
+        return o1.compareTo(o2);
+    }
+}
+
+class SortInspectionsByDate implements  Comparator<Inspection> {
+    @Override
+    public int compare(Inspection o1, Inspection o2) {
+        return o1.compareTo(o2);
     }
 }

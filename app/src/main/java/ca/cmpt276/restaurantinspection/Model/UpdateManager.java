@@ -13,6 +13,10 @@ public class UpdateManager {
     private Context context;
     private String lastUpdatedDate;
     private String lastModifiedInspections;
+    private String lastModifiedRestaurants;
+
+    private int updated = -1;
+    private int cancelled = 0;
 
     private UpdateManager(Context context) {
         this.context = context;
@@ -22,9 +26,11 @@ public class UpdateManager {
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
         SharedPreferences.Editor editor = pref.edit();
 
-        editor.putString("last_updated", null);
-        editor.putString("last_modified_by_server", null);
-        editor.commit();
+        /** TO DELETE: TESTING TO MAKE POP-UP APPEAR IF NO UPDATE IN 20 HOURS **/
+        editor.putString("last_updated", "2020-03-25 11:32:43");
+        /** ================================================================== **/
+
+        editor.apply();
     }
 
     public static UpdateManager getInstance() {
@@ -45,6 +51,22 @@ public class UpdateManager {
         return instance;
     }
 
+    public void setUpdated(int i) {
+        this.updated = i;
+    }
+
+    public int getUpdated() {
+        return updated;
+    }
+
+    public void setCancelled(int i) {
+        this.cancelled = i;
+    }
+
+    public int getCancelled() {
+        return cancelled;
+    }
+
     public String getLastModifiedInspections() {
         return lastModifiedInspections;
     }
@@ -55,7 +77,7 @@ public class UpdateManager {
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
         SharedPreferences.Editor editor = pref.edit();
 
-        editor.putString("last_modified_by_server", lastModifiedDate);
+        editor.putString("last_modified_inspections_by_server", lastModifiedDate);
         editor.apply();
     }
 
@@ -63,13 +85,26 @@ public class UpdateManager {
         this.lastModifiedInspections = lastModifiedDate;
     }
 
-    public String getLastUpdatedDate() {
-        return lastUpdatedDate;
+
+    public String getLastModifiedRestaurants() {
+        return lastModifiedRestaurants;
+    }
+
+    public void setLastModifiedRestaurantsPrefs(String lastModifiedDate) {
+        this.lastModifiedRestaurants = lastModifiedDate;
+
+        SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
+        SharedPreferences.Editor editor = pref.edit();
+
+        editor.putString("last_modified_restaurants_by_server", lastModifiedDate);
+        editor.apply();
+    }
+
+    public void setLastModifiedRestaurants(String lastModifiedDate) {
+        this.lastModifiedRestaurants = lastModifiedDate;
     }
 
     public void setLastUpdatedDatePrefs(String lastUpdatedDate) {
-        this.lastUpdatedDate = lastUpdatedDate;
-
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
         SharedPreferences.Editor editor = pref.edit();
 
@@ -112,9 +147,7 @@ public class UpdateManager {
             long diff = dateEnd.getTime() - dateStart.getTime();
             hoursApart =  diff / (60 * 60 * 1000);
 
-            System.out.println(hoursApart);
-
-            if (hoursApart >= 20) {
+            if (hoursApart >= 1) {
                 return true;
             }
 
@@ -130,18 +163,23 @@ public class UpdateManager {
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
 
         try {
-            while (pref.getString("last_modified_by_server", null) == null) {
+            while (pref.getString("last_modified_inspections_by_server", null) == null
+                    || pref.getString("last_modified_restaurants_by_server", null) == null
+                    || lastModifiedRestaurants == null || lastModifiedInspections == null) {
                 Thread.sleep(10);
             }
         } catch(InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
-        String savedDate = pref.getString("last_modified_by_server", null);
+        String savedRestaurantsDate = pref.getString("last_modified_restaurants_by_server",
+                                                    null);
+        String savedInspectionsDate = pref.getString("last_modified_inspections_by_server",
+                                                    null);
 
-        if (!this.lastModifiedInspections.equals(savedDate)) {
-            return true;
-        }
+        if (!this.lastModifiedRestaurants.equals(savedRestaurantsDate)) { return true; }
+
+        if (!this.lastModifiedInspections.equals(savedInspectionsDate)) { return true; }
 
         return false;
     }

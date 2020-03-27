@@ -76,6 +76,8 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
             case "Low":
                 holder.inspBackground.setImageResource(R.drawable.inspection_low);
                 break;
+            case "None":
+                holder.inspBackground.setImageResource(R.drawable.inspection_det_none);
             default:
                 break;
         }
@@ -90,5 +92,15 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
     @Override
     public int getItemCount() {
         return inspectionList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 }

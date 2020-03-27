@@ -6,7 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class Inspection {
+public class Inspection implements Comparable<Inspection>{
     private String trackingNumber;
 
     private String inspDate;
@@ -20,9 +20,19 @@ public class Inspection {
 
     private ArrayList<Violation> violationsList;
 
-    /** String[] = [0: TrackingNum, 1: Date, 2: InspType, 3: NumCrit, 4: NumNonCrit, 5: HazRating, 6: ViolLump] **/
+    /** inspectionLump is either
+     * [0: Inspection (as is, there were no violations)] >> length = 1
+     * OR
+     * [0: First half of Inspection, 1: Violations & Hazard Rating] >> length = 2 **/
     /** ViolLump is currently a long string of all violations to be split by '|' **/
-    public Inspection(String[] inspectionDetails, ViolationsMap map) {
+    public Inspection(String[] inspectionLump, ViolationsMap map) {
+        violationsList = new ArrayList<>();
+
+        String[] inspectionDetails = inspectionLump[0].split(",");
+        /** [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit, 5: NULL, 6: HazardLevel] if len 1
+         * OR
+         * [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit] if len 2 **/
+
         trackingNumber = inspectionDetails[0];
         inspDate = inspectionDetails[1];
         getDateInformation();
@@ -37,28 +47,45 @@ public class Inspection {
             throw new RuntimeException("ERROR: Failed number conversion.");
         }
 
-        hazardRating = inspectionDetails[5];
-
-        if (inspectionDetails.length < 7) { return; }
-
-        violationsList = new ArrayList<>();
-        String violLump = inspectionDetails[6];
-        String[] violations = violLump.split("\\|");
-
-        for (String violation : violations) {
-            String[] currViolation = violation.split(",");
-
-            String violationID = currViolation[0];
-            String[] violationInfo = ViolationsMap.getViolationFromMap(violationID);
-
-            /** ID not found **/
-            if (violationInfo == null) { return; }
-
-            /** Create new data from info retrieved **/
-            Violation newViolation = new Violation(violationInfo);
-
-            violationsList.add(newViolation);
+        if (inspectionLump.length == 1) {
+            if (inspectionDetails.length == 7) {
+                hazardRating = inspectionDetails[6];
+            }
+            else { hazardRating = "None"; }
         }
+
+        else {
+            String[] separateViolationsAndHazard = inspectionLump[1].split("\",");
+            /** [0: Violations, 1: 1: HazardLevel] **/
+
+            if (separateViolationsAndHazard.length == 2) {
+                hazardRating = separateViolationsAndHazard[1];
+            }
+            else { hazardRating = "None"; }
+
+            String violLump = separateViolationsAndHazard[0];
+            String[] violations = violLump.split("\\|");
+
+            for (String violation : violations) {
+                String[] currViolation = violation.split(",");
+
+                String violationID = currViolation[0];
+                String[] violationInfo = ViolationsMap.getViolationFromMap(violationID);
+
+                /** ID not found **/
+                if (violationInfo == null) {
+                    return;
+                }
+
+                /** Create new data from info retrieved **/
+                Violation newViolation = new Violation(violationInfo);
+
+                violationsList.add(newViolation);
+            }
+        }
+    }
+    public String getInspDate() {
+        return inspDate;
     }
 
     public String getDateDisplay() {
@@ -115,7 +142,7 @@ public class Inspection {
         cal.add(Calendar.DATE, - daysAgo);
 
         if (daysAgo < 31) {
-            dateDisplay = daysAgo + "days ago";
+            dateDisplay = daysAgo + " days ago";
         }
         else if (daysAgo < 366) {
             dateDisplay = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime());
@@ -126,5 +153,14 @@ public class Inspection {
 
         fullDate = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime()) +
                 ", " + getYear.format(cal.getTime());
+    }
+
+    @Override
+    public int compareTo(Inspection inspection) {
+        int thisDate = Integer.parseInt(this.inspDate);
+        int comparedDate = Integer.parseInt(inspection.getInspDate());
+
+        if (thisDate >= comparedDate) { return comparedDate - thisDate; }
+        else { return thisDate - comparedDate; }
     }
 }

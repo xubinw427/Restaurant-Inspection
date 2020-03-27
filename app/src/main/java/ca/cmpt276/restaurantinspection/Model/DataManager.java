@@ -1,6 +1,7 @@
 package ca.cmpt276.restaurantinspection.Model;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -9,8 +10,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 import java.util.Scanner;
 
 import okhttp3.Call;
@@ -24,11 +29,15 @@ import static android.content.ContentValues.TAG;
 public class DataManager {
     private static DataManager instance;
     private Context fileContext;
+    UpdateManager updateManager = UpdateManager.getInstance();
+
+    private String updateURLRestaurant;
+    private String updateURLInspection;
 
     private DataManager(Context context) {
-        this.fileContext = context;
-        readTheFirstURL();
-        readTheSecondURL();
+        fileContext = context;
+        readRestaurantURL();
+        readInspectionsURL();
     }
 
     public static DataManager getInstance() {
@@ -49,7 +58,15 @@ public class DataManager {
         return instance;
     }
 
-    private void readTheFirstURL() {
+    private void setUpdateURLRestaurant (String url) {
+        updateURLRestaurant = url;
+    }
+
+    private void setUpdateURLInspection (String url) {
+        updateURLInspection = url;
+    }
+
+    private void readRestaurantURL() {
         // Create okHttp to make get request
         OkHttpClient client = new OkHttpClient();
 
@@ -93,71 +110,40 @@ public class DataManager {
                         String updateURL2 = url2.replace("http", "https");
 
                         String lastModified = csv.get("last_modified").toString();
+
+                        SharedPreferences pref = fileContext.getSharedPreferences("UpdatePref", 0);
+                        String rawDate = pref.getString("last_updated", null);
+
+                        /** On first load, save modified dates as last updated & last modified **/
+                        if (rawDate == null) {
+                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
+                            Calendar cal = Calendar.getInstance();
+                            String today = sdf.format(cal.getTime());
+
+                            updateManager.setLastUpdatedDatePrefs(today);
+                        }
+                        if (updateManager.getLastModifiedRestaurants() == null) {
+                            updateManager.setLastModifiedRestaurantsPrefs(lastModified);
+                        }
+
+                        else { updateManager.setLastModifiedRestaurants(lastModified); }
+                        /** === END UPDATE MANAGER === **/
+
                         Log.d(TAG, updateURL2);
                         Log.d(TAG, lastModified);
 
-                        // To read real data
-                        readSecondURLForRestaurantData(updateURL2,lastModified);
+                        setUpdateURLRestaurant(updateURL2);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             }
-
-            private void readSecondURLForRestaurantData(String url2, String lastModified) {
-
-                // All the same as the first URL.
-                final Request requestForRestaurantData = new Request.Builder().url(url2).build();
-
-                OkHttpClient client2 = new OkHttpClient();
-
-                client2.newCall(requestForRestaurantData).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                        e.printStackTrace();
-                    }
-
-                    @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        if(!response.isSuccessful()) {
-                            throw new IOException("Unexpected code " +  response);
-                        }
-                        else {
-                            final String secondResponse = response.body().string();
-
-                            Scanner scanner = new Scanner(secondResponse);
-
-                            String filename = "update_restaurant";
-
-                            FileOutputStream outputStream;
-                            outputStream = fileContext.openFileOutput(filename, Context.MODE_PRIVATE);
-
-                            // Make sure we get the right number of restaurants.
-                            int count = 0;
-                            while(scanner.hasNextLine())
-                            {
-                                String line = scanner.nextLine();
-                                line = line + '\r';
-                                try {
-                                    outputStream.write(line.getBytes());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                count++;
-                            }
-                            outputStream.close();
-                            Log.d(TAG, "There are " + count + " Restaurants.");
-                            scanner.close();
-                        }
-                    }
-                });
-            }
         });
     }
 
     // Same as Restaurants.
-    private void readTheSecondURL() {
+    private void readInspectionsURL() {
         OkHttpClient client = new OkHttpClient();
 
         String url = "https://data.surrey.ca/api/3/action/package_show?id=fraser-health-restaurant-inspection-reports";
@@ -186,76 +172,143 @@ public class DataManager {
                         String updateURL2 = url2.replace("http", "https");
                         String lastModified = csv.get("last_modified").toString();
 
-                        /** On first load, save modified dates as last updated & last modified **/
-                        UpdateManager updateManager = UpdateManager.getInstance();
-                        if (updateManager.getLastUpdatedDate() == null) {
-                            System.out.println(lastModified);
-                            updateManager.setLastUpdatedDatePrefs(lastModified);
-                        }
+                        /** UPDATE MANAGER OPERATIONS **/
                         if (updateManager.getLastModifiedInspections() == null) {
-                            System.out.println(lastModified);
                             updateManager.setLastModifiedInspectionsPrefs(lastModified);
                         }
-
-                        updateManager.setLastModifiedInspections(lastModified);
+                        else { updateManager.setLastModifiedInspections(lastModified); }
                         /** === END UPDATE MANAGER === **/
 
                         Log.d(TAG, updateURL2);
                         Log.d(TAG, lastModified);
 
-                        readSecondURLForRestaurantData(updateURL2,lastModified);
+                        setUpdateURLInspection(updateURL2);
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
             }
+        });
+    }
 
-            private void readSecondURLForRestaurantData(String url2, String lastModified) {
+    public void readSecondURLForRestaurantData() {
+        final Request requestForRestaurantData = new Request.Builder().url(updateURLRestaurant).build();
 
-                final Request requestForInspectionData = new Request.Builder().url(url2).build();
+        OkHttpClient client2 = new OkHttpClient();
 
-                OkHttpClient client2 = new OkHttpClient();
+        client2.newCall(requestForRestaurantData).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
 
-                client2.newCall(requestForInspectionData).enqueue(new Callback() {
-                    @Override
-                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                        e.printStackTrace();
-                    }
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(!response.isSuccessful()) {
+                    throw new IOException("Unexpected code " +  response);
+                }
+                else {
+                    final String secondResponse = response.body().string();
 
-                    @Override
-                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        if(!response.isSuccessful()) {
-                            throw new IOException("Unexpected code " +  response);
-                        }
-                        else {
-                            final String secondResponse = response.body().string();
+                    Scanner scanner = new Scanner(secondResponse);
 
-                            Scanner scanner = new Scanner(secondResponse);
+                    String filename = "new_update_restaurant";
 
-                            String filename = "update_inspection";
+                    FileOutputStream outputStream;
+                    outputStream = fileContext.openFileOutput(filename, Context.MODE_PRIVATE);
 
-                            FileOutputStream outputStream;
+                    while(scanner.hasNextLine() && updateManager.getCancelled() != 1) {
+                        String line = scanner.nextLine();
+                        System.out.println(line);
+                        line = line + '\r';
 
-                            outputStream = fileContext.openFileOutput(filename, Context.MODE_PRIVATE);
-                            // Make sure we get the right number of inspections.
-                            int count = 0;
-                            while(scanner.hasNextLine()) {
-                                String line = scanner.nextLine();
-                                line = line + '\r';
-                                try {
-                                    outputStream.write(line.getBytes());
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                count++;
-                            }
-                            outputStream.close();
-                            Log.d(TAG, "There are " + count + " Inspections.");
-                            scanner.close();
+                        try {
+                            outputStream.write(line.getBytes());
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
                     }
-                });
+
+                    outputStream.close();
+                    scanner.close();
+                }
+            }
+        });
+    }
+
+    public void readSecondURLForInspectionData() {
+        final Request requestForRestaurantData = new Request.Builder().url(updateURLInspection).build();
+
+        OkHttpClient client2 = new OkHttpClient();
+
+        client2.newCall(requestForRestaurantData).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(!response.isSuccessful()) {
+                    throw new IOException("Unexpected code " +  response);
+                }
+                else {
+                    final String secondResponse = response.body().string();
+
+                    Scanner scanner = new Scanner(secondResponse);
+
+                    String filename = "new_update_inspection";
+
+                    FileOutputStream outputStream;
+                    outputStream = fileContext.openFileOutput(filename, Context.MODE_PRIVATE);
+
+                    while(scanner.hasNextLine() && updateManager.getCancelled() != 1) {
+                        String line = scanner.nextLine();
+                        System.out.println(line);
+                        line = line + '\r';
+
+                        try {
+                            outputStream.write(line.getBytes());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    outputStream.close();
+                    scanner.close();
+
+                    if (updateManager.getCancelled() == 1) {
+                        return;
+                    }
+
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
+                    Calendar cal = Calendar.getInstance();
+
+                    String today = sdf.format(cal.getTime());
+
+                    SharedPreferences pref = fileContext.getSharedPreferences("UpdatePref", 0);
+                    SharedPreferences.Editor editor = pref.edit();
+
+                    editor.putString("last_updated", today);
+                    editor.putString("last_modified_restaurants_by_server",
+                            updateManager.getLastModifiedRestaurants());
+                    editor.putString("last_modified_inspections_by_server",
+                            updateManager.getLastModifiedInspections());
+                    editor.apply();
+
+                    fileContext.deleteFile("update_restaurant");
+                    File oldRestaurantFile = fileContext.getFileStreamPath("new_update_restaurant");
+                    File newRestaurantFile = fileContext.getFileStreamPath("update_restaurant");
+                    oldRestaurantFile.renameTo(newRestaurantFile);
+
+                    fileContext.deleteFile("update_inspection");
+                    File oldInspectionFile = fileContext.getFileStreamPath("new_update_inspection");
+                    File newInspectionFile = fileContext.getFileStreamPath("update_inspection");
+                    oldInspectionFile.renameTo(newInspectionFile);
+
+                    updateManager.setUpdated(1);
+                }
             }
         });
     }
