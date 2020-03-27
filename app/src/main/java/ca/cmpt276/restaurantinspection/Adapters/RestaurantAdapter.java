@@ -70,9 +70,6 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         /** Check 10 icon of restaurant(5 of them have 4 stores or more), then set corresponding background **/
         String restaurantName = currRestaurant.getName();
         if (restaurantName.contains("7-Eleven")) {
-            System.out.println("****************");
-            System.out.println(restaurantName);
-            System.out.println("****************");
             holder.restaurantLogoIcon.setImageResource(R.drawable.logo_seveneleven);
         }
         else if (restaurantName.contains("Royal Canadian Legion")) {
