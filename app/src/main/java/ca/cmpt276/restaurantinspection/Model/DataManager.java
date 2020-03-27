@@ -113,6 +113,8 @@ public class DataManager {
 
                         SharedPreferences pref = fileContext.getSharedPreferences("UpdatePref", 0);
                         String rawDate = pref.getString("last_updated", null);
+                        String savedRestaurantsDate = pref.getString("last_modified_restaurants_by_server",
+                                null);
 
                         /** On first load, save modified dates as last updated & last modified **/
                         if (rawDate == null) {
@@ -122,10 +124,9 @@ public class DataManager {
 
                             updateManager.setLastUpdatedDatePrefs(today);
                         }
-                        if (updateManager.getLastModifiedRestaurants() == null) {
+                        if (savedRestaurantsDate == null) {
                             updateManager.setLastModifiedRestaurantsPrefs(lastModified);
                         }
-
                         else { updateManager.setLastModifiedRestaurants(lastModified); }
                         /** === END UPDATE MANAGER === **/
 
@@ -172,8 +173,12 @@ public class DataManager {
                         String updateURL2 = url2.replace("http", "https");
                         String lastModified = csv.get("last_modified").toString();
 
+                        SharedPreferences pref = fileContext.getSharedPreferences("UpdatePref", 0);
+                        String savedInspectionsDate = pref.getString("last_modified_inspections_by_server",
+                                null);
+
                         /** UPDATE MANAGER OPERATIONS **/
-                        if (updateManager.getLastModifiedInspections() == null) {
+                        if (savedInspectionsDate == null) {
                             updateManager.setLastModifiedInspectionsPrefs(lastModified);
                         }
                         else { updateManager.setLastModifiedInspections(lastModified); }

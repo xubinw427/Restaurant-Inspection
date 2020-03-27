@@ -2,6 +2,7 @@ package ca.cmpt276.restaurantinspection;
 
 import androidx.annotation.NonNull;
 
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
@@ -78,10 +79,10 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         if (updateManager.twentyHrsSinceUpdate()) {
             /** and if an update exists then **/
             /** UNCOMMENT AFTER TESTING -- NO NEW DATA so pop-up won't show up **/
-//            if (updateManager.checkUpdateNeeded()) {
+            if (updateManager.checkUpdateNeeded()) {
                 startActivityForResult(new Intent(RestaurantMapActivity.this,
                         PopUpUpdateActivity.class), REQUEST_CODE);
-//            }
+            }
         }
 
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
@@ -99,11 +100,27 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
 
         ViolationsMap.init(violationsIn);
-        RestaurantManager.init(restaurantsIn, internalRestaurants,
-                                inspectionsIn, internalInspections);
+
+        if (internalRestaurants == null && internalInspections == null) {
+            RestaurantManager.init(restaurantsIn, inspectionsIn);
+        }
+        else {
+            RestaurantManager.init(internalRestaurants, internalInspections);
+        }
         restaurantManager = RestaurantManager.getInstance();
 
         initMap();
+
+        SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
+        String savedRestaurantsDate = pref.getString("last_modified_restaurants_by_server",
+                null);
+        String savedInspectionsDate = pref.getString("last_modified_inspections_by_server",
+                null);
+
+        System.out.println("**************");
+        System.out.println(savedRestaurantsDate);
+        System.out.println(savedInspectionsDate);
+        System.out.println("**************");
 
         startRestaurantListActivity();
     }

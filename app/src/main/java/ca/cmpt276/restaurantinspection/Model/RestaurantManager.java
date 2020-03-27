@@ -24,16 +24,13 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
     private String TAG = "Degug";
     /** Private to prevent anyone else from instantiating. **/
-    private RestaurantManager(InputStream restaurantFile, FileInputStream serverRestaurantFile,
-                              InputStream inspectionsFile, FileInputStream serverInspectionFile) {
+    private RestaurantManager(InputStream restaurantFile, InputStream inspectionsFile) {
 
         readRestaurantData(restaurantFile);
-        readRestaurantData(serverRestaurantFile);
 
         violationsMap = ViolationsMap.getInstance();
 
         populateInspections(inspectionsFile);
-        populateInspections(serverInspectionFile);
     }
 
     public static RestaurantManager getInstance() {
@@ -45,14 +42,12 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return instance;
     }
 
-    public static void init(InputStream restaurantFile, FileInputStream serverRestaurantFile,
-                            InputStream inspectionsFile, FileInputStream serverInspectionFile) {
+    public static void init(InputStream restaurantFile, InputStream inspectionsFile) {
         if (instance != null) {
             return;
         }
 
-        instance = new RestaurantManager(restaurantFile, serverRestaurantFile,
-                                            inspectionsFile, serverInspectionFile);
+        instance = new RestaurantManager(restaurantFile, inspectionsFile);
     }
 
     public void reset() {

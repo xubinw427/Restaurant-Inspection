@@ -72,7 +72,7 @@ public class UpdateManager {
     }
 
     public void setLastModifiedInspectionsPrefs(String lastModifiedDate) {
-        this.lastModifiedInspections = lastModifiedDate;
+        this.lastModifiedInspections = "2000-01-01 00:00:00";
 
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
         SharedPreferences.Editor editor = pref.edit();
@@ -91,7 +91,7 @@ public class UpdateManager {
     }
 
     public void setLastModifiedRestaurantsPrefs(String lastModifiedDate) {
-        this.lastModifiedRestaurants = lastModifiedDate;
+        this.lastModifiedRestaurants = "2000-01-01 00:00:00";
 
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
         SharedPreferences.Editor editor = pref.edit();
@@ -176,6 +176,12 @@ public class UpdateManager {
                                                     null);
         String savedInspectionsDate = pref.getString("last_modified_inspections_by_server",
                                                     null);
+
+        System.out.println(savedRestaurantsDate);
+        System.out.println(savedInspectionsDate);
+
+        System.out.println(this.lastModifiedRestaurants);
+        System.out.println(this.lastModifiedInspections);
 
         if (!this.lastModifiedRestaurants.equals(savedRestaurantsDate)) { return true; }
 
