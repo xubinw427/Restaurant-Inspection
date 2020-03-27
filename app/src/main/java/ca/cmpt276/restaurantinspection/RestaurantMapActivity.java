@@ -217,6 +217,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                 int position = getRestaurantPosition(marker.getPosition());
                 restaurantManager.setCurrRestaurantPosition(position);
                 restaurantManager.setFromMap(1);
+                restaurantManager.setFromList(0);
 
                 Intent intent = new Intent(RestaurantMapActivity.this, RestaurantInfoActivity.class);
                 startActivity(intent);

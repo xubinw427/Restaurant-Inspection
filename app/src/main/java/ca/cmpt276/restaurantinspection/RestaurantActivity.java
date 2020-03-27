@@ -62,6 +62,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
     public void onRestaurantClick(int position) {
         restaurantManager.setCurrRestaurantPosition(position);
         restaurantManager.setFromList(1);
+        restaurantManager.setFromMap(0);
 
         Intent intent = new Intent(this, RestaurantInfoActivity.class);
         startActivity(intent);
