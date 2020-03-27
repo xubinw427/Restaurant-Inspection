@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class PopUpUpdateActivity extends AppCompatActivity {
+    private final int REQUEST_CODE = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,8 +49,7 @@ public class PopUpUpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = makePopUpDownloadIntent(getApplicationContext());
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
     }
@@ -60,5 +61,21 @@ public class PopUpUpdateActivity extends AppCompatActivity {
 
     public static Intent makePopUpDownloadIntent(Context c){
         return new Intent(c, PopUpDownloadActivity.class);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            Intent backToMap = new Intent();
+            setResult(PopUpDownloadActivity.RESULT_OK, backToMap);
+            finish();
+        }
+        else if (requestCode == REQUEST_CODE && resultCode == RESULT_CANCELED) {
+            Intent backToMap = new Intent();
+            setResult(PopUpDownloadActivity.RESULT_CANCELED, backToMap);
+            finish();
+        }
     }
 }

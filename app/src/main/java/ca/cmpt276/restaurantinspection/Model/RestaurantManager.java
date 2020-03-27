@@ -1,10 +1,9 @@
 package ca.cmpt276.restaurantinspection.Model;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -23,13 +22,18 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private int fromMap = 0;
     private int fromList = 0;
 
+    private String TAG = "Degug";
     /** Private to prevent anyone else from instantiating. **/
-    private RestaurantManager(InputStream restaurantFile,
-                              InputStream inspectionsFile) {
+    private RestaurantManager(InputStream restaurantFile, FileInputStream serverRestaurantFile,
+                              InputStream inspectionsFile, FileInputStream serverInspectionFile) {
 
         readRestaurantData(restaurantFile);
+        readRestaurantData(serverRestaurantFile);
+
         violationsMap = ViolationsMap.getInstance();
+
         populateInspections(inspectionsFile);
+        populateInspections(serverInspectionFile);
     }
 
     public static RestaurantManager getInstance() {
@@ -41,14 +45,18 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return instance;
     }
 
-    public static RestaurantManager init(InputStream restaurantFile,
-                                         InputStream inspectionsFile) {
+    public static void init(InputStream restaurantFile, FileInputStream serverRestaurantFile,
+                            InputStream inspectionsFile, FileInputStream serverInspectionFile) {
         if (instance != null) {
-            return null;
+            return;
         }
 
-        instance = new RestaurantManager(restaurantFile, inspectionsFile);
-        return instance;
+        instance = new RestaurantManager(restaurantFile, serverRestaurantFile,
+                                            inspectionsFile, serverInspectionFile);
+    }
+
+    public void reset() {
+        instance = null;
     }
 
     public ArrayList<Restaurant> getList() {
@@ -100,6 +108,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 
     private void readRestaurantData(InputStream file) {
+        if (file == null) { return; }
+
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(file, Charset.forName("UTF-8"))
         );
@@ -141,6 +151,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 
     private void populateInspections(InputStream file) {
+        if (file == null) { return; }
+        
         BufferedReader input = new BufferedReader(new InputStreamReader(file));
 
         String line;

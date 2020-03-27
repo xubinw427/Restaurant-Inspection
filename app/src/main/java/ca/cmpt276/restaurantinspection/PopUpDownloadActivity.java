@@ -2,9 +2,10 @@ package ca.cmpt276.restaurantinspection;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -13,8 +14,15 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+
 import ca.cmpt276.restaurantinspection.Model.DataManager;
 import ca.cmpt276.restaurantinspection.Model.UpdateManager;
+
+import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
 public class PopUpDownloadActivity extends AppCompatActivity {
     UpdateManager updateManager = UpdateManager.getInstance();
@@ -58,15 +66,15 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
                 if (updateManager.getCancelled() != 1) {
                     /** SAVE: Last Modified Restaurant/Inspection Time (by server) **/
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
-                    Calendar cal = Calendar.getInstance();
-
                     EDITOR.putString("last_modified_restaurants_by_server",
                             updateManager.getLastModifiedRestaurants());
                     EDITOR.putString("last_modified_inspections_by_server",
                             updateManager.getLastModifiedInspections());
                     EDITOR.apply();
                 }
+
+                Intent backToUpdate = new Intent();
+                setResult(RESULT_OK, backToUpdate);
 
                 finish();
             }
@@ -82,6 +90,9 @@ public class PopUpDownloadActivity extends AppCompatActivity {
             public void onClick(View view) {
                 download.interrupt();
                 updateManager.setCancelled(1);
+
+                Intent backToUpdate = new Intent();
+                setResult(RESULT_CANCELED, backToUpdate);
                 finish();
             }
         });
@@ -91,6 +102,9 @@ public class PopUpDownloadActivity extends AppCompatActivity {
     public void onBackPressed() {
         download.interrupt();
         updateManager.setCancelled(1);
+
+        Intent backToUpdate = new Intent();
+        setResult(RESULT_CANCELED, backToUpdate);
         finish();
     }
 }
