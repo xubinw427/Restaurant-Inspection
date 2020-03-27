@@ -25,7 +25,9 @@ public class UpdateManager {
         SharedPreferences.Editor editor = pref.edit();
 
         /** TO DELETE: TESTING TO MAKE POP-UP APPEAR IF NO UPDATE IN 20 HOURS **/
-        editor.putString("last_updated", "2020-03-25 11:32:43");
+        if (pref.getString("last_updated", null) == null) {
+            editor.putString("last_updated", "2020-03-01 00:00:00");
+        }
         /** ================================================================== **/
 
         editor.apply();
@@ -145,7 +147,7 @@ public class UpdateManager {
             long diff = dateEnd.getTime() - dateStart.getTime();
             hoursApart =  diff / (60 * 60 * 1000);
 
-            if (hoursApart >= 20) {
+            if (hoursApart >= 17) {
                 return true;
             }
 
@@ -175,16 +177,7 @@ public class UpdateManager {
                                                     null);
         String lastUpdatedDate = pref.getString("last_updated", null);
 
-        System.out.println(lastUpdatedDate);
-
         if (lastUpdatedDate == null) { return true; }
-
-        System.out.println("IS BEFORE REST DATE");
-        System.out.println(savedRestaurantsDate);
-        System.out.println(isBeforeDate(lastUpdatedDate, savedRestaurantsDate));
-        System.out.println("IS BEFORE INSP DATE");
-        System.out.println(savedInspectionsDate);
-        System.out.println(isBeforeDate(lastUpdatedDate, savedInspectionsDate));
 
         if (isBeforeDate(lastUpdatedDate, savedRestaurantsDate)) { return true; }
 
@@ -208,7 +201,7 @@ public class UpdateManager {
             long diff = secondDate.getTime() - firstDate.getTime();
             float hoursApart =  diff / (60 * 60 * 1000);
 
-            if (hoursApart <= 0) {
+            if (hoursApart > -3) {
                 return true;
             }
 

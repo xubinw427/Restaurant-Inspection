@@ -65,10 +65,6 @@ public class PopUpDownloadActivity extends AppCompatActivity {
                 }
 
                 if (updateManager.getCancelled() != 1) {
-                    System.out.println("1111111111111111111111111");
-                    System.out.println(updateManager.getLastModifiedRestaurants());
-                    System.out.println(updateManager.getLastModifiedInspections());
-                    System.out.println("1111111111111111111111111");
                     /** SAVE: Last Modified Restaurant/Inspection Time (by server) **/
                     EDITOR.putString("last_modified_restaurants_by_server",
                             updateManager.getLastModifiedRestaurants());

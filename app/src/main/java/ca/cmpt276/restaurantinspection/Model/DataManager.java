@@ -116,25 +116,10 @@ public class DataManager {
                         String savedRestaurantsDate = pref.getString("last_modified_restaurants_by_server",
                                 null);
 
-                        System.out.println("%%%%%%%%%%%%");
-                        System.out.println(savedRestaurantsDate);
-                        System.out.println("%%%%%%%%%%%%");
-
-                        /** On first load, save modified dates as last updated & last modified **/
-                        if (rawDate == null) {
-                            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
-                            Calendar cal = Calendar.getInstance();
-                            String today = sdf.format(cal.getTime());
-
-                            updateManager.setLastUpdatedDatePrefs(today);
-                        }
                         if (savedRestaurantsDate == null) {
-                            System.out.println("SAVING RESTAURANT PREFS");
                             updateManager.setLastModifiedRestaurantsPrefs(lastModified);
                         }
                         else {
-                            System.out.println("NOT!!!! SAVING TO RESTAURANT PREFS");
-                            System.out.println(lastModified);
                             updateManager.setLastModifiedRestaurants(lastModified);
                         }
                         /** === END UPDATE MANAGER === **/
@@ -299,12 +284,7 @@ public class DataManager {
 
                     String today = sdf.format(cal.getTime());
 
-                    SharedPreferences pref = fileContext.getSharedPreferences("UpdatePref", 0);
-                    SharedPreferences.Editor editor = pref.edit();
-
-                    editor.putString("last_updated", today);
-
-                    editor.apply();
+                    updateManager.setLastUpdatedDatePrefs(today);
 
                     fileContext.deleteFile("update_restaurant");
                     File oldRestaurantFile = fileContext.getFileStreamPath("new_update_restaurant");

@@ -77,8 +77,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         /** === END CHECKING === **/
 
         if (updateManager.twentyHrsSinceUpdate()) {
-            System.out.println("+++++++++++++++");
-            System.out.println(updateManager.checkUpdateNeeded());
             /** and if an update exists then **/
             /** UNCOMMENT AFTER TESTING -- NO NEW DATA so pop-up won't show up **/
             if (updateManager.checkUpdateNeeded()) {
@@ -114,38 +112,15 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         initMap();
 
         SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
-        String savedRestaurantsDate = pref.getString("last_modified_restaurants_by_server",
-                null);
-        String savedInspectionsDate = pref.getString("last_modified_inspections_by_server",
-                null);
-
-        final SharedPreferences.Editor EDITOR = pref.edit();
-
-        System.out.println("**************");
-        System.out.println(savedRestaurantsDate);
-        System.out.println(savedInspectionsDate);
-
-        System.out.println(updateManager.getUpdated());
+        SharedPreferences.Editor editor = pref.edit();
 
         if (updateManager.getUpdated() == 1) {
-            EDITOR.putString("last_modified_restaurants_by_server",
+            editor.putString("last_modified_restaurants_by_server",
                     updateManager.getLastModifiedRestaurants());
-            EDITOR.putString("last_modified_inspections_by_server",
+            editor.putString("last_modified_inspections_by_server",
                     updateManager.getLastModifiedInspections());
-            EDITOR.apply();
+            editor.apply();
         }
-
-        System.out.println("**************");
-
-        savedRestaurantsDate = pref.getString("last_modified_restaurants_by_server",
-                null);
-        savedInspectionsDate = pref.getString("last_modified_inspections_by_server",
-                null);
-
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-        System.out.println(savedRestaurantsDate);
-        System.out.println(savedInspectionsDate);
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$");
 
         startRestaurantListActivity();
     }
