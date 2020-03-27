@@ -2,7 +2,7 @@ package ca.cmpt276.restaurantinspection.Model;
 
 import java.util.ArrayList;
 
-public class Restaurant {
+public class Restaurant implements Comparable<Restaurant>{
     private String id;
     private String name;
     private String address;
@@ -75,4 +75,26 @@ public class Restaurant {
     public void addInspection(Inspection inspection) {
         inspectionsList.add(inspection);
     }
+
+
+    @Override
+    public int compareTo(Restaurant restaurant) {
+        int l1 = this.name.length();
+        int l2 = restaurant.getName().length();
+        int min = Math.min(l1, l2);
+
+        for(int i = 0; i < min; i++)
+        {
+            int s1Char = (int)this.name.charAt(i);
+            int s2Char = (int)restaurant.getName().charAt(i);
+
+            if(s1Char != s2Char)
+                return s1Char - s2Char;
+        }
+        if(l1 != l2)
+            return l1 - l2;
+        else
+            return 0;
+    }
+
 }

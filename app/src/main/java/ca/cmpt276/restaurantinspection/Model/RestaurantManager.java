@@ -8,6 +8,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class RestaurantManager implements Iterable<Restaurant> {
@@ -121,6 +123,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
         catch (IOException ex) {
             throw new RuntimeException("ERROR: Failed to close " + file);
         }
+
+        //this.sortRestaurants();
     }
 
     private void populateInspections(InputStream file) {
@@ -163,10 +167,32 @@ public class RestaurantManager implements Iterable<Restaurant> {
             throw new RuntimeException("ERROR: Failed to close " + file);
         }
     }
+    public void sortRestaurants()
+    {
+        Collections.sort(restaurantsList, new SortRestaurantsByNameAplhabet());
+    }
 
     @Override
     @NonNull
     public Iterator<Restaurant> iterator() {
         return restaurantsList.iterator();
+    }
+}
+
+class SortRestaurantsByNameAplhabet implements Comparator<Restaurant>
+{
+
+    @Override
+    public int compare(Restaurant o1, Restaurant o2) {
+        return o1.compareTo(o2);
+    }
+}
+
+class SortInspectionsByDate implements  Comparator<Inspection>
+{
+
+    @Override
+    public int compare(Inspection o1, Inspection o2) {
+        return o1.compareTo(o2);
     }
 }
