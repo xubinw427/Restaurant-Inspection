@@ -112,7 +112,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
      */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        if (Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= 24) {
             if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) !=
                     PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{
@@ -267,8 +267,8 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     finish();
                     startActivity(intent);
                 } else {
-                    // Permission Denied
-                    Toast.makeText(this, "your message", Toast.LENGTH_SHORT)
+                    /** Permission Denied **/
+                    Toast.makeText(this, "Location Permissions Turned Off.", Toast.LENGTH_SHORT)
                             .show();
                 }
                 break;
