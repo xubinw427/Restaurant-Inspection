@@ -20,9 +20,19 @@ public class Inspection {
 
     private ArrayList<Violation> violationsList;
 
-    /** String[] = [0: TrackingNum, 1: Date, 2: InspType, 3: NumCrit, 4: NumNonCrit, 5: HazRating, 6: ViolLump] **/
+    /** inspectionLump is either
+     * [0: Inspection (as is, there were no violations)] >> length = 1
+     * OR
+     * [0: First half of Inspection, 1: Violations & Hazard Rating] >> length = 2 **/
     /** ViolLump is currently a long string of all violations to be split by '|' **/
-    public Inspection(String[] inspectionDetails, ViolationsMap map) {
+    public Inspection(String[] inspectionLump, ViolationsMap map) {
+        violationsList = new ArrayList<>();
+
+        String[] inspectionDetails = inspectionLump[0].split(",");
+        /** [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit, 5: NULL, 6: HazardLevel] if len 1
+         * OR
+         * [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit] if len 2 **/
+
         trackingNumber = inspectionDetails[0];
         inspDate = inspectionDetails[1];
         getDateInformation();
@@ -37,27 +47,35 @@ public class Inspection {
             throw new RuntimeException("ERROR: Failed number conversion.");
         }
 
-        hazardRating = inspectionDetails[5];
+        if (inspectionLump.length == 1) {
+            hazardRating = inspectionDetails[6];
+        }
 
-        if (inspectionDetails.length < 7) { return; }
+        else {
+            String[] separateViolationsAndHazard = inspectionLump[1].split("\",");
+            /** [0: Violations, 1: 1: HazardLevel] **/
 
-        violationsList = new ArrayList<>();
-        String violLump = inspectionDetails[6];
-        String[] violations = violLump.split("\\|");
+            hazardRating = separateViolationsAndHazard[1];
 
-        for (String violation : violations) {
-            String[] currViolation = violation.split(",");
+            String violLump = separateViolationsAndHazard[0];
+            String[] violations = violLump.split("\\|");
 
-            String violationID = currViolation[0];
-            String[] violationInfo = ViolationsMap.getViolationFromMap(violationID);
+            for (String violation : violations) {
+                String[] currViolation = violation.split(",");
 
-            /** ID not found **/
-            if (violationInfo == null) { return; }
+                String violationID = currViolation[0];
+                String[] violationInfo = ViolationsMap.getViolationFromMap(violationID);
 
-            /** Create new data from info retrieved **/
-            Violation newViolation = new Violation(violationInfo);
+                /** ID not found **/
+                if (violationInfo == null) {
+                    return;
+                }
 
-            violationsList.add(newViolation);
+                /** Create new data from info retrieved **/
+                Violation newViolation = new Violation(violationInfo);
+
+                violationsList.add(newViolation);
+            }
         }
     }
 
