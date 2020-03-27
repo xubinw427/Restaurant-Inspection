@@ -104,6 +104,13 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 
     private void addNew(Restaurant restaurant) {
+        /** Don't add duplicate restaurants across the two data sources **/
+        for (Restaurant restaurantInList : restaurantsList) {
+            if (restaurant.getId().equals(restaurantInList.getId())) {
+                return;
+            }
+        }
+
         restaurantsList.add(restaurant);
     }
 
@@ -178,7 +185,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         }
     }
 
-    public void sortRestaurants() {
+    private void sortRestaurants() {
         Collections.sort(restaurantsList, new SortRestaurantsByNameAplhabet());
     }
 
