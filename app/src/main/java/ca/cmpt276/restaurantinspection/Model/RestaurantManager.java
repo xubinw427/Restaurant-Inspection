@@ -137,6 +137,17 @@ public class RestaurantManager implements Iterable<Restaurant> {
         }
 
         this.sortRestaurants();
+        this.sortInspectionsForEveryRestaurant();
+    }
+
+
+    private  void sortInspectionsForEveryRestaurant()
+    {
+        int size = this.restaurantsList.size();
+        for(int i = 0; i < size; i++)
+        {
+            Collections.sort(restaurantsList.get(i).getInspectionsList(), new SortInspectionsByDate());
+        }
     }
 
     private void populateInspections(InputStream file) {
