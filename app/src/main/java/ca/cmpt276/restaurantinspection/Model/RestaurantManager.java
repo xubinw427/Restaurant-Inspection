@@ -22,7 +22,6 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private int fromMap = 0;
     private int fromList = 0;
 
-    private String TAG = "Degug";
     /** Private to prevent anyone else from instantiating. **/
     private RestaurantManager(InputStream restaurantFile, InputStream inspectionsFile) {
 

@@ -116,6 +116,10 @@ public class DataManager {
                         String savedRestaurantsDate = pref.getString("last_modified_restaurants_by_server",
                                 null);
 
+                        System.out.println("%%%%%%%%%%%%");
+                        System.out.println(savedRestaurantsDate);
+                        System.out.println("%%%%%%%%%%%%");
+
                         /** On first load, save modified dates as last updated & last modified **/
                         if (rawDate == null) {
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
@@ -125,9 +129,14 @@ public class DataManager {
                             updateManager.setLastUpdatedDatePrefs(today);
                         }
                         if (savedRestaurantsDate == null) {
+                            System.out.println("SAVING RESTAURANT PREFS");
                             updateManager.setLastModifiedRestaurantsPrefs(lastModified);
                         }
-                        else { updateManager.setLastModifiedRestaurants(lastModified); }
+                        else {
+                            System.out.println("NOT!!!! SAVING TO RESTAURANT PREFS");
+                            System.out.println(lastModified);
+                            updateManager.setLastModifiedRestaurants(lastModified);
+                        }
                         /** === END UPDATE MANAGER === **/
 
                         Log.d(TAG, updateURL2);
@@ -294,10 +303,7 @@ public class DataManager {
                     SharedPreferences.Editor editor = pref.edit();
 
                     editor.putString("last_updated", today);
-                    editor.putString("last_modified_restaurants_by_server",
-                            updateManager.getLastModifiedRestaurants());
-                    editor.putString("last_modified_inspections_by_server",
-                            updateManager.getLastModifiedInspections());
+
                     editor.apply();
 
                     fileContext.deleteFile("update_restaurant");
@@ -314,5 +320,9 @@ public class DataManager {
                 }
             }
         });
+    }
+
+    public void reset() {
+        instance = null;
     }
 }

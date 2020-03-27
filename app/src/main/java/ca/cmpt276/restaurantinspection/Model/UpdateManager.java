@@ -11,7 +11,6 @@ import java.util.Locale;
 public class UpdateManager {
     private static UpdateManager instance;
     private Context context;
-    private String lastUpdatedDate;
     private String lastModifiedInspections;
     private String lastModifiedRestaurants;
 
@@ -20,7 +19,6 @@ public class UpdateManager {
 
     private UpdateManager(Context context) {
         this.context = context;
-        this.lastUpdatedDate = null;
         this.lastModifiedInspections = null;
 
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
@@ -147,7 +145,7 @@ public class UpdateManager {
             long diff = dateEnd.getTime() - dateStart.getTime();
             hoursApart =  diff / (60 * 60 * 1000);
 
-            if (hoursApart >= 1) {
+            if (hoursApart >= 20) {
                 return true;
             }
 
@@ -164,8 +162,7 @@ public class UpdateManager {
 
         try {
             while (pref.getString("last_modified_inspections_by_server", null) == null
-                    || pref.getString("last_modified_restaurants_by_server", null) == null
-                    || lastModifiedRestaurants == null || lastModifiedInspections == null) {
+                    || pref.getString("last_modified_restaurants_by_server", null) == null) {
                 Thread.sleep(10);
             }
         } catch(InterruptedException ex) {
@@ -176,16 +173,48 @@ public class UpdateManager {
                                                     null);
         String savedInspectionsDate = pref.getString("last_modified_inspections_by_server",
                                                     null);
+        String lastUpdatedDate = pref.getString("last_updated", null);
 
+        System.out.println(lastUpdatedDate);
+
+        if (lastUpdatedDate == null) { return true; }
+
+        System.out.println("IS BEFORE REST DATE");
         System.out.println(savedRestaurantsDate);
+        System.out.println(isBeforeDate(lastUpdatedDate, savedRestaurantsDate));
+        System.out.println("IS BEFORE INSP DATE");
         System.out.println(savedInspectionsDate);
+        System.out.println(isBeforeDate(lastUpdatedDate, savedInspectionsDate));
 
-        System.out.println(this.lastModifiedRestaurants);
-        System.out.println(this.lastModifiedInspections);
+        if (isBeforeDate(lastUpdatedDate, savedRestaurantsDate)) { return true; }
 
-        if (!this.lastModifiedRestaurants.equals(savedRestaurantsDate)) { return true; }
+        if (isBeforeDate(lastUpdatedDate, savedInspectionsDate)) { return true; }
 
-        if (!this.lastModifiedInspections.equals(savedInspectionsDate)) { return true; }
+        return false;
+    }
+
+    private boolean isBeforeDate(String date1, String date2) {
+        String replacedDate = date2.replace("T", " ");
+        String[] dateSplit = replacedDate.split("\\.");
+
+        String cleanDate2 = dateSplit[0];
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
+
+        try {
+            Date firstDate = sdf.parse(date1);
+            Date secondDate = sdf.parse(cleanDate2);
+
+            long diff = secondDate.getTime() - firstDate.getTime();
+            float hoursApart =  diff / (60 * 60 * 1000);
+
+            if (hoursApart <= 0) {
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return false;
     }
