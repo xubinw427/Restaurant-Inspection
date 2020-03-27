@@ -155,15 +155,12 @@ public class Inspection implements Comparable<Inspection>{
                 ", " + getYear.format(cal.getTime());
     }
 
-
     @Override
     public int compareTo(Inspection inspection) {
         int thisDate = Integer.parseInt(this.inspDate);
         int comparedDate = Integer.parseInt(inspection.getInspDate());
 
-        if(thisDate >= comparedDate)
-            return comparedDate - thisDate;
-        else
-            return thisDate - comparedDate;
+        if (thisDate >= comparedDate) { return comparedDate - thisDate; }
+        else { return thisDate - comparedDate; }
     }
 }

@@ -22,7 +22,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private int currInspectionPosition;
     private int fromMap = 0;
     private int fromList = 0;
-    private final String TAG = "Degug";
+
     /** Private to prevent anyone else from instantiating. **/
     private RestaurantManager(InputStream restaurantFile,
                               InputStream inspectionsFile) {
@@ -109,12 +109,9 @@ public class RestaurantManager implements Iterable<Restaurant> {
         try {
             /** Step over header **/
             reader.readLine();
-            int count = 1;
+
             while (((line = reader.readLine()) != null)) {
-//                Log.d(TAG, "The " + count + " Restaurant is: " + line);
-                count++;
                 Restaurant newRestaurant = new Restaurant(line);
-//                System.out.println(newRestaurant.getName());
                 this.addNew(newRestaurant);
             }
         }
@@ -129,7 +126,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
             throw new RuntimeException("ERROR: Failed to close " + file);
         }
 
-        //this.sortRestaurants();
+        this.sortRestaurants();
     }
 
     private void populateInspections(InputStream file) {
@@ -172,8 +169,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
             throw new RuntimeException("ERROR: Failed to close " + file);
         }
     }
-    public void sortRestaurants()
-    {
+
+    public void sortRestaurants() {
         Collections.sort(restaurantsList, new SortRestaurantsByNameAplhabet());
     }
 
@@ -184,18 +181,14 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 }
 
-class SortRestaurantsByNameAplhabet implements Comparator<Restaurant>
-{
-
+class SortRestaurantsByNameAplhabet implements Comparator<Restaurant> {
     @Override
     public int compare(Restaurant o1, Restaurant o2) {
         return o1.compareTo(o2);
     }
 }
 
-class SortInspectionsByDate implements  Comparator<Inspection>
-{
-
+class SortInspectionsByDate implements  Comparator<Inspection> {
     @Override
     public int compare(Inspection o1, Inspection o2) {
         return o1.compareTo(o2);

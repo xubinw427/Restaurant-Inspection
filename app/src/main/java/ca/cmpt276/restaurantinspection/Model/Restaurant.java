@@ -1,17 +1,14 @@
 package ca.cmpt276.restaurantinspection.Model;
 
-import android.util.Log;
-
 import java.util.ArrayList;
 
 public class Restaurant implements Comparable<Restaurant>{
     private String id;
-    private String name = "";
+    private String name;
     private String address;
     private double latitude;
     private double longitude;
     private ArrayList<Inspection> inspectionsList;
-    private final String TAG = "Writting";
 
     public Restaurant(String restaurantLump) {
         restaurantLump = restaurantLump.replaceAll(", ", " ");
@@ -82,7 +79,6 @@ public class Restaurant implements Comparable<Restaurant>{
     public void addInspection(Inspection inspection) {
         inspectionsList.add(inspection);
     }
-
 
     @Override
     public int compareTo(Restaurant restaurant) {
