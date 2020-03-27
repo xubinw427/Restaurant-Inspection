@@ -1,3 +1,12 @@
+[Required Android Version]
+Target SDK Version: 29
+Emulated on: Nexus 5X
+
+[SETUP INSTRUCTIONS]
+Followed Dr. Fraser's Videos:
+https://www.youtube.com/watch?v=jfk-5-7fMtw&feature=youtu.be
+https://www.youtube.com/playlist?list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt
+
 [CODE RESOURCES]
 Data Parsing: https://stackoverflow.com/questions/38415680/how-to-parse-csv-file-into-an-array-in-android-studio
 CardView and RecyclerView Adapter: https://www.youtube.com/watch?v=Nw9JF55LDzE&t=1s
@@ -21,7 +30,3 @@ Restaurant Logos:
     Royal Canadian Legion: https://nutanalegion.com/
     Starbucks Coffee: https://www.stickpng.com/img/icons-logos-emojis/iconic-brands/starbucks-logo
 
-
-[Required Android Version]
-Target SDK Version: 29
-Emulated on: Nexus 5X
