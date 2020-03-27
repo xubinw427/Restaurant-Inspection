@@ -70,7 +70,8 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         /** === END CHECKING === **/
 
         if (updateManager.twentyHrsSinceUpdate()) {
-//            /** and if an update exists then **/
+            /** and if an update exists then **/
+            /** UNCOMMENT AFTER TESTING -- NO NEW DATA so pop-up won't show up **/
 //            if (updateManager.checkUpdateNeeded()) {
                 startActivity(new Intent(RestaurantMapActivity.this,
                         PopUpUpdateActivity.class));

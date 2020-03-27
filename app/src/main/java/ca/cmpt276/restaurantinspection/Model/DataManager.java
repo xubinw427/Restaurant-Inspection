@@ -31,9 +31,6 @@ public class DataManager {
     private Context fileContext;
     UpdateManager updateManager = UpdateManager.getInstance();
 
-    private String currRestaurantData = "current_update_restaurants";
-    private String currInspectionData = "current_update_inspection";
-
     private String updateURLRestaurant;
     private String updateURLInspection;
 
