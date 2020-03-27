@@ -20,7 +20,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private int currInspectionPosition;
     private int fromMap = 0;
     private int fromList = 0;
-    private final String TAG = "Degug";
+    private String TAG = "Degug";
     /** Private to prevent anyone else from instantiating. **/
     private RestaurantManager(InputStream restaurantFile,
                               InputStream inspectionsFile) {
@@ -39,14 +39,18 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return instance;
     }
 
-    public static RestaurantManager init(InputStream restaurantFile,
-                                         InputStream inspectionsFile) {
+    public static void init(InputStream restaurantFile,
+                            InputStream inspectionsFile) {
         if (instance != null) {
-            return null;
+            return;
         }
 
         instance = new RestaurantManager(restaurantFile, inspectionsFile);
-        return instance;
+    }
+
+    public void reset()
+    {
+        instance = null;
     }
 
     public ArrayList<Restaurant> getList() {

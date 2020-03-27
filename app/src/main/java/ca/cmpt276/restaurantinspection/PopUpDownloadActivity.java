@@ -20,7 +20,7 @@ import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
 public class PopUpDownloadActivity extends AppCompatActivity {
-    private RestaurantManager restaurantManager;
+    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
     private final String filenameForRestaurant = "update_restaurant";
     private final String filenameForInspection = "update_inspection";
     private final String TAG = "Debug";
@@ -37,26 +37,27 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
         getWindow().setLayout((int) (width * .8), (int) (height * .6));
 
-//        FileInputStream internalRestaurants = null;
-//        FileInputStream internalInspections = null;
-//        try {
-//            internalRestaurants = openFileInput(filenameForRestaurant);
-//            internalInspections = openFileInput(filenameForInspection);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//
-//        InputStream restaurantsIn = internalRestaurants;
-//        InputStream inspectionsIn = internalInspections;
-//        InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
-//
-//        ViolationsMap.init(violationsIn);
-//        RestaurantManager.init(restaurantsIn, inspectionsIn);
-//        restaurantManager = RestaurantManager.getInstance();
-//
-//        int size = restaurantManager.getSize();
-//        Log.d(TAG, "There are " + size + " restaurants.");
+        restaurantManager.reset();
+
+        FileInputStream internalRestaurants = null;
+        FileInputStream internalInspections = null;
+        try {
+            internalRestaurants = openFileInput(filenameForRestaurant);
+            internalInspections = openFileInput(filenameForInspection);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
+        InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
+
+        ViolationsMap.init(violationsIn);
+        RestaurantManager.init(internalRestaurants, internalInspections);
+
+        restaurantManager = RestaurantManager.getInstance();
+
+        int size = restaurantManager.getSize();
+        Log.d(TAG, "There are " + size + " restaurants.");
 
         cancelBtnPressed();
     }
