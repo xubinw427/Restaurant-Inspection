@@ -46,7 +46,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private Algorithm <CustomMarker> clusterManagerAlgorithm;
     private RestaurantManager restaurantManager;
     private ClusterManager <CustomMarker> mClusterManager;
-    private static final float DEFAULT_ZOOM = 15f;
+    private static final float DEFAULT_ZOOM = 17f;
     private GoogleMap mMap;
     private FusedLocationProviderClient mFusedLocationProviderClient;
     OwnIconRendered mRender;
