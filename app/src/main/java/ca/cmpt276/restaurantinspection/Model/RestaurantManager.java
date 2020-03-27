@@ -1,5 +1,7 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
@@ -18,7 +20,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private int currInspectionPosition;
     private int fromMap = 0;
     private int fromList = 0;
-
+    private final String TAG = "Degug";
     /** Private to prevent anyone else from instantiating. **/
     private RestaurantManager(InputStream restaurantFile,
                               InputStream inspectionsFile) {
@@ -105,8 +107,10 @@ public class RestaurantManager implements Iterable<Restaurant> {
         try {
             /** Step over header **/
             reader.readLine();
-
+            int count = 1;
             while (((line = reader.readLine()) != null)) {
+                Log.d(TAG, "The " + count + " Restaurant is: " + line);
+                count++;
                 Restaurant newRestaurant = new Restaurant(line);
                 this.addNew(newRestaurant);
             }

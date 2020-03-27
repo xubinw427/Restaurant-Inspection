@@ -75,13 +75,16 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
          */
         startActivity(new Intent(RestaurantMapActivity.this,PopUpUpdateActivity.class));
 
-        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
-        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
+        InputStream restaurantsIn = getResources().openRawResource(R.raw.update_restaurants);
+        InputStream inspectionsIn = getResources().openRawResource(R.raw.update_inspections);
         InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
 
         ViolationsMap.init(violationsIn);
         RestaurantManager.init(restaurantsIn, inspectionsIn);
         restaurantManager = RestaurantManager.getInstance();
+
+        int size = restaurantManager.getSize();
+        Log.d(TAG, "There are " + size + " restaurants.");
 
         initMap();
 
