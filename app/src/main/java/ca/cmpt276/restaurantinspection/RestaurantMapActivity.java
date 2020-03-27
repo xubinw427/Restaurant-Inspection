@@ -75,7 +75,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         updateManager.twentyHrsSinceUpdate();
         /** === END CHECKING === **/
 
-        if (updateManager.twentyHrsSinceUpdate()) {
+        if (updateManager.twentyHrsSinceUpdate() && updateManager.getCancelled() == 0) {
             /** and if an update exists then **/
             /** UNCOMMENT AFTER TESTING -- NO NEW DATA so pop-up won't show up **/
 //            if (updateManager.checkUpdateNeeded()) {
@@ -279,7 +279,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     Toast.LENGTH_SHORT);
 
             toast.show();
-            return;
         }
     }
 }

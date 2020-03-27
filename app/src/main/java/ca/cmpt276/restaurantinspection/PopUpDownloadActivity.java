@@ -52,6 +52,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
         download = new Thread(new Runnable() {
             @Override
             public void run() {
+                Intent backToUpdate = new Intent();
                 dataManager.readSecondURLForRestaurantData();
                 dataManager.readSecondURLForInspectionData();
 
@@ -71,11 +72,12 @@ public class PopUpDownloadActivity extends AppCompatActivity {
                     EDITOR.putString("last_modified_inspections_by_server",
                             updateManager.getLastModifiedInspections());
                     EDITOR.apply();
+
+                    setResult(PopUpDownloadActivity.RESULT_OK, backToUpdate);
+                    finish();
                 }
 
-                Intent backToUpdate = new Intent();
-                setResult(PopUpDownloadActivity.RESULT_OK, backToUpdate);
-
+                setResult(RESULT_CANCELED, backToUpdate);
                 finish();
             }
         });
@@ -89,7 +91,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 download.interrupt();
-                updateManager.setCancelled(PopUpDownloadActivity.RESULT_CANCELED);
+                updateManager.setCancelled(1);
 
                 Intent backToUpdate = new Intent();
                 setResult(RESULT_CANCELED, backToUpdate);
@@ -101,7 +103,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         download.interrupt();
-        updateManager.setCancelled(PopUpDownloadActivity.RESULT_CANCELED);
+        updateManager.setCancelled(1);
 
         Intent backToUpdate = new Intent();
         setResult(RESULT_CANCELED, backToUpdate);
