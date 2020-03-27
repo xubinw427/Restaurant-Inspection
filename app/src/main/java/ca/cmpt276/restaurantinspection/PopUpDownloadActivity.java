@@ -74,7 +74,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
                 }
 
                 Intent backToUpdate = new Intent();
-                setResult(PopUpDownloadActivity.RESULT_OK, backToUpdate);
+                setResult(RESULT_OK, backToUpdate);
 
                 finish();
             }
@@ -89,7 +89,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 download.interrupt();
-                updateManager.setCancelled(PopUpDownloadActivity.RESULT_CANCELED);
+                updateManager.setCancelled(1);
 
                 Intent backToUpdate = new Intent();
                 setResult(RESULT_CANCELED, backToUpdate);
@@ -101,7 +101,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         download.interrupt();
-        updateManager.setCancelled(PopUpDownloadActivity.RESULT_CANCELED);
+        updateManager.setCancelled(1);
 
         Intent backToUpdate = new Intent();
         setResult(RESULT_CANCELED, backToUpdate);

@@ -279,7 +279,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     Toast.LENGTH_SHORT);
 
             toast.show();
-            return;
         }
     }
 }
