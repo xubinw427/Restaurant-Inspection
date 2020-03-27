@@ -31,7 +31,6 @@ import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgor
 
 import java.io.InputStream;
 
-
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
 import ca.cmpt276.restaurantinspection.Model.CustomMarker;
 import ca.cmpt276.restaurantinspection.Model.OwnIconRendered;
@@ -75,16 +74,14 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
          */
         startActivity(new Intent(RestaurantMapActivity.this,PopUpUpdateActivity.class));
 
-        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
-        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
+        /** CHANGE RESTAURANT FILE AFTER TESTING **/
+        InputStream restaurantsIn = getResources().openRawResource(R.raw.update_restaurants);
+        InputStream inspectionsIn = getResources().openRawResource(R.raw.update_inspections);
         InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
 
         ViolationsMap.init(violationsIn);
         RestaurantManager.init(restaurantsIn, inspectionsIn);
         restaurantManager = RestaurantManager.getInstance();
-
-//        int size = restaurantManager.getSize();
-//        Log.d(TAG, "There are " + size + " restaurants.");
 
         initMap();
 
@@ -240,5 +237,3 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         return -1;
     }
 }
-
-

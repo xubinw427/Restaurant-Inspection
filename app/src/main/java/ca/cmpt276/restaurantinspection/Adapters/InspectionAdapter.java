@@ -93,4 +93,14 @@ public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.In
     public int getItemCount() {
         return inspectionList.size();
     }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
 }
