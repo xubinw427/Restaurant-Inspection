@@ -3,11 +3,14 @@ package ca.cmpt276.restaurantinspection.Model;
 import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 public class RestaurantManager implements Iterable<Restaurant> {
@@ -19,13 +22,18 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private int fromMap = 0;
     private int fromList = 0;
 
+    private String TAG = "Degug";
     /** Private to prevent anyone else from instantiating. **/
-    private RestaurantManager(InputStream restaurantFile,
-                              InputStream inspectionsFile) {
+    private RestaurantManager(InputStream restaurantFile, FileInputStream serverRestaurantFile,
+                              InputStream inspectionsFile, FileInputStream serverInspectionFile) {
 
         readRestaurantData(restaurantFile);
+        readRestaurantData(serverRestaurantFile);
+
         violationsMap = ViolationsMap.getInstance();
+
         populateInspections(inspectionsFile);
+        populateInspections(serverInspectionFile);
     }
 
     public static RestaurantManager getInstance() {
@@ -37,14 +45,18 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return instance;
     }
 
-    public static RestaurantManager init(InputStream restaurantFile,
-                                         InputStream inspectionsFile) {
+    public static void init(InputStream restaurantFile, FileInputStream serverRestaurantFile,
+                            InputStream inspectionsFile, FileInputStream serverInspectionFile) {
         if (instance != null) {
-            return null;
+            return;
         }
 
-        instance = new RestaurantManager(restaurantFile, inspectionsFile);
-        return instance;
+        instance = new RestaurantManager(restaurantFile, serverRestaurantFile,
+                                            inspectionsFile, serverInspectionFile);
+    }
+
+    public void reset() {
+        instance = null;
     }
 
     public ArrayList<Restaurant> getList() {
@@ -96,6 +108,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 
     private void readRestaurantData(InputStream file) {
+        if (file == null) { return; }
+
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(file, Charset.forName("UTF-8"))
         );
@@ -121,9 +135,24 @@ public class RestaurantManager implements Iterable<Restaurant> {
         catch (IOException ex) {
             throw new RuntimeException("ERROR: Failed to close " + file);
         }
+
+        this.sortRestaurants();
+        this.sortInspectionsForEveryRestaurant();
+    }
+
+
+    private  void sortInspectionsForEveryRestaurant()
+    {
+        int size = this.restaurantsList.size();
+        for(int i = 0; i < size; i++)
+        {
+            Collections.sort(restaurantsList.get(i).getInspectionsList(), new SortInspectionsByDate());
+        }
     }
 
     private void populateInspections(InputStream file) {
+        if (file == null) { return; }
+        
         BufferedReader input = new BufferedReader(new InputStreamReader(file));
 
         String line;
@@ -135,7 +164,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
             while ((line = input.readLine()) != null) {
                 String[] inspectionLump = line.split(",\"");
 
-                if (inspectionLump[0].contains("***")) {
+                if (inspectionLump[0].contains(",,,")) {
                     continue;
                 }
 
@@ -164,9 +193,27 @@ public class RestaurantManager implements Iterable<Restaurant> {
         }
     }
 
+    public void sortRestaurants() {
+        Collections.sort(restaurantsList, new SortRestaurantsByNameAplhabet());
+    }
+
     @Override
     @NonNull
     public Iterator<Restaurant> iterator() {
         return restaurantsList.iterator();
+    }
+}
+
+class SortRestaurantsByNameAplhabet implements Comparator<Restaurant> {
+    @Override
+    public int compare(Restaurant o1, Restaurant o2) {
+        return o1.compareTo(o2);
+    }
+}
+
+class SortInspectionsByDate implements  Comparator<Inspection> {
+    @Override
+    public int compare(Inspection o1, Inspection o2) {
+        return o1.compareTo(o2);
     }
 }

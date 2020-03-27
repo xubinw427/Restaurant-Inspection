@@ -8,13 +8,20 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
+
+import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 
 public class PopUpUpdateActivity extends AppCompatActivity {
+    UpdateManager updateManager = UpdateManager.getInstance();
+    private final int REQUEST_CODE = 500;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pop_up_update);
+
+        setFinishOnTouchOutside(false);
 
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -34,6 +41,7 @@ public class PopUpUpdateActivity extends AppCompatActivity {
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                updateManager.setCancelled(1);
                 finish();
             }
         });
@@ -45,23 +53,36 @@ public class PopUpUpdateActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = makePopUpDownloadIntent(getApplicationContext());
-                startActivity(intent);
-                finish();
+                startActivityForResult(intent, REQUEST_CODE);
             }
         });
     }
 
     @Override
     public void onBackPressed() {
-        //TO DO: Cancel download
-        moveTaskToBack(true);
+        updateManager.setCancelled(1);
+        finish();
     }
 
     public static Intent makePopUpDownloadIntent(Context c){
         return new Intent(c, PopUpDownloadActivity.class);
     }
 
-    public static Intent makeRestaurantMapIntent(Context c){
-        return new Intent(c, RestaurantMapActivity.class);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            Intent backToMap = new Intent();
+            setResult(PopUpDownloadActivity.RESULT_OK, backToMap);
+            finish();
+        }
+        else if (requestCode == REQUEST_CODE && resultCode == RESULT_CANCELED) {
+            updateManager.setCancelled(1);
+
+            Intent backToMap = new Intent();
+            setResult(PopUpDownloadActivity.RESULT_CANCELED, backToMap);
+            finish();
+        }
     }
 }
