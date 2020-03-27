@@ -48,7 +48,6 @@ public class PopUpDownloadActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
         InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
 
         ViolationsMap.init(violationsIn);

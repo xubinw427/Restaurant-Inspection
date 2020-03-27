@@ -48,8 +48,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         instance = new RestaurantManager(restaurantFile, inspectionsFile);
     }
 
-    public void reset()
-    {
+    public void reset() {
         instance = null;
     }
 
