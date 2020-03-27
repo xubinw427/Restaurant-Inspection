@@ -1,10 +1,9 @@
 package ca.cmpt276.restaurantinspection.Model;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -25,12 +24,16 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
     private String TAG = "Degug";
     /** Private to prevent anyone else from instantiating. **/
-    private RestaurantManager(InputStream restaurantFile,
-                              InputStream inspectionsFile) {
+    private RestaurantManager(InputStream restaurantFile, FileInputStream serverRestaurantFile,
+                              InputStream inspectionsFile, FileInputStream serverInspectionFile) {
 
         readRestaurantData(restaurantFile);
+        readRestaurantData(serverRestaurantFile);
+
         violationsMap = ViolationsMap.getInstance();
+
         populateInspections(inspectionsFile);
+        populateInspections(serverInspectionFile);
     }
 
     public static RestaurantManager getInstance() {
@@ -42,13 +45,14 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return instance;
     }
 
-    public static void init(InputStream restaurantFile,
-                            InputStream inspectionsFile) {
+    public static void init(InputStream restaurantFile, FileInputStream serverRestaurantFile,
+                            InputStream inspectionsFile, FileInputStream serverInspectionFile) {
         if (instance != null) {
             return;
         }
 
-        instance = new RestaurantManager(restaurantFile, inspectionsFile);
+        instance = new RestaurantManager(restaurantFile, serverRestaurantFile,
+                                            inspectionsFile, serverInspectionFile);
     }
 
     public void reset() {

@@ -220,7 +220,6 @@ public class DataManager {
 
                     while(scanner.hasNextLine() && updateManager.getCancelled() != 1) {
                         String line = scanner.nextLine();
-                        System.out.println(line);
                         line = line + '\r';
 
                         try {
@@ -265,7 +264,6 @@ public class DataManager {
 
                     while(scanner.hasNextLine() && updateManager.getCancelled() != 1) {
                         String line = scanner.nextLine();
-                        System.out.println(line);
                         line = line + '\r';
 
                         try {

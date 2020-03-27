@@ -2,6 +2,7 @@ package ca.cmpt276.restaurantinspection;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -28,11 +29,6 @@ public class PopUpDownloadActivity extends AppCompatActivity {
     DataManager dataManager = DataManager.getInstance();
     Thread download;
 
-    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
-    private final String filenameForRestaurant = "update_restaurant";
-    private final String filenameForInspection = "update_inspection";
-    private final String TAG = "Debug";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,26 +46,6 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
         SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
         final SharedPreferences.Editor EDITOR = pref.edit();
-        restaurantManager.reset();
-
-        FileInputStream internalRestaurants = null;
-        FileInputStream internalInspections = null;
-        try {
-            internalRestaurants = openFileInput(filenameForRestaurant);
-            internalInspections = openFileInput(filenameForInspection);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
-
-        ViolationsMap.init(violationsIn);
-        RestaurantManager.init(internalRestaurants, internalInspections);
-
-        restaurantManager = RestaurantManager.getInstance();
-
-        int size = restaurantManager.getSize();
-        Log.d(TAG, "There are " + size + " restaurants.");
 
         cancelBtnPressed();
 
@@ -90,15 +66,15 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
                 if (updateManager.getCancelled() != 1) {
                     /** SAVE: Last Modified Restaurant/Inspection Time (by server) **/
-                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
-                    Calendar cal = Calendar.getInstance();
-
                     EDITOR.putString("last_modified_restaurants_by_server",
                             updateManager.getLastModifiedRestaurants());
                     EDITOR.putString("last_modified_inspections_by_server",
                             updateManager.getLastModifiedInspections());
                     EDITOR.apply();
                 }
+
+                Intent backToUpdate = new Intent();
+                setResult(PopUpDownloadActivity.RESULT_OK, backToUpdate);
 
                 finish();
             }
@@ -113,7 +89,10 @@ public class PopUpDownloadActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 download.interrupt();
-                updateManager.setCancelled(1);
+                updateManager.setCancelled(PopUpDownloadActivity.RESULT_CANCELED);
+
+                Intent backToUpdate = new Intent();
+                setResult(RESULT_CANCELED, backToUpdate);
                 finish();
             }
         });
@@ -122,7 +101,10 @@ public class PopUpDownloadActivity extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         download.interrupt();
-        updateManager.setCancelled(1);
+        updateManager.setCancelled(PopUpDownloadActivity.RESULT_CANCELED);
+
+        Intent backToUpdate = new Intent();
+        setResult(RESULT_CANCELED, backToUpdate);
         finish();
     }
 }

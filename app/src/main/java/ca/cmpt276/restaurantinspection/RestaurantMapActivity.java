@@ -2,7 +2,6 @@ package ca.cmpt276.restaurantinspection;
 
 import androidx.annotation.NonNull;
 
-import android.content.SharedPreferences;
 import android.location.Location;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
@@ -29,6 +28,8 @@ import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.algo.Algorithm;
 import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
@@ -45,6 +46,12 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private DataManager dataManager;
     private Algorithm <CustomMarker> clusterManagerAlgorithm;
     private RestaurantManager restaurantManager;
+
+    private final String RESTAURANT_FILENAME = "update_restaurant";
+    private final String INSPECTION_FILENAME = "update_inspection";
+
+    private final int REQUEST_CODE = 100;
+
     private ClusterManager <CustomMarker> mClusterManager;
     private static final float DEFAULT_ZOOM = 17f;
     private GoogleMap mMap;
@@ -72,18 +79,28 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             /** and if an update exists then **/
             /** UNCOMMENT AFTER TESTING -- NO NEW DATA so pop-up won't show up **/
 //            if (updateManager.checkUpdateNeeded()) {
-                startActivity(new Intent(RestaurantMapActivity.this,
-                        PopUpUpdateActivity.class));
+                startActivityForResult(new Intent(RestaurantMapActivity.this,
+                        PopUpUpdateActivity.class), REQUEST_CODE);
 //            }
         }
 
-        /** CHANGE RESTAURANT FILE AFTER TESTING **/
-        InputStream restaurantsIn = getResources().openRawResource(R.raw.update_restaurants);
-        InputStream inspectionsIn = getResources().openRawResource(R.raw.update_inspections);
+        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
+        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
+
+        FileInputStream internalRestaurants = null;
+        FileInputStream internalInspections = null;
+        try {
+            internalRestaurants = openFileInput(RESTAURANT_FILENAME);
+            internalInspections = openFileInput(INSPECTION_FILENAME);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
         InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
 
         ViolationsMap.init(violationsIn);
-        RestaurantManager.init(restaurantsIn, inspectionsIn);
+        RestaurantManager.init(restaurantsIn, internalRestaurants,
+                                inspectionsIn, internalInspections);
         restaurantManager = RestaurantManager.getInstance();
 
         initMap();
@@ -238,5 +255,31 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         }
 
         return -1;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Map is now refreshing ...",
+                    Toast.LENGTH_SHORT);
+
+            toast.show();
+
+            restaurantManager.reset();
+
+            startActivity(new Intent(this, RestaurantMapActivity.class));
+            finish();
+        }
+        else if (requestCode == REQUEST_CODE && resultCode == RESULT_CANCELED) {
+            Toast toast = Toast.makeText(getApplicationContext(),
+                    "Download from server cancelled.",
+                    Toast.LENGTH_SHORT);
+
+            toast.show();
+            return;
+        }
     }
 }
