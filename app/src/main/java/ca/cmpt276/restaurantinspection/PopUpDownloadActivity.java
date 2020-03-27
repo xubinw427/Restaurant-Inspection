@@ -34,7 +34,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8),(int)(height*.6));
+        getWindow().setLayout((int) (width * .8), (int) (height * .6));
 
         SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
         final SharedPreferences.Editor EDITOR = pref.edit();

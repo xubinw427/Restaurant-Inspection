@@ -11,6 +11,10 @@ public class Restaurant implements Comparable<Restaurant>{
     private ArrayList<Inspection> inspectionsList;
 
     public Restaurant(String restaurantLump) {
+        restaurantLump = restaurantLump.replaceAll(", ", " ");
+        restaurantLump = restaurantLump.replaceAll("\"", "");
+
+        System.out.println(restaurantLump);
         String[] restaurantInfo = restaurantLump.split(",");
         /** [0: ID, 1: Name, 2: PhysAddress, 3: PhysCity, 4: Factype, 5: Latitude, 6: Longitude] **/
         id = restaurantInfo[0];
@@ -75,7 +79,6 @@ public class Restaurant implements Comparable<Restaurant>{
     public void addInspection(Inspection inspection) {
         inspectionsList.add(inspection);
     }
-
 
     @Override
     public int compareTo(Restaurant restaurant) {

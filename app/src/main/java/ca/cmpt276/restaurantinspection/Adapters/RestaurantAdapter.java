@@ -114,6 +114,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                 holder.btnBackground.setImageResource(R.drawable.button_teal);
                 holder.hazardIcon.setImageResource(R.drawable.restlist_low);
                 break;
+            case "None":
+                holder.btnBackground.setImageResource(R.drawable.button_none);
+                holder.hazardIcon.setImageResource(R.drawable.restlist_none);
             default:
                 break;
         }
