@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -13,24 +12,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Scanner;
-
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
-import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
@@ -50,6 +34,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
 
         mapView();
     }
+
     private void mapView() {
         Button btn = findViewById(R.id.map_button_inact);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +61,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
     @Override
     public void onRestaurantClick(int position) {
         restaurantManager.setCurrRestaurantPosition(position);
+        restaurantManager.setFromList(1);
 
         Intent intent = new Intent(this, RestaurantInfoActivity.class);
         startActivity(intent);

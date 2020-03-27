@@ -18,15 +18,15 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private ViolationsMap violationsMap;
     private int currRestaurantPosition;
     private int currInspectionPosition;
+    private int fromMap = 0;
+    private int fromList = 0;
 
     /** Private to prevent anyone else from instantiating. **/
     private RestaurantManager(InputStream restaurantFile,
                               InputStream inspectionsFile) {
 
         readRestaurantData(restaurantFile);
-
         violationsMap = ViolationsMap.getInstance();
-
         populateInspections(inspectionsFile);
     }
 
@@ -77,6 +77,22 @@ public class RestaurantManager implements Iterable<Restaurant> {
         currInspectionPosition = position;
     }
 
+    public int getFromList() {
+        return this.fromList;
+    }
+
+    public int getFromMap() {
+        return this.fromMap;
+    }
+
+    public void setFromList(int i) {
+        this.fromList = i;
+    }
+
+    public void setFromMap(int i) {
+        this.fromMap = i;
+    }
+
     private void addNew(Restaurant restaurant) {
         restaurantsList.add(restaurant);
     }
@@ -87,6 +103,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         );
 
         String line;
+
         try {
             /** Step over header **/
             reader.readLine();
@@ -97,9 +114,9 @@ public class RestaurantManager implements Iterable<Restaurant> {
             }
         }
         catch (IOException e) {
-
             e.printStackTrace();
         }
+
         try {
             file.close();
         }
@@ -113,18 +130,23 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private void populateInspections(InputStream file) {
         BufferedReader input = new BufferedReader(new InputStreamReader(file));
 
-        try {
-            String line;
+        String line;
 
+        try {
             /** Step over header **/
             input.readLine();
 
             while ((line = input.readLine()) != null) {
-                String[] inspectionData = line.split("\\*");
+                String[] inspectionLump = line.split(",\"");
 
-                Inspection currInspection = new Inspection(inspectionData, violationsMap);
+                if (inspectionLump[0].contains("***")) {
+                    continue;
+                }
 
-                String currRestaurantID = inspectionData[0];
+                String[] firstHalf = inspectionLump[0].split(",");
+                String currRestaurantID = firstHalf[0].trim();
+
+                Inspection currInspection = new Inspection(inspectionLump, violationsMap);
 
                 for (Restaurant restaurant : restaurantsList) {
                     if (restaurant.getId().equals(currRestaurantID)) {
@@ -137,6 +159,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         catch (IOException ex) {
             throw new RuntimeException("ERROR: Failed to read in " + file);
         }
+
         try {
             file.close();
         }
