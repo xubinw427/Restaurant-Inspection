@@ -37,7 +37,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
         getWindow().setLayout((int)(width*.8),(int)(height*.6));
 
         SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
-        final SharedPreferences.Editor editor = pref.edit();
+        final SharedPreferences.Editor EDITOR = pref.edit();
 
         cancelBtnPressed();
 
@@ -57,17 +57,15 @@ public class PopUpDownloadActivity extends AppCompatActivity {
                 }
 
                 if (updateManager.getCancelled() != 1) {
-                    /** SAVE: Updated Time, Last Modified Restaurant/Inspection Time (by server) **/
+                    /** SAVE: Last Modified Restaurant/Inspection Time (by server) **/
                     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
                     Calendar cal = Calendar.getInstance();
 
-                    String today = sdf.format(cal.getTime());
-
-                    editor.putString("last_modified_restaurants_by_server",
+                    EDITOR.putString("last_modified_restaurants_by_server",
                             updateManager.getLastModifiedRestaurants());
-                    editor.putString("last_modified_inspections_by_server",
+                    EDITOR.putString("last_modified_inspections_by_server",
                             updateManager.getLastModifiedInspections());
-                    editor.apply();
+                    EDITOR.apply();
                 }
 
                 finish();

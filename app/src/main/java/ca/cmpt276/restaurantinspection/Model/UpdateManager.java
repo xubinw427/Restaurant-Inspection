@@ -147,10 +147,6 @@ public class UpdateManager {
             long diff = dateEnd.getTime() - dateStart.getTime();
             hoursApart =  diff / (60 * 60 * 1000);
 
-            System.out.println("***************");
-            System.out.println(rawDate);
-            System.out.println(hoursApart);
-
             if (hoursApart >= 1) {
                 return true;
             }
@@ -180,8 +176,6 @@ public class UpdateManager {
                                                     null);
         String savedInspectionsDate = pref.getString("last_modified_inspections_by_server",
                                                     null);
-        System.out.println(this.lastModifiedRestaurants.equals(savedRestaurantsDate));
-        System.out.println(this.lastModifiedInspections.equals(savedInspectionsDate));
 
         if (!this.lastModifiedRestaurants.equals(savedRestaurantsDate)) { return true; }
 

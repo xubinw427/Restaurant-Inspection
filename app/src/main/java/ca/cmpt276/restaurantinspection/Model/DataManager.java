@@ -218,13 +218,8 @@ public class DataManager {
                     FileOutputStream outputStream;
                     outputStream = fileContext.openFileOutput(filename, Context.MODE_PRIVATE);
 
-                    System.out.println("**********");
-                    System.out.println(updateManager.getCancelled());
-                    System.out.println("**********");
-
                     while(scanner.hasNextLine() && updateManager.getCancelled() != 1) {
                         String line = scanner.nextLine();
-                        System.out.println(line);
                         line = line + '\r';
 
                         try {
@@ -269,7 +264,6 @@ public class DataManager {
 
                     while(scanner.hasNextLine() && updateManager.getCancelled() != 1) {
                         String line = scanner.nextLine();
-                        System.out.println(line);
                         line = line + '\r';
 
                         try {
