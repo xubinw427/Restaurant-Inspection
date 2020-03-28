@@ -11,7 +11,6 @@ import java.util.Locale;
 public class UpdateManager {
     private static UpdateManager instance;
     private Context context;
-    private String lastUpdatedDate;
     private String lastModifiedInspections;
     private String lastModifiedRestaurants;
 
@@ -20,15 +19,15 @@ public class UpdateManager {
 
     private UpdateManager(Context context) {
         this.context = context;
-        this.lastUpdatedDate = null;
         this.lastModifiedInspections = null;
 
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
         SharedPreferences.Editor editor = pref.edit();
 
-        /** TO DELETE: TESTING TO MAKE POP-UP APPEAR IF NO UPDATE IN 20 HOURS **/
-        editor.putString("last_updated", "2020-03-25 11:32:43");
-        /** ================================================================== **/
+        /** Set some default last updated date **/
+        if (pref.getString("last_updated", null) == null) {
+            editor.putString("last_updated", "2020-03-01 00:00:00");
+        }
 
         editor.apply();
     }
@@ -72,7 +71,7 @@ public class UpdateManager {
     }
 
     public void setLastModifiedInspectionsPrefs(String lastModifiedDate) {
-        this.lastModifiedInspections = lastModifiedDate;
+        this.lastModifiedInspections = "2000-01-01 00:00:00";
 
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
         SharedPreferences.Editor editor = pref.edit();
@@ -85,13 +84,12 @@ public class UpdateManager {
         this.lastModifiedInspections = lastModifiedDate;
     }
 
-
     public String getLastModifiedRestaurants() {
         return lastModifiedRestaurants;
     }
 
     public void setLastModifiedRestaurantsPrefs(String lastModifiedDate) {
-        this.lastModifiedRestaurants = lastModifiedDate;
+        this.lastModifiedRestaurants = "2000-01-01 00:00:00";
 
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
         SharedPreferences.Editor editor = pref.edit();
@@ -120,7 +118,7 @@ public class UpdateManager {
             while (pref.getString("last_updated", null) == null) {
                 Thread.sleep(50);
             }
-        } catch(InterruptedException ex) {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
@@ -147,7 +145,8 @@ public class UpdateManager {
             long diff = dateEnd.getTime() - dateStart.getTime();
             hoursApart =  diff / (60 * 60 * 1000);
 
-            if (hoursApart >= 1) {
+            /** Adjusted 3 hours for EST conversion of Server time **/
+            if (hoursApart >= 17) {
                 return true;
             }
 
@@ -164,11 +163,10 @@ public class UpdateManager {
 
         try {
             while (pref.getString("last_modified_inspections_by_server", null) == null
-                    || pref.getString("last_modified_restaurants_by_server", null) == null
-                    || lastModifiedRestaurants == null || lastModifiedInspections == null) {
+                    || pref.getString("last_modified_restaurants_by_server", null) == null) {
                 Thread.sleep(10);
             }
-        } catch(InterruptedException ex) {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
@@ -176,10 +174,40 @@ public class UpdateManager {
                                                     null);
         String savedInspectionsDate = pref.getString("last_modified_inspections_by_server",
                                                     null);
+        String lastUpdatedDate = pref.getString("last_updated", null);
 
-        if (!this.lastModifiedRestaurants.equals(savedRestaurantsDate)) { return true; }
+        if (lastUpdatedDate == null) { return true; }
 
-        if (!this.lastModifiedInspections.equals(savedInspectionsDate)) { return true; }
+        if (isBeforeDate(lastUpdatedDate, savedRestaurantsDate)) { return true; }
+
+        if (isBeforeDate(lastUpdatedDate, savedInspectionsDate)) { return true; }
+
+        return false;
+    }
+
+    private boolean isBeforeDate(String date1, String date2) {
+        String replacedDate = date2.replace("T", " ");
+        String[] dateSplit = replacedDate.split("\\.");
+
+        String cleanDate2 = dateSplit[0];
+
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
+
+        try {
+            Date firstDate = sdf.parse(date1);
+            Date secondDate = sdf.parse(cleanDate2);
+
+            long diff = secondDate.getTime() - firstDate.getTime();
+            float hoursApart =  diff / (60 * 60 * 1000);
+
+            /** Adjusted 3 hours for EST conversion of Server time **/
+            if (hoursApart > -3) {
+                return true;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return false;
     }

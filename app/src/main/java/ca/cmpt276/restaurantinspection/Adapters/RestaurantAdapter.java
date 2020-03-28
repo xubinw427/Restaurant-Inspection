@@ -30,12 +30,14 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         private RestaurantViewHolder(@NonNull View itemView, OnRestaurantListener onRestaurantListener) {
             super(itemView);
+
             btnBackground = itemView.findViewById((R.id.restaurant_button));
             hazardIcon = itemView.findViewById(R.id.haz_icon);
             restaurantName = itemView.findViewById(R.id.restaurant_name);
             inspectionDate = itemView.findViewById(R.id.inspection_date);
             numIssues = itemView.findViewById(R.id.num_issues);
             restaurantLogoIcon = itemView.findViewById(R.id.food_icon);
+
             this.onRestaurantListener = onRestaurantListener;
             itemView.setOnClickListener(this);
         }
@@ -71,6 +73,9 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         String restaurantName = currRestaurant.getName();
         if (restaurantName.contains("7-Eleven")) {
             holder.restaurantLogoIcon.setImageResource(R.drawable.logo_seveneleven);
+        }
+        else if (restaurantName.contains("A&W") || restaurantName.contains("A & W")) {
+            holder.restaurantLogoIcon.setImageResource(R.drawable.logo_anw);
         }
         else if (restaurantName.contains("Royal Canadian Legion")) {
             holder.restaurantLogoIcon.setImageResource(R.drawable.logo_royalcanadianlegion);
@@ -125,6 +130,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         holder.restaurantName.setText(currRestaurant.getName());
         holder.numIssues.setText(currRestaurant.getNumIssues());
 
+        /** Re-adjust spacing between RecyclerView items **/
         if (position == 0) {
             RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
             lp.setMargins(0, 0, 0, 0);

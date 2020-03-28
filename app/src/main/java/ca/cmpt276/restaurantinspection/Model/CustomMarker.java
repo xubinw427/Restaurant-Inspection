@@ -34,6 +34,7 @@ public class CustomMarker implements ClusterItem {
     }
 
     public BitmapDescriptor getIcon(){ return mIcon;}
+
     @Override
     public LatLng getPosition() {
         return mPosition;

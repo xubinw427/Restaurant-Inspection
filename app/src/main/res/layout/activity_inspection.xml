@@ -2,11 +2,11 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    android:orientation="vertical"
-    android:id="@+id/linearLayout">
+    android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv2"
@@ -23,31 +23,30 @@
         app:layout_constraintVertical_bias="1.0"
         tools:layout_conversion_absoluteHeight="465dp"
         tools:layout_conversion_absoluteWidth="411dp">
-
     </androidx.recyclerview.widget.RecyclerView>
 
     <ImageView
         android:id="@+id/list_button_background"
         android:layout_width="360dp"
         android:layout_height="59dp"
-        tools:ignore="ContentDescription"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.052"
-        app:srcCompat="@drawable/button_box" />
+        app:srcCompat="@drawable/button_box"
+        tools:ignore="ContentDescription" />
 
     <Button
         android:id="@+id/list_button_act"
         android:layout_width="165dp"
         android:layout_height="38dp"
         android:background="@drawable/button_insp_active"
+        android:enabled="false"
         android:gravity="center"
         android:text="@string/str_insp_inspection"
         android:textColor="@color/fontColour"
-        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.861"
@@ -77,9 +76,9 @@
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:gravity="center"
+        android:lineSpacingExtra="5sp"
         android:textColor="@color/fontColour"
         android:textSize="18sp"
-        android:lineSpacingExtra="5sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

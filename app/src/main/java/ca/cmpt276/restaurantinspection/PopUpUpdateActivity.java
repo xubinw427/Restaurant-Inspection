@@ -1,19 +1,16 @@
 package ca.cmpt276.restaurantinspection;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
-
 import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 
 public class PopUpUpdateActivity extends AppCompatActivity {
-    UpdateManager updateManager = UpdateManager.getInstance();
+    private UpdateManager updateManager = UpdateManager.getInstance();
     private final int REQUEST_CODE = 500;
 
     @Override

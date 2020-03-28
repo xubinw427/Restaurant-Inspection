@@ -15,7 +15,7 @@ public class Restaurant implements Comparable<Restaurant>{
         restaurantLump = restaurantLump.replaceAll("\"", "");
 
         String[] restaurantInfo = restaurantLump.split(",");
-        /** [0: ID, 1: Name, 2: PhysAddress, 3: PhysCity, 4: Factype, 5: Latitude, 6: Longitude] **/
+        /** [0: ID, 1: Name, 2: PhysAddress, 3: PhysCity, 4: FacType, 5: Latitude, 6: Longitude] **/
         id = restaurantInfo[0];
         name = restaurantInfo[1];
         address = restaurantInfo[2] + ", " + restaurantInfo[3];
@@ -85,17 +85,15 @@ public class Restaurant implements Comparable<Restaurant>{
         int l2 = restaurant.getName().length();
         int min = Math.min(l1, l2);
 
-        for(int i = 0; i < min; i++)
-        {
+        for (int i = 0; i < min; i++) {
             int s1Char = (int)this.name.charAt(i);
             int s2Char = (int)restaurant.getName().charAt(i);
 
             if(s1Char != s2Char)
                 return s1Char - s2Char;
         }
-        if(l1 != l2)
-            return l1 - l2;
-        else
-            return 0;
+
+        if (l1 != l2) { return l1 - l2; }
+        else { return 0; }
     }
 }

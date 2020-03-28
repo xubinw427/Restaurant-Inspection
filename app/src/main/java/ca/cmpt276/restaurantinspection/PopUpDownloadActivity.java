@@ -1,28 +1,15 @@
 package ca.cmpt276.restaurantinspection;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Locale;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 import ca.cmpt276.restaurantinspection.Model.DataManager;
 import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 
-import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
-import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 
 public class PopUpDownloadActivity extends AppCompatActivity {
     UpdateManager updateManager = UpdateManager.getInstance();
@@ -48,7 +35,10 @@ public class PopUpDownloadActivity extends AppCompatActivity {
         final SharedPreferences.Editor EDITOR = pref.edit();
 
         cancelBtnPressed();
+        proceedBtnPressed(EDITOR);
+    }
 
+    private void proceedBtnPressed(final SharedPreferences.Editor EDITOR) {
         download = new Thread(new Runnable() {
             @Override
             public void run() {
