@@ -338,4 +338,9 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             toast.show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+    }
 }
