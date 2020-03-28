@@ -13,25 +13,25 @@
         android:layout_width="359dp"
         android:layout_height="248dp"
         android:src="@drawable/box_info"
-        tools:ignore="ContentDescription"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.471"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.893" />
+        app:layout_constraintVertical_bias="0.893"
+        tools:ignore="ContentDescription" />
 
     <ImageView
         android:id="@+id/inspection_overview"
         android:layout_width="433dp"
         android:layout_height="179dp"
-        tools:ignore="ContentDescription"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.235"
-        app:srcCompat="@drawable/inspection_det_high" />
+        app:srcCompat="@drawable/inspection_det_high"
+        tools:ignore="ContentDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv3"
@@ -49,14 +49,14 @@
         android:layout_width="360dp"
         android:layout_height="46dp"
         android:layout_marginTop="12dp"
-        tools:ignore="ContentDescription"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/inspection_overview"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/violation_header" />
+        app:srcCompat="@drawable/violation_header"
+        tools:ignore="ContentDescription" />
 
     <TextView
         android:id="@+id/violations"
@@ -117,8 +117,7 @@
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.052"
-/>
+        app:layout_constraintVertical_bias="0.052" />
 
     <TextView
         android:id="@+id/textView2"

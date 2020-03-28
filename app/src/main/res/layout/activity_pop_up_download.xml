@@ -4,15 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PopUpDownloadActivity"
-    android:background="@drawable/background_popupwindow">
+    android:background="@drawable/background_popupwindow"
+    tools:context=".PopUpDownloadActivity">
 
     <TextView
         android:id="@+id/text_downloadinprogress"
         android:layout_width="256dp"
         android:layout_height="35dp"
         android:layout_marginBottom="32dp"
-        android:text="Updating Data..."
+        android:text="@string/str_updating_data"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
@@ -35,10 +35,10 @@
 
     <Button
         android:id="@+id/btn_cancel"
-        android:background="@drawable/button_canceldownload"
         android:layout_width="81dp"
         android:layout_height="40dp"
         android:layout_marginTop="28dp"
+        android:background="@drawable/button_canceldownload"
         android:text="@android:string/cancel"
         android:textColor="@android:color/white"
         app:layout_constraintEnd_toEndOf="parent"

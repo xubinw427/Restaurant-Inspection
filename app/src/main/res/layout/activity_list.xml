@@ -15,23 +15,21 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/background_header">
-
-    </com.google.android.material.appbar.AppBarLayout>
+        app:layout_constraintTop_toTopOf="@+id/background_header" />
 
     <ImageView
         android:id="@+id/background_header"
         android:layout_width="0dp"
         android:layout_height="169dp"
         android:layout_marginBottom="524dp"
-        tools:ignore="ContentDescription"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@drawable/background_top" />
+        app:srcCompat="@drawable/background_top"
+        tools:ignore="ContentDescription" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
@@ -81,7 +79,7 @@
         android:layout_height="38dp"
         android:background="@drawable/button_info_inactive"
         android:elevation="0dp"
-        android:text="MAP"
+        android:text="@string/str_map"
         android:textColor="@color/fontColour"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -97,7 +95,7 @@
         android:background="@drawable/button_insp_active"
         android:enabled="false"
         android:gravity="center"
-        android:text="RESTAURANTS"
+        android:text="@string/str_restaurants"
         android:textColor="@color/fontColour"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

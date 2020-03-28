@@ -4,14 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PopUpDownloadActivity"
-    android:background="@drawable/background_popupwindow">
+    android:background="@drawable/background_popupwindow"
+    tools:context=".PopUpDownloadActivity">
 
     <TextView
         android:id="@+id/text_downloadinprogress"
         android:layout_width="256dp"
         android:layout_height="35dp"
-        android:text="Update Available"
+        android:text="@string/str_update_available"
         android:textAlignment="center"
         android:textSize="22sp"
         android:textStyle="bold"
@@ -28,7 +28,7 @@
         android:layout_width="81dp"
         android:layout_height="40dp"
         android:background="@drawable/button_canceldownload"
-        android:text="Cancel"
+        android:text="@string/str_cancel"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,7 +41,7 @@
         android:layout_width="81dp"
         android:layout_height="40dp"
         android:background="@drawable/button_proceeddownload"
-        android:text="Proceed"
+        android:text="@string/str_proceed"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,6 +55,7 @@
         android:layout_height="150dp"
         android:layout_centerInParent="true"
         android:background="@drawable/download_icon"
+        android:contentDescription="@string/str_image_download"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

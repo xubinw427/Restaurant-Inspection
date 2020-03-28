@@ -31,4 +31,11 @@
     <string name="str_date_level">%1$s | %2$s</string>
     <string name="str_map_snippet">\nAddress: %1$s \n\nHazard Level: %2$s \n</string>
     <string name="title_restaurant_map">Restaurants Map</string>
+    <string name="str_updating_data">Updating Data…</string>
+    <string name="str_map">MAP</string>
+    <string name="str_restaurants">RESTAURANTS</string>
+    <string name="str_update_available">Update Available</string>
+    <string name="str_proceed">Proceed</string>
+    <string name="str_cancel">Cancel</string>
+    <string name="str_image_download">Image Download</string>
 </resources>
