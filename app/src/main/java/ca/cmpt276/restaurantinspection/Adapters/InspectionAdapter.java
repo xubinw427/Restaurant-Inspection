@@ -15,6 +15,7 @@ import java.util.Locale;
 import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.R;
 
+/** RecyclerView Adapter for list of Inspections for a Restaurant **/
 public class InspectionAdapter extends RecyclerView.Adapter<InspectionAdapter.InspectionViewHolder> {
     private ArrayList<Inspection> inspectionList;
     private OnInspectionListener onInspectionListener;

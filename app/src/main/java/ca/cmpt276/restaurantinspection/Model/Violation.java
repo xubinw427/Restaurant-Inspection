@@ -1,5 +1,6 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+/** Violation Object that is Linked to Inspection Object **/
 public class Violation {
     private String ID;
     private String type;

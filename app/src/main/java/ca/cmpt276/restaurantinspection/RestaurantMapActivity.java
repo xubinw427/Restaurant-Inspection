@@ -39,6 +39,7 @@ import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 import ca.cmpt276.restaurantinspection.Model.DataManager;
 
+/** Map Displaying GPS Location of All Restaurants **/
 public class RestaurantMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private UpdateManager updateManager;
     private DataManager dataManager;

@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/** Manages New Updates of Data from Server, and Checks if Update is Needed **/
 public class UpdateManager {
     private static UpdateManager instance;
     private Context context;

@@ -10,7 +10,7 @@ import android.widget.Button;
 import ca.cmpt276.restaurantinspection.Model.DataManager;
 import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 
-
+/** Pop-up for Signalling New Download is Available **/
 public class PopUpDownloadActivity extends AppCompatActivity {
     UpdateManager updateManager = UpdateManager.getInstance();
     DataManager dataManager = DataManager.getInstance();

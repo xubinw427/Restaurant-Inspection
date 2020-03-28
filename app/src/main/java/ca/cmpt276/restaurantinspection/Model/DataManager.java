@@ -23,6 +23,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
+/** For Downloading Data From the Server & Saving into Internal Storage **/
 public class DataManager {
     private static DataManager instance;
     private Context fileContext;

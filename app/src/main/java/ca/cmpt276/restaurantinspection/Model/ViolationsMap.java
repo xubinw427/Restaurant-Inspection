@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 
+/** Mapping Lookup of Violations Based on Code; Contains Long & Short Descriptions **/
 public class ViolationsMap {
     private static ViolationsMap instance = null;
     private static Map<String, String[]> violationsLookup;

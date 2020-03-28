@@ -15,6 +15,7 @@ import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.Violation;
 
+/** List of Violations Associated with an Inspection Record **/
 public class RestaurantViolationActivity extends AppCompatActivity implements ViolationAdapter.OnViolationListener {
     private Inspection inspection;
     private ArrayList<Violation> violationList;

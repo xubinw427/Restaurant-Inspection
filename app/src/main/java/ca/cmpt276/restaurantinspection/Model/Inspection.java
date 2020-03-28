@@ -6,6 +6,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+/** Inspection class object for each Restaurant **/
 public class Inspection implements Comparable<Inspection>{
     private String trackingNumber;
 

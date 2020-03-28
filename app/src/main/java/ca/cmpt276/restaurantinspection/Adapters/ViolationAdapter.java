@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import ca.cmpt276.restaurantinspection.Model.Violation;
 import ca.cmpt276.restaurantinspection.R;
 
+/** RecyclerView Adapter for List of Violations for an Inspection Record **/
 public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.ViolationViewHolder> {
     private ArrayList<Violation> violationList;
     private OnViolationListener violationListener;

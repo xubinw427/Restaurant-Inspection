@@ -2,6 +2,7 @@ package ca.cmpt276.restaurantinspection.Model;
 
 import java.util.ArrayList;
 
+/** Restaurant Object to Represent Each Restaurant in Data **/
 public class Restaurant implements Comparable<Restaurant>{
     private String id;
     private String name;

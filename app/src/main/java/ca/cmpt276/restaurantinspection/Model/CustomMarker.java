@@ -7,6 +7,7 @@ import com.google.maps.android.clustering.ClusterItem;
 
 import ca.cmpt276.restaurantinspection.R;
 
+/** Setting up Map Pegs depending on Hazard Level of a Restaurant's Latest Inspection **/
 public class CustomMarker implements ClusterItem {
     private final LatLng mPosition;
     private String mTitle;

@@ -16,6 +16,7 @@ import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 
+/** List of All Inspections on Record for Restaurant **/
 public class RestaurantInspectionActivity extends AppCompatActivity implements InspectionAdapter.OnInspectionListener {
     private RestaurantManager restaurantManager;
     private Restaurant restaurant;

@@ -14,6 +14,7 @@ import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 
 import ca.cmpt276.restaurantinspection.R;
 
+/** RecyclerView Adapter for Main List of Restaurants **/
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private RestaurantManager restaurantManager;
     private OnRestaurantListener onRestaurantListener;

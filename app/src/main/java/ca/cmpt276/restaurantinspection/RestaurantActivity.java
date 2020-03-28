@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
 
+/** List of Restaurants **/
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
 

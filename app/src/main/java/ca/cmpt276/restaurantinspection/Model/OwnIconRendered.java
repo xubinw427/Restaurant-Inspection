@@ -9,7 +9,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
-
+/** Intelligent Clustering of Restaurant Pegs on Map **/
 public class OwnIconRendered extends DefaultClusterRenderer<CustomMarker> {
     private RestaurantManager manager = RestaurantManager.getInstance();
     private int position = manager.getCurrRestaurantPosition();
