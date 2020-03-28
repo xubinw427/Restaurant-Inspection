@@ -7,6 +7,11 @@ Followed Dr. Fraser's Videos:
 https://www.youtube.com/watch?v=jfk-5-7fMtw&feature=youtu.be
 https://www.youtube.com/playlist?list=PLgCYzUzKIBE-vInwQhGSdnbyJ62nixHCt
 
+- Allow Location Services on pop-up for proper Map functionality
+- Pop-up update will appear on-launch every time until data is downloaded. Will not pop-up again otherwise (unless there actually is 
+  data to download from server); for testing, will need to clear storage, and re-launch to simulate initial launch.
+- For lists, drag to scroll on emulator devices
+
 [CODE RESOURCES]
 Data Parsing: https://stackoverflow.com/questions/38415680/how-to-parse-csv-file-into-an-array-in-android-studio
 CardView and RecyclerView Adapter: https://www.youtube.com/watch?v=Nw9JF55LDzE&t=1s
