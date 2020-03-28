@@ -145,6 +145,7 @@ public class UpdateManager {
             long diff = dateEnd.getTime() - dateStart.getTime();
             hoursApart =  diff / (60 * 60 * 1000);
 
+            /** Adjusted 3 hours for EST conversion of Server time **/
             if (hoursApart >= 17) {
                 return true;
             }
@@ -199,6 +200,7 @@ public class UpdateManager {
             long diff = secondDate.getTime() - firstDate.getTime();
             float hoursApart =  diff / (60 * 60 * 1000);
 
+            /** Adjusted 3 hours for EST conversion of Server time **/
             if (hoursApart > -3) {
                 return true;
             }
