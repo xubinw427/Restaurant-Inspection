@@ -33,7 +33,6 @@ public class OwnIconRendered extends DefaultClusterRenderer<CustomMarker> {
     protected  void onClusterItemRendered (CustomMarker item, Marker marker){
         super.onClusterItemRendered(item, marker);
         if (item.getPosition().equals(pos) && item.getTitle().equals(name)) {
-
             getMarker(item).showInfoWindow();
         }
     }
