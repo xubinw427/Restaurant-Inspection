@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Build;
@@ -86,10 +87,10 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         if (updateManager.twentyHrsSinceUpdate() && updateManager.getCancelled() == 0) {
             /** and if an update exists then **/
             /** UNCOMMENT AFTER TESTING -- NO NEW DATA so pop-up won't show up **/
-//            if (updateManager.checkUpdateNeeded()) {
+            if (updateManager.checkUpdateNeeded()) {
                 startActivityForResult(new Intent(RestaurantMapActivity.this,
                         PopUpUpdateActivity.class), REQUEST_CODE);
-//            }
+            }
         }
 
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
@@ -107,11 +108,28 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
 
         ViolationsMap.init(violationsIn);
-        RestaurantManager.init(restaurantsIn, internalRestaurants,
-                                inspectionsIn, internalInspections);
+
+        if (internalRestaurants == null && internalInspections == null) {
+            RestaurantManager.init(restaurantsIn, inspectionsIn);
+        }
+        else {
+            RestaurantManager.init(internalRestaurants, internalInspections);
+        }
+
         restaurantManager = RestaurantManager.getInstance();
 
         initMap();
+
+        SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
+        SharedPreferences.Editor editor = pref.edit();
+
+        if (updateManager.getUpdated() == 1) {
+            editor.putString("last_modified_restaurants_by_server",
+                    updateManager.getLastModifiedRestaurants());
+            editor.putString("last_modified_inspections_by_server",
+                    updateManager.getLastModifiedInspections());
+            editor.apply();
+        }
 
         startRestaurantListActivity();
     }
@@ -326,6 +344,10 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             toast.show();
 
             restaurantManager.reset();
+
+            if (updateManager.getUpdated() == 1) {
+                dataManager.reset();
+            }
 
             startActivity(new Intent(this, RestaurantMapActivity.class));
             finish();
