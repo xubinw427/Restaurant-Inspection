@@ -98,6 +98,13 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 
     private void addNew(Restaurant restaurant) {
+        /** Don't add duplicate restaurants across the two data sources **/
+        for (Restaurant restaurantInList : restaurantsList) {
+            if (restaurant.getId().equals(restaurantInList.getId())) {
+                return;
+            }
+        }
+
         restaurantsList.add(restaurant);
     }
 
@@ -131,6 +138,17 @@ public class RestaurantManager implements Iterable<Restaurant> {
         }
 
         this.sortRestaurants();
+        this.sortInspectionsForEveryRestaurant();
+    }
+
+
+    private void sortInspectionsForEveryRestaurant()
+    {
+        int size = this.restaurantsList.size();
+        for(int i = 0; i < size; i++)
+        {
+            Collections.sort(restaurantsList.get(i).getInspectionsList(), new SortInspectionsByDate());
+        }
     }
 
     private void populateInspections(InputStream file) {
