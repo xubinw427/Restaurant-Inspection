@@ -70,7 +70,6 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
 
         RestaurantInfoActivity.this.startActivityForResult(intent, LAUNCH_MAP_ACTIVITY);
-        finish();
     }
 
     public static Intent makeRestaurantMapIntent(Context c){
