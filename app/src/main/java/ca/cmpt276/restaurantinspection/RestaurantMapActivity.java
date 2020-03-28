@@ -1,27 +1,20 @@
 package ca.cmpt276.restaurantinspection;
 
 import androidx.annotation.NonNull;
-
-import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.SharedPreferences;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,17 +22,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.algo.Algorithm;
 import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
 import ca.cmpt276.restaurantinspection.Model.CustomMarker;
 import ca.cmpt276.restaurantinspection.Model.OwnIconRendered;
@@ -52,20 +42,16 @@ import ca.cmpt276.restaurantinspection.Model.DataManager;
 public class RestaurantMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private UpdateManager updateManager;
     private DataManager dataManager;
-    private Algorithm<CustomMarker> clusterManagerAlgorithm;
     private RestaurantManager restaurantManager;
 
-    private final String RESTAURANT_FILENAME = "update_restaurant";
-    private final String INSPECTION_FILENAME = "update_inspection";
-
-    private final int REQUEST_CODE = 100;
-
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Algorithm<CustomMarker> clusterManagerAlgorithm;
     private ClusterManager <CustomMarker> mClusterManager;
+    private OwnIconRendered mRender;
     private static final float DEFAULT_ZOOM = 17f;
     private GoogleMap mMap;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
-    OwnIconRendered mRender;
-    private static final String TAG = "MainActivity";
+
+    private final int REQUEST_CODE = 100;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     @Override
@@ -73,31 +59,26 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_map);
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(getString(R.string.title_restaurant_map));
-        actionBar.setElevation(0);
+        if (actionBar != null) {
+            actionBar.setTitle(getString(R.string.title_restaurant_map));
+            actionBar.setElevation(0);
+        }
 
         UpdateManager.init(this);
         DataManager.init(this);
         dataManager = DataManager.getInstance();
-        /** === CHECKING FOR UPDATES === **/
-        updateManager = UpdateManager.getInstance();
-        updateManager.twentyHrsSinceUpdate();
-        /** === END CHECKING === **/
 
-        if (updateManager.twentyHrsSinceUpdate() && updateManager.getCancelled() == 0) {
-            /** and if an update exists then **/
-            /** UNCOMMENT AFTER TESTING -- NO NEW DATA so pop-up won't show up **/
-            if (updateManager.checkUpdateNeeded()) {
-                startActivityForResult(new Intent(RestaurantMapActivity.this,
-                        PopUpUpdateActivity.class), REQUEST_CODE);
-            }
-        }
+        updateChecker();
 
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
         InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
 
         FileInputStream internalRestaurants = null;
         FileInputStream internalInspections = null;
+
+        final String RESTAURANT_FILENAME = "update_restaurant";
+        final String INSPECTION_FILENAME = "update_inspection";
+
         try {
             internalRestaurants = openFileInput(RESTAURANT_FILENAME);
             internalInspections = openFileInput(INSPECTION_FILENAME);
@@ -134,6 +115,22 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         startRestaurantListActivity();
     }
 
+    private void updateChecker() {
+        /** === CHECKING FOR UPDATES === **/
+        updateManager = UpdateManager.getInstance();
+        updateManager.twentyHrsSinceUpdate();
+        /** === END CHECKING === **/
+
+        if (updateManager.twentyHrsSinceUpdate() && updateManager.getCancelled() == 0) {
+            /** and if an update exists then **/
+            /** UNCOMMENT AFTER TESTING -- NO NEW DATA so pop-up won't show up **/
+            if (updateManager.checkUpdateNeeded()) {
+                startActivityForResult(new Intent(RestaurantMapActivity.this,
+                        PopUpUpdateActivity.class), REQUEST_CODE);
+            }
+        }
+    }
+
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
@@ -153,7 +150,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                         REQUEST_CODE_ASK_PERMISSIONS);
                 return;
             }
-            getLocation();
         }
 
         mMap = googleMap;
@@ -164,12 +160,29 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         startMapActivityFromRestaurantInfo();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode==REQUEST_CODE_ASK_PERMISSIONS) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            } else {
+                /** Permission Denied **/
+                Toast.makeText(this, "Location Permissions Turned Off.", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
     private void startMapActivityFromRestaurantInfo() {
         if (getCallingActivity() != null) {
             if (getCallingActivity().getClassName().equals("ca.cmpt276.restaurantinspection.RestaurantInfoActivity")) {
                 mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-                Task location = mFusedLocationProviderClient.getLastLocation();
-                location.addOnCompleteListener(new OnCompleteListener() {
+                Task<Location> location = mFusedLocationProviderClient.getLastLocation();
+                location.addOnCompleteListener(new OnCompleteListener<Location>() {
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
@@ -187,8 +200,8 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
     private void getDeviceLocation() {
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        Task location = mFusedLocationProviderClient.getLastLocation();
-        location.addOnCompleteListener(new OnCompleteListener() {
+        Task<Location> location = mFusedLocationProviderClient.getLastLocation();
+        location.addOnCompleteListener(new OnCompleteListener<Location>() {
             @Override
             public void onComplete(@NonNull Task task) {
                 if (task.isSuccessful()) {
@@ -207,7 +220,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
-    // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+    /** Obtain the SupportMapFragment and get notified when the map is ready to be used. **/
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -217,9 +230,9 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     }
 
     private void setUpCluster() {
-        //Initialize the manager with context and the map
+        /** Initialize the manager with context and the map **/
         mClusterManager = new ClusterManager<>(this, mMap);
-        clusterManagerAlgorithm = new NonHierarchicalDistanceBasedAlgorithm();
+        clusterManagerAlgorithm = new NonHierarchicalDistanceBasedAlgorithm<>();
         mClusterManager.setAlgorithm(clusterManagerAlgorithm);
 
         mMap.setOnCameraIdleListener(mClusterManager);
@@ -290,46 +303,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         }
 
         return -1;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE_ASK_PERMISSIONS:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    getLocation();
-                    Intent intent = getIntent();
-                    finish();
-                    startActivity(intent);
-                } else {
-                    /** Permission Denied **/
-                    Toast.makeText(this, "Location Permissions Turned Off.", Toast.LENGTH_SHORT)
-                            .show();
-                }
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-    }
-
-    //Get location
-    public void getLocation() {
-        LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TO-DO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        Location myLocation = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (myLocation == null) {
-            myLocation = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
-
-        }
     }
 
     @Override

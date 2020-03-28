@@ -14,6 +14,9 @@ Dynamic Parent Activity: https://www.youtube.com/watch?v=suWIljV1AxI
 Calculate Difference in Hours Between Dates: https://mkyong.com/java/how-to-calculate-date-time-difference-in-java/
 Ask User for Location Permission: https://stackoverflow.com/questions/57098852/how-to-ask-for-location-permission-in-android-studio
 
+[ASSUMPTION]
+Server modified times assumed to be EST (3 hours ahead), and calculations adjusted for PST.
+
 [IMAGE RESOURCES]
 Activity Icons: https://www.figma.com/resources/assets/material-icons-outline/
 App Icon: https://static.allongeorgia.com/wp-content/uploads/2018/04/Restaurant-Inspection-696x517.jpeg

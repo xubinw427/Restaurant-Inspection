@@ -9,6 +9,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
+
 public class OwnIconRendered extends DefaultClusterRenderer<CustomMarker> {
     private RestaurantManager manager = RestaurantManager.getInstance();
     private int position = manager.getCurrRestaurantPosition();
@@ -33,7 +34,6 @@ public class OwnIconRendered extends DefaultClusterRenderer<CustomMarker> {
     protected  void onClusterItemRendered (CustomMarker item, Marker marker){
         super.onClusterItemRendered(item, marker);
         if (item.getPosition().equals(pos) && item.getTitle().equals(name)) {
-
             getMarker(item).showInfoWindow();
         }
     }

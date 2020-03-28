@@ -24,11 +24,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
     /** Private to prevent anyone else from instantiating. **/
     private RestaurantManager(InputStream restaurantFile, InputStream inspectionsFile) {
-
         readRestaurantData(restaurantFile);
-
         violationsMap = ViolationsMap.getInstance();
-
         populateInspections(inspectionsFile);
     }
 
@@ -142,11 +139,10 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 
 
-    private void sortInspectionsForEveryRestaurant()
-    {
+    private void sortInspectionsForEveryRestaurant() {
         int size = this.restaurantsList.size();
-        for(int i = 0; i < size; i++)
-        {
+
+        for (int i = 0; i < size; i++) {
             Collections.sort(restaurantsList.get(i).getInspectionsList(), new SortInspectionsByDate());
         }
     }

@@ -24,11 +24,10 @@ public class UpdateManager {
         SharedPreferences pref = context.getSharedPreferences("UpdatePref", 0);
         SharedPreferences.Editor editor = pref.edit();
 
-        /** TO DELETE: TESTING TO MAKE POP-UP APPEAR IF NO UPDATE IN 20 HOURS **/
+        /** Set some default last updated date **/
         if (pref.getString("last_updated", null) == null) {
             editor.putString("last_updated", "2020-03-01 00:00:00");
         }
-        /** ================================================================== **/
 
         editor.apply();
     }
@@ -85,7 +84,6 @@ public class UpdateManager {
         this.lastModifiedInspections = lastModifiedDate;
     }
 
-
     public String getLastModifiedRestaurants() {
         return lastModifiedRestaurants;
     }
@@ -120,7 +118,7 @@ public class UpdateManager {
             while (pref.getString("last_updated", null) == null) {
                 Thread.sleep(50);
             }
-        } catch(InterruptedException ex) {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
@@ -147,6 +145,7 @@ public class UpdateManager {
             long diff = dateEnd.getTime() - dateStart.getTime();
             hoursApart =  diff / (60 * 60 * 1000);
 
+            /** Adjusted 3 hours for EST conversion of Server time **/
             if (hoursApart >= 17) {
                 return true;
             }
@@ -167,7 +166,7 @@ public class UpdateManager {
                     || pref.getString("last_modified_restaurants_by_server", null) == null) {
                 Thread.sleep(10);
             }
-        } catch(InterruptedException ex) {
+        } catch (InterruptedException ex) {
             Thread.currentThread().interrupt();
         }
 
@@ -201,6 +200,7 @@ public class UpdateManager {
             long diff = secondDate.getTime() - firstDate.getTime();
             float hoursApart =  diff / (60 * 60 * 1000);
 
+            /** Adjusted 3 hours for EST conversion of Server time **/
             if (hoursApart > -3) {
                 return true;
             }
