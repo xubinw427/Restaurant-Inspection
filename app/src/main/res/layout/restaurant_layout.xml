@@ -47,12 +47,12 @@
             android:layout_marginBottom="78dp"
             android:layout_toEndOf="@+id/food_icon"
             android:gravity="center"
-            android:lineSpacingExtra="2dp"
+            android:lineSpacingExtra="3dp"
             android:maxLines="4"
             android:singleLine="false"
             android:text="@string/str_rest_layout_restaurant_name"
             android:textColor="@color/fontColour"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <TextView
