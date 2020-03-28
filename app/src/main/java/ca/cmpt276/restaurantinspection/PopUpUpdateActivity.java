@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 
-
 public class PopUpUpdateActivity extends AppCompatActivity {
     private UpdateManager updateManager = UpdateManager.getInstance();
     private final int REQUEST_CODE = 500;

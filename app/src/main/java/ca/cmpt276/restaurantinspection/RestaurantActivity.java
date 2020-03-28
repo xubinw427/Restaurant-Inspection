@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
 
-
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
 
@@ -25,7 +24,6 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
-
 
         extractRestaurants();
 

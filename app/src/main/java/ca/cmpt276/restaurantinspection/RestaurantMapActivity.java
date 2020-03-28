@@ -1,11 +1,9 @@
 package ca.cmpt276.restaurantinspection;
 
 import androidx.annotation.NonNull;
-import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Location;
-import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
@@ -41,21 +39,19 @@ import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 import ca.cmpt276.restaurantinspection.Model.DataManager;
 
-
 public class RestaurantMapActivity extends AppCompatActivity implements OnMapReadyCallback {
     private UpdateManager updateManager;
     private DataManager dataManager;
-    private Algorithm<CustomMarker> clusterManagerAlgorithm;
     private RestaurantManager restaurantManager;
-    private final String RESTAURANT_FILENAME = "update_restaurant";
-    private final String INSPECTION_FILENAME = "update_inspection";
-    private final int REQUEST_CODE = 100;
+
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private Algorithm<CustomMarker> clusterManagerAlgorithm;
     private ClusterManager <CustomMarker> mClusterManager;
+    private OwnIconRendered mRender;
     private static final float DEFAULT_ZOOM = 17f;
     private GoogleMap mMap;
-    private FusedLocationProviderClient mFusedLocationProviderClient;
-    private OwnIconRendered mRender;
-    private static final String TAG = "MainActivity";
+
+    private final int REQUEST_CODE = 100;
     final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
 
     @Override
@@ -79,6 +75,10 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         FileInputStream internalRestaurants = null;
         FileInputStream internalInspections = null;
+
+        final String RESTAURANT_FILENAME = "update_restaurant";
+        final String INSPECTION_FILENAME = "update_inspection";
+
         try {
             internalRestaurants = openFileInput(RESTAURANT_FILENAME);
             internalInspections = openFileInput(INSPECTION_FILENAME);
@@ -160,6 +160,23 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         startMapActivityFromRestaurantInfo();
     }
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode==REQUEST_CODE_ASK_PERMISSIONS) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent intent = getIntent();
+                finish();
+                startActivity(intent);
+            } else {
+                /** Permission Denied **/
+                Toast.makeText(this, "Location Permissions Turned Off.", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
     private void startMapActivityFromRestaurantInfo() {
         if (getCallingActivity() != null) {
             if (getCallingActivity().getClassName().equals("ca.cmpt276.restaurantinspection.RestaurantInfoActivity")) {
@@ -203,7 +220,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
     }
 
-    // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+    /** Obtain the SupportMapFragment and get notified when the map is ready to be used. **/
     private void initMap() {
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -213,7 +230,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     }
 
     private void setUpCluster() {
-        //Initialize the manager with context and the map
+        /** Initialize the manager with context and the map **/
         mClusterManager = new ClusterManager<>(this, mMap);
         clusterManagerAlgorithm = new NonHierarchicalDistanceBasedAlgorithm<>();
         mClusterManager.setAlgorithm(clusterManagerAlgorithm);
@@ -286,25 +303,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         }
 
         return -1;
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode==REQUEST_CODE_ASK_PERMISSIONS) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Intent intent = getIntent();
-                finish();
-                startActivity(intent);
-            } else {
-                /** Permission Denied **/
-                Toast.makeText(this, "Location Permissions Turned Off.", Toast.LENGTH_SHORT)
-                        .show();
-            }
-
-        } else {
-            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-
     }
 
     @Override

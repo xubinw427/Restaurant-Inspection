@@ -15,13 +15,11 @@ import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.Violation;
 
-
 public class RestaurantViolationActivity extends AppCompatActivity implements ViolationAdapter.OnViolationListener {
     private Inspection inspection;
     private ArrayList<Violation> violationList;
     private Toast toast;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
