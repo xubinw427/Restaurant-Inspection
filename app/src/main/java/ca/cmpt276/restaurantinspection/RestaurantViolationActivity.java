@@ -4,41 +4,48 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
-import java.util.Locale;
-
 import ca.cmpt276.restaurantinspection.Adapters.ViolationAdapter;
 import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.Violation;
 
+
 public class RestaurantViolationActivity extends AppCompatActivity implements ViolationAdapter.OnViolationListener {
     private Inspection inspection;
-    ArrayList<Violation> violationList;
-    Toast toast;
+    private ArrayList<Violation> violationList;
+    private Toast toast;
+    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_violation);
 
-        RestaurantManager restaurantManager = RestaurantManager.getInstance();
         int restaurantIndex = restaurantManager.getCurrRestaurantPosition();
         int inspectionIndex = restaurantManager.getCurrInspectionPosition();
         Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantIndex);
         inspection = restaurant.getInspectionAt(inspectionIndex);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(restaurant.getName());
-        actionBar.setElevation(0);
 
+        if (actionBar != null) {
+            actionBar.setTitle(restaurant.getName());
+            actionBar.setElevation(0);
+        }
+
+        setViolationTextAndImages();
+
+        extractInspectionViolations();
+    }
+
+    private void setViolationTextAndImages() {
         ImageView inspectionOverview = this.findViewById(R.id.inspection_overview);
         TextView dateAndLevel = this.findViewById(R.id.date_level);
         TextView inspectionType = this.findViewById(R.id.inspection_type);
@@ -65,8 +72,6 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         inspectionType.setText(inspection.getInspType());
         numCritIssues.setText(getString(R.string.str_num_issues, inspection.getNumCritical()));
         numNonCritIssues.setText(getString(R.string.str_num_issues, inspection.getNumNonCritical()));
-
-        extractInspectionViolations();
     }
 
     private void extractInspectionViolations() {

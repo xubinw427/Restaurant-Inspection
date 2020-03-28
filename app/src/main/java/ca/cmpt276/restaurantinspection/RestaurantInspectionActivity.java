@@ -6,18 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import ca.cmpt276.restaurantinspection.Adapters.InspectionAdapter;
 import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+
 
 public class RestaurantInspectionActivity extends AppCompatActivity implements InspectionAdapter.OnInspectionListener {
     private RestaurantManager restaurantManager;
@@ -33,11 +31,17 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         restaurant = restaurantManager.getList().get(index);
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(restaurant.getName());
-        actionBar.setElevation(0);
 
+        if (actionBar != null) {
+            actionBar.setTitle(restaurant.getName());
+            actionBar.setElevation(0);
+        }
         extractRestaurantInspections();
 
+        startRestaurantInfoActivityBtn();
+    }
+
+    private void startRestaurantInfoActivityBtn() {
         Button btn = findViewById(R.id.map_button_inact);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override

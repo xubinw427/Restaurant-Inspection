@@ -6,15 +6,13 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
-
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
+
 
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
@@ -28,7 +26,6 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
 
-        restaurantManager = RestaurantManager.getInstance();
 
         extractRestaurants();
 
@@ -68,7 +65,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         startActivity(intent);
     }
 
-    public static Intent makeRestaurantMapIntent(Context c){
+    public static Intent makeRestaurantMapIntent(Context c) {
         return new Intent(c, RestaurantMapActivity.class);
     }
 }
