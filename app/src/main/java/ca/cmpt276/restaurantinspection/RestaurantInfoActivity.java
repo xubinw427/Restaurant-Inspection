@@ -62,7 +62,6 @@ public class RestaurantInfoActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     private void startRestaurantInspectionActivityBtn() {
