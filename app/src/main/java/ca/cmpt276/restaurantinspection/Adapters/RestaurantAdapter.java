@@ -26,19 +26,19 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         private TextView restaurantName;
         private TextView inspectionDate;
         private TextView numIssues;
+        private ImageView favoriteIcon;
 
         OnRestaurantListener onRestaurantListener;
 
         private RestaurantViewHolder(@NonNull View itemView, OnRestaurantListener onRestaurantListener) {
             super(itemView);
-
             btnBackground = itemView.findViewById((R.id.restaurant_button));
             hazardIcon = itemView.findViewById(R.id.haz_icon);
             restaurantName = itemView.findViewById(R.id.restaurant_name);
             inspectionDate = itemView.findViewById(R.id.inspection_date);
             numIssues = itemView.findViewById(R.id.num_issues);
             restaurantLogoIcon = itemView.findViewById(R.id.food_icon);
-
+            favoriteIcon = itemView.findViewById(R.id.favorite_icon);
             this.onRestaurantListener = onRestaurantListener;
             itemView.setOnClickListener(this);
         }
@@ -125,6 +125,14 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
                 holder.hazardIcon.setImageResource(R.drawable.restlist_none);
             default:
                 break;
+        }
+        /*
+
+         */
+        if(currRestaurant.isFavorite()){
+            holder.favoriteIcon.setImageResource(R.drawable.button_favorite);
+        }else{
+            holder.favoriteIcon.setImageResource(R.drawable.box_info);
         }
 
         holder.inspectionDate.setText(currRestaurant.getDate());

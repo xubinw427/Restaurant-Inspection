@@ -5,13 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 
-/** Basic Info Page of Restaurant (Address & Coordinates) **/
+/**
+ * Basic Info Page of Restaurant (Address & Coordinates)
+ **/
 public class RestaurantInfoActivity extends AppCompatActivity {
     private static final int LAUNCH_MAP_ACTIVITY = 1;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
@@ -33,27 +38,30 @@ public class RestaurantInfoActivity extends AppCompatActivity {
             actionBar.setElevation(0);
         }
         extractRestaurantInfo();
+
         setFavoriteBtn();
         startRestaurantInspectionActivityBtn();
     }
 
-    public void setFavoriteBtn(){
+    public void setFavoriteBtn() {
         final Button btn = findViewById(R.id.button_favorite);
-            btn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (restaurantManager.getRestaurantAt(index).isFavorite()) {
-                        restaurantManager.getRestaurantAt(index).setFavorite(false);
-                        btn.setBackgroundResource(R.drawable.button_not_favorite);
-                    }else{
-                        restaurantManager.getRestaurantAt(index).setFavorite(true);
-                        btn.setBackgroundResource(R.drawable.button_favorite);
-                    }
-//                    Intent intent = makeRestaurantInspectionIntent(getApplicationContext());
-//                    startActivity(intent);
-//                    finish();
+        if (!restaurantManager.getRestaurantAt(index).isFavorite()) {
+            btn.setBackgroundResource(R.drawable.button_not_favorite);
+        }else{
+            btn.setBackgroundResource(R.drawable.button_favorite);
+        }
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (restaurantManager.getRestaurantAt(index).isFavorite()) {
+                    restaurantManager.getRestaurantAt(index).setFavorite(false);
+                    btn.setBackgroundResource(R.drawable.button_not_favorite);
+                } else {
+                    restaurantManager.getRestaurantAt(index).setFavorite(true);
+                    btn.setBackgroundResource(R.drawable.button_favorite);
                 }
-            });
+            }
+        });
 
     }
 
@@ -85,7 +93,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         coordinate.setText(getString(R.string.str_coordinates, latitude, longitude));
     }
 
-    public static Intent makeRestaurantInspectionIntent(Context c){
+    public static Intent makeRestaurantInspectionIntent(Context c) {
         return new Intent(c, RestaurantInspectionActivity.class);
     }
 
@@ -98,7 +106,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         finish();
     }
 
-    public static Intent makeRestaurantMapIntent(Context c){
+    public static Intent makeRestaurantMapIntent(Context c) {
         return new Intent(c, RestaurantMapActivity.class);
     }
 
@@ -110,8 +118,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
             restaurantManager.setFromList(0);
 
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-        }
-        else if (restaurantManager.getFromMap() == 1) {
+        } else if (restaurantManager.getFromMap() == 1) {
             intent = new Intent(this, RestaurantMapActivity.class);
             restaurantManager.setFromMap(0);
 
