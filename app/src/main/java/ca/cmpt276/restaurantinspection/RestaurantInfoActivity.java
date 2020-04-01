@@ -116,7 +116,6 @@ public class RestaurantInfoActivity extends AppCompatActivity {
             intent = new Intent(this, RestaurantActivity.class);
             restaurantManager.setFromList(0);
 
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         } else if (restaurantManager.getFromMap() == 1) {
             intent = new Intent(this, RestaurantMapActivity.class);
             restaurantManager.setFromMap(0);
