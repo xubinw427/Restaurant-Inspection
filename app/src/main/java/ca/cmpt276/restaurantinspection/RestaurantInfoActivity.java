@@ -33,8 +33,28 @@ public class RestaurantInfoActivity extends AppCompatActivity {
             actionBar.setElevation(0);
         }
         extractRestaurantInfo();
-
+        setFavoriteBtn();
         startRestaurantInspectionActivityBtn();
+    }
+
+    public void setFavoriteBtn(){
+        final Button btn = findViewById(R.id.button_favorite);
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (restaurantManager.getRestaurantAt(index).isFavorite()) {
+                        restaurantManager.getRestaurantAt(index).setFavorite(false);
+                        btn.setBackgroundResource(R.drawable.button_not_favorite);
+                    }else{
+                        restaurantManager.getRestaurantAt(index).setFavorite(true);
+                        btn.setBackgroundResource(R.drawable.button_favorite);
+                    }
+//                    Intent intent = makeRestaurantInspectionIntent(getApplicationContext());
+//                    startActivity(intent);
+//                    finish();
+                }
+            });
+
     }
 
     private void startRestaurantInspectionActivityBtn() {

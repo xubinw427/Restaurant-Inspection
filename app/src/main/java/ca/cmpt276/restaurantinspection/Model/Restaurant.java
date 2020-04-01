@@ -10,6 +10,7 @@ public class Restaurant implements Comparable<Restaurant>{
     private double latitude;
     private double longitude;
     private ArrayList<Inspection> inspectionsList;
+    private boolean favorite = false;
 
     public Restaurant(String restaurantLump) {
         restaurantLump = restaurantLump.replaceAll(", ", " ");
@@ -74,6 +75,17 @@ public class Restaurant implements Comparable<Restaurant>{
             return Integer.toString(num);
         }
         return "0";
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public boolean isFavorite() {
+        if(favorite){
+            return true;
+        }
+        return false;
     }
 
     public void addInspection(Inspection inspection) {
