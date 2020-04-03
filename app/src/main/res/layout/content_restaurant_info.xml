@@ -125,4 +125,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.81" />
 
+    <Button
+        android:id="@+id/button_favorite"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/button_not_favorite"
+        app:layout_constraintEnd_toEndOf="@+id/map_background"
+        app:layout_constraintTop_toTopOf="@+id/map_background" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
