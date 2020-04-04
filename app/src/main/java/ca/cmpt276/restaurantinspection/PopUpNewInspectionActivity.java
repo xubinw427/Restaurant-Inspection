@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -21,7 +23,6 @@ import ca.cmpt276.restaurantinspection.Model.Violation;
 
 public class PopUpNewInspectionActivity extends AppCompatActivity implements FavoriteAdapter.OnFavoriteListener {
 
-    private Toast toast;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
     private Restaurant restaurant;
 
@@ -30,6 +31,14 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pop_up_new_inspection);
 
+        int restaurantIndex = restaurantManager.getCurrRestaurantPosition();
+        restaurant = restaurantManager.getRestaurantAt(restaurantIndex);
+
+        setScreenSize();
+        cancelBtnPressed();
+        extractInspection();
+    }
+    private void setScreenSize(){
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -37,52 +46,15 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
         int height = dm.heightPixels;
 
         getWindow().setLayout((int) (width * .8), (int) (height * .6));
-
-        int restaurantIndex = restaurantManager.getCurrRestaurantPosition();
-//        int inspectionIndex = restaurantManager.getCurrInspectionPosition();
-        restaurant = restaurantManager.getRestaurantAt(restaurantIndex);
-//        inspection = restaurant.getInspectionAt(inspectionIndex);
-
-//        ActionBar actionBar = getSupportActionBar();
-
-//        if (actionBar != null) {
-//            actionBar.setTitle(restaurant.getName());
-//            actionBar.setElevation(0);
-//        }
-
-//        setNewInspectionTextAndImages();
-
-        extractInspection();
     }
-
-    private void setNewInspectionTextAndImages() {
-//        ImageView hazardIcon = this.findViewById(R.id.hazard_level_icon);
-//        TextView restaurantName = this.findViewById(R.id.restaurant_name);
-//        TextView newInspectionDate = this.findViewById(R.id.newest_inspection_date);
-//
-//        //isi haz level terakhir
-//        switch (inspection.getHazardRating()) {
-//            case "High":
-//                hazardIcon.setImageResource(R.drawable.newinsp_high);
-//                break;
-//            case "Moderate":
-//                hazardIcon.setImageResource(R.drawable.newinsp_mod);
-//                break;
-//            case "Low":
-//                hazardIcon.setImageResource(R.drawable.newinsp_low);
-//                break;
-//            case "None":
-//                hazardIcon.setImageResource(R.drawable.newinsp_none);
-//                break;
-//        }
-//        //isi nama resto
-//        //isi date terakhir
-//        restaurantName.setText(restaurantManager.getClass().getName());
-////        dateAndLevel.setText(getString(R.string.str_date_level, inspection.getFullDate(),
-////                inspection.getHazardRating().toUpperCase()));
-////        inspectionType.setText(inspection.getInspType());
-////        numCritIssues.setText(getString(R.string.str_num_issues, inspection.getNumCritical()));
-////        numNonCritIssues.setText(getString(R.string.str_num_issues, inspection.getNumNonCritical()));
+    private void cancelBtnPressed(){
+        Button btn = findViewById(R.id.btn_cancel);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void extractInspection() {
@@ -90,7 +62,7 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
         RecyclerView.Adapter favoriteAdapter;
         RecyclerView.LayoutManager favoriteLayoutManager;
 
-        ArrayList<Restaurant> favoriteList = restaurantManager.getList();
+        ArrayList<Restaurant> favoriteList = restaurantManager.getFavoriteList();
 
         favoriteRecyclerView = findViewById(R.id.rv4);
         favoriteRecyclerView.setHasFixedSize(true);
@@ -105,13 +77,7 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
 
     @Override
     public void onViolationClick(int position) {
-//        if (toast != null) {
-//            toast.cancel();
-//        }
-//
-//        String longDescription = violationList.get(position).getLongDescription();
-//        toast = Toast.makeText(this, longDescription, Toast.LENGTH_LONG);
-//        toast.show();
+
     }
 
 }

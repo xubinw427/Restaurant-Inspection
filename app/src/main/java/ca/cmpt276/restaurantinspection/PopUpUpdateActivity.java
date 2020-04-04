@@ -21,17 +21,19 @@ public class PopUpUpdateActivity extends AppCompatActivity {
 
         setFinishOnTouchOutside(false);
 
+        setScreenSize();
+        proceedBtnPressed();
+        cancelBtnPressed();
+    }
+
+    private void setScreenSize(){
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
         int width = dm.widthPixels;
         int height = dm.heightPixels;
 
-        getWindow().setLayout((int)(width*.8),(int)(height*.6));
-
-        proceedBtnPressed();
-
-        cancelBtnPressed();
+        getWindow().setLayout((int) (width * .8), (int) (height * .6));
     }
 
     private void cancelBtnPressed() {
