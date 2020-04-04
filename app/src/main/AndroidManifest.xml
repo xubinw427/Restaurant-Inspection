@@ -67,7 +67,7 @@
             android:theme="@style/AppTheme.CustomTheme" />
         <activity
             android:name=".PopUpNewInspectionActivity"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.CustomTheme" />
     </application>
 
 </manifest>
