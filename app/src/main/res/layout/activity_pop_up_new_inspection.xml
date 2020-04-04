@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_popupwindow"
+    tools:context=".PopUpDownloadActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv4"
+        android:layout_width="363dp"
+        android:layout_height="364dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.485"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/violation_header"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/violation_header"
+        android:layout_width="360dp"
+        android:layout_height="46dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="484dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inspection_overview"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/violation_header"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/violations"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Inspections on Favorite Restaurants"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/rv3"
+        app:layout_constraintEnd_toEndOf="@+id/violation_header"
+        app:layout_constraintStart_toStartOf="@+id/violation_header"
+        app:layout_constraintTop_toTopOf="@+id/violation_header"
+        app:layout_constraintVertical_bias="0.5" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="81dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_canceldownload"
+        android:text="@android:string/cancel"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv4"
+        app:layout_constraintVertical_bias="0.213" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

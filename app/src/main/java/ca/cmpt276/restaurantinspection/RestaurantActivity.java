@@ -26,6 +26,9 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
 
+//        Intent intent = new Intent(RestaurantActivity.this, PopUpNewInspectionActivity.class);
+//        startActivity(intent);
+
         extractRestaurants();
 
         mapView();
