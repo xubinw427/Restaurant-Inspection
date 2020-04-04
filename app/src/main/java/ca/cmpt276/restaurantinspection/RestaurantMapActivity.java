@@ -35,6 +35,7 @@ import ca.cmpt276.restaurantinspection.Model.CustomMarker;
 import ca.cmpt276.restaurantinspection.Model.OwnIconRendered;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+import ca.cmpt276.restaurantinspection.Model.SearchManager;
 import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 import ca.cmpt276.restaurantinspection.Model.ViolationsMap;
 import ca.cmpt276.restaurantinspection.Model.DataManager;
@@ -44,6 +45,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     private UpdateManager updateManager;
     private DataManager dataManager;
     private RestaurantManager restaurantManager;
+    private SearchManager searchManager;
 
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private Algorithm<CustomMarker> clusterManagerAlgorithm;
@@ -91,15 +93,20 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         ViolationsMap.init(violationsIn);
 
-        if (internalRestaurants == null && internalInspections == null) {
-            RestaurantManager.init(restaurantsIn, inspectionsIn);
+//        SearchManager.init("abc","Low",2,7,RestaurantManager.getInstance(),internalInspections);
+        if (SearchManager.getInstance() != null){
+            searchManager = SearchManager.getInstance();
         }
+
         else {
-            RestaurantManager.init(internalRestaurants, internalInspections);
+            if (internalRestaurants == null && internalInspections == null) {
+                RestaurantManager.init(restaurantsIn, inspectionsIn);
+            } else {
+                RestaurantManager.init(internalRestaurants, internalInspections);
+            }
+
+            restaurantManager = RestaurantManager.getInstance();
         }
-
-        restaurantManager = RestaurantManager.getInstance();
-
         initMap();
 
         SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
@@ -187,9 +194,17 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
-                            Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantManager.getCurrRestaurantPosition());
-                            LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
-                            moveCamera(position, DEFAULT_ZOOM);
+                            if (SearchManager.getInstance()==null) {
+                                Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantManager.getCurrRestaurantPosition());
+                                LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
+                                moveCamera(position, DEFAULT_ZOOM);
+                            }
+                            else {
+                                Restaurant restaurant = searchManager.getRestaurantAt(searchManager.getCurrRestaurantPosition());
+                                LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
+                                moveCamera(position, DEFAULT_ZOOM);
+                            }
+
                         } else {
                             Toast.makeText(RestaurantMapActivity.this, "Unable to get restaurant location", Toast.LENGTH_SHORT).show();
                         }
@@ -247,9 +262,16 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             @Override
             public void onClusterItemInfoWindowClick(CustomMarker marker) {
                 int position = getRestaurantPosition(marker.getPosition());
-                restaurantManager.setCurrRestaurantPosition(position);
-                restaurantManager.setFromMap(1);
-                restaurantManager.setFromList(0);
+                if (SearchManager.getInstance()==null) {
+                    restaurantManager.setCurrRestaurantPosition(position);
+                    restaurantManager.setFromMap(1);
+                    restaurantManager.setFromList(0);
+                }
+                else {
+                    searchManager.setCurrRestaurantPosition(position);
+                    searchManager.setFromMap(1);
+                    searchManager.setFromList(0);
+                }
 
                 Intent intent = new Intent(RestaurantMapActivity.this, RestaurantInfoActivity.class);
                 startActivity(intent);

@@ -88,6 +88,18 @@ public class Restaurant implements Comparable<Restaurant>{
         return false;
     }
 
+    public int getNumCriticalIssues() {
+        int num = 0;
+        if (this.inspectionsList.size() > 0) {
+            for (Inspection inspection : inspectionsList) {
+                if (inspection.getWithinLastYear() == true) {
+                    num+=inspection.getNumCritical();
+                }
+            }
+        }
+        return num;
+    }
+
     public void addInspection(Inspection inspection) {
         inspectionsList.add(inspection);
     }
