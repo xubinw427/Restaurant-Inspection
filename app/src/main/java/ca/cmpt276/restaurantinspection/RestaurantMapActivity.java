@@ -160,7 +160,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         }
 
         //Put buttonOnClicks etc here
-        boolean searchBtnPushed = true;
+        boolean searchBtnPushed = false;
         if (searchBtnPushed==true){
 
             //for testing

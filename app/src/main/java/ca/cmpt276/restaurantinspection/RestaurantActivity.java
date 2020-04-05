@@ -42,7 +42,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
             searchManager= SearchManager.getInstance();
             extractSearchedRestaurants();
         }
-//        filterRestaurants();
+        filterRestaurants();
 
 
         mapView();
@@ -50,7 +50,6 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
 
     private void filterRestaurants() {
 
-        //if search filter btn is clicked
         searchManager = SearchManager.getInstance();
         String search = "";
         String hazardLevel= "";
@@ -91,6 +90,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
 
             SearchManager.init(restaurantInput, inspectionsInput, search,hazardLevel,lessNumCrit,greatNumCrit);
             searchManager = SearchManager.getInstance();
+            extractSearchedRestaurants();
         }
         boolean clearBtnPushed = false;
         if (clearBtnPushed==true){
