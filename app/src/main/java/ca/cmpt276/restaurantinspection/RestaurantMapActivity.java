@@ -12,6 +12,8 @@ import androidx.core.app.ActivityCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -60,6 +62,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_map);
         ActionBar actionBar = getSupportActionBar();
+
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.title_restaurant_map));
             actionBar.setElevation(0);
@@ -340,4 +343,18 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         finishAffinity();
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_favorite) {
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
 }
