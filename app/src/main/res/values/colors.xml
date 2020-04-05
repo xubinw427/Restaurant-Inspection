@@ -11,4 +11,7 @@
     <color name="backgroundColorLightBlue">#80eae5</color>
     <color name="backgroundRed">#DB7474</color>
     <color name="backgroundTeal">#35CD96</color>
+    <color name="high">#FF9D87</color>
+    <color name="mod">#FAD77D</color>
+    <color name="low">#35CDB2</color>
 </resources>
