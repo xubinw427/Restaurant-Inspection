@@ -11,7 +11,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <TextView
-        android:id="@+id/map_background"
+        android:id="@+id/filter_background"
         android:layout_width="361dp"
         android:layout_height="450dp"
         android:background="@drawable/box_info"
@@ -35,7 +35,7 @@
         tools:ignore="ContentDescription" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/search_text"
         android:layout_width="302dp"
         android:layout_height="43dp"
         android:layout_marginBottom="528dp"
@@ -50,32 +50,31 @@
         app:layout_constraintVertical_bias="1.14" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/high_filter_btn"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:background="@drawable/circle_outline_red"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/button3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.553"
+        app:layout_constraintStart_toEndOf="@+id/mod_filter_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.324" />
+
+    <Button
+        android:id="@+id/low_filter_btn"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/circle_outline_green"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/mod_filter_btn"
         app:layout_constraintHorizontal_bias="0.445"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.324" />
 
     <Button
-        android:id="@+id/button2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginEnd="60dp"
-        android:background="@drawable/circle_outline_green"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.974"
-        app:layout_constraintStart_toEndOf="@+id/button3"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.324" />
-
-    <Button
-        android:id="@+id/button3"
+        android:id="@+id/mod_filter_btn"
         android:layout_width="45dp"
         android:layout_height="45dp"
         android:background="@drawable/circle_outline_yellow"
@@ -87,7 +86,7 @@
         app:layout_constraintVertical_bias="0.326" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/hazard_filter_descrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hazard Level of Most Recent Inspection:"
@@ -100,7 +99,7 @@
         app:layout_constraintVertical_bias="0.243" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/violation_filter_descrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Number of Critical Violations in Last Year:"
@@ -110,10 +109,10 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.48" />
+        app:layout_constraintVertical_bias="0.475" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/favourite_filter_descrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Only Include ‘Favourite’ Restaurants:"
@@ -126,7 +125,7 @@
         app:layout_constraintVertical_bias="0.7" />
 
     <Button
-        android:id="@+id/button_favorite"
+        android:id="@+id/button_favourite_filter"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:background="@drawable/button_not_favorite"
@@ -138,7 +137,7 @@
         app:layout_constraintVertical_bias="0.78" />
 
     <EditText
-        android:id="@+id/editText2"
+        android:id="@+id/less_than_filter_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -148,36 +147,53 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.62" />
+        app:layout_constraintVertical_bias="0.618" />
+
+    <EditText
+        android:id="@+id/greater_than_filter_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="# Critical Violations"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.547" />
 
     <Button
-        android:id="@+id/button5"
+        android:id="@+id/search_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.232"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.906" />
+        app:layout_constraintVertical_bias="0.911" />
 
     <TextView
-        android:id="@+id/textView7"
+        android:id="@+id/high_filter_descrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="High"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.183"
+        app:layout_constraintHorizontal_bias="0.821"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.398" />
+        app:layout_constraintVertical_bias="0.397" />
 
     <TextView
-        android:id="@+id/textView8"
+        android:id="@+id/moderate_filter_descrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Moderate"
@@ -188,57 +204,69 @@
         app:layout_constraintVertical_bias="0.397" />
 
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/low_filter_descrip"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Low"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.812"
+        app:layout_constraintHorizontal_bias="0.182"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.397" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/search_icon"
         android:layout_width="26dp"
         android:layout_height="28dp"
         android:src="@android:drawable/ic_search_category_default"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/editText"
+        app:layout_constraintEnd_toStartOf="@+id/search_text"
         app:layout_constraintHorizontal_bias="0.85"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.08" />
 
-    <Button
-        android:id="@+id/y"
+    <TextView
+        android:id="@+id/less_than_label"
         android:layout_width="45dp"
         android:layout_height="29dp"
-        android:background="@drawable/button_insp_inactive"
         android:gravity="center"
         android:text="@string/str_less_than"
         android:textColor="@color/fontColour"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.572"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.545" />
+        app:layout_constraintVertical_bias="0.615" />
 
-    <Button
-        android:id="@+id/x"
+    <TextView
+        android:id="@+id/greater_than_label"
         android:layout_width="45dp"
         android:layout_height="29dp"
-        android:background="@drawable/button_info_inactive"
-        android:elevation="0dp"
+        android:gravity="center"
         android:text="@string/str_greater_than"
         android:textColor="@color/fontColour"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.42"
+        app:layout_constraintHorizontal_bias="0.25"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.545" />
+        app:layout_constraintVertical_bias="0.543" />
+
+    <Button
+        android:id="@+id/reset_search"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reset"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.764"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.913" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
