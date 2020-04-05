@@ -12,11 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 
+import ca.cmpt276.restaurantinspection.Model.SearchManager;
 import ca.cmpt276.restaurantinspection.R;
 
 /** RecyclerView Adapter for Main List of Restaurants **/
 public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.RestaurantViewHolder> {
     private RestaurantManager restaurantManager;
+    private SearchManager searchManager;
     private OnRestaurantListener onRestaurantListener;
 
     public static class RestaurantViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -58,6 +60,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         this.onRestaurantListener = onRestaurantListener;
     }
 
+    public RestaurantAdapter(SearchManager restaurants, OnRestaurantListener onRestaurantListener) {
+        searchManager = restaurants;
+        this.onRestaurantListener = onRestaurantListener;
+    }
+
     @NonNull
     @Override
     public RestaurantViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -69,7 +76,13 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        Restaurant currRestaurant = restaurantManager.getRestaurantAt(position);
+        Restaurant currRestaurant;
+        if (SearchManager.getInstance()==null){
+            currRestaurant = restaurantManager.getRestaurantAt(position);
+        }
+        else {
+            currRestaurant = searchManager.getRestaurantAt(position);
+        }
         /** Check 10 icon of restaurant(5 of them have 4 stores or more), then set corresponding background **/
         String restaurantName = currRestaurant.getName();
         if (restaurantName.contains("7-Eleven")) {
@@ -155,7 +168,12 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public int getItemCount() {
-        return restaurantManager.getSize();
+        if (SearchManager.getInstance() == null) {
+            return restaurantManager.getSize();
+        }
+        else {
+            return searchManager.getSize();
+        }
     }
 
     @Override
