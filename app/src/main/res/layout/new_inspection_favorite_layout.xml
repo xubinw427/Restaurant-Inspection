@@ -71,7 +71,7 @@
             android:layout_marginEnd="26dp"
             android:layout_marginBottom="16dp"
             android:layout_toEndOf="@+id/restaurant_name"
-            app:srcCompat="@drawable/restlist_high"
+            app:srcCompat="@drawable/circle_green"
             tools:ignore="ContentDescription" />
 
     </RelativeLayout>
