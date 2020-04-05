@@ -81,12 +81,13 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         }
 
         //Put buttonOnClicks etc here
-        boolean searchBtnPushed = false;
+        boolean searchBtnPushed = true;
         if (searchBtnPushed==true){
 
             //for testing
             search = "bar";
             hazardLevel="Low";
+//            lessNumCrit = 2;
 
             SearchManager.init(restaurantInput, inspectionsInput, search,hazardLevel,lessNumCrit,greatNumCrit);
             searchManager = SearchManager.getInstance();
