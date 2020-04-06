@@ -13,6 +13,7 @@ import ca.cmpt276.restaurantinspection.Adapters.ViolationAdapter;
 import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+import ca.cmpt276.restaurantinspection.Model.SearchManager;
 import ca.cmpt276.restaurantinspection.Model.Violation;
 
 /** List of Violations Associated with an Inspection Record **/
@@ -21,16 +22,29 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
     private ArrayList<Violation> violationList;
     private Toast toast;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private SearchManager searchManager;
+    private int restaurantIndex;
+    private int inspectionIndex;
+    private Restaurant restaurant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_violation);
 
-        int restaurantIndex = restaurantManager.getCurrRestaurantPosition();
-        int inspectionIndex = restaurantManager.getCurrInspectionPosition();
-        Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantIndex);
-        inspection = restaurant.getInspectionAt(inspectionIndex);
+        if (SearchManager.getInstance()!=null) {
+            searchManager = SearchManager.getInstance();
+            restaurantIndex = searchManager.getCurrRestaurantPosition();
+            inspectionIndex = searchManager.getCurrInspectionPosition();
+            restaurant = searchManager.getRestaurantAt(restaurantIndex);
+            inspection = restaurant.getInspectionAt(inspectionIndex);
+        }
+        else {
+            restaurantIndex = restaurantManager.getCurrRestaurantPosition();
+            inspectionIndex = restaurantManager.getCurrInspectionPosition();
+            restaurant = restaurantManager.getRestaurantAt(restaurantIndex);
+            inspection = restaurant.getInspectionAt(inspectionIndex);
+        }
 
         ActionBar actionBar = getSupportActionBar();
 
