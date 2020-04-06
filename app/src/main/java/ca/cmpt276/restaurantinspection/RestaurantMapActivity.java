@@ -12,6 +12,8 @@ import androidx.core.app.ActivityCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -103,7 +105,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         restaurantManager = RestaurantManager.getInstance();
 
-        if (SearchManager.getInstance() != null){
+        if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1){
             searchManager = SearchManager.getInstance();
         } else {
             SearchManager.init();
@@ -454,6 +456,21 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     @Override
     public void onBackPressed() {
         finishAffinity();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.action_favorite) {
+            Intent intent = new Intent(this, SearchActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }

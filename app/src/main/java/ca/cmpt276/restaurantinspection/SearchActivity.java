@@ -17,7 +17,6 @@ import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.SearchManager;
 
 public class SearchActivity extends AppCompatActivity {
-    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
     private SearchManager searchManager = SearchManager.getInstance();
 
     private final String RESTAURANT_FILENAME = "update_restaurant";
@@ -51,6 +50,38 @@ public class SearchActivity extends AppCompatActivity {
 
         Button search = findViewById(R.id.search_btn);
         Button reset = findViewById(R.id.reset_search);
+
+        if (!searchManager.getSearch().equals("")) {
+            searchText.setText(searchManager.getSearch());
+        }
+
+        switch (searchManager.getHazard()) {
+            case "High":
+                red.setBackgroundResource(R.drawable.circle_red);
+                redClicked = 1;
+                yellowClicked = 0;
+                greenClicked = 0;
+                break;
+            case "Moderate":
+                yellow.setBackgroundResource(R.drawable.circle_yellow);
+                yellowClicked = 1;
+                greenClicked = 0;
+                redClicked = 0;
+                break;
+            case "Low":
+                green.setBackgroundResource(R.drawable.circle_green);
+                greenClicked = 1;
+                yellowClicked = 0;
+                redClicked = 0;
+                break;
+            default:
+                break;
+        }
+
+        if (searchManager.getFave() == 1) {
+            fave.setBackgroundResource(R.drawable.button_favorite);
+            favouriteClicked = 1;
+        }
 
         green.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,19 +170,19 @@ public class SearchActivity extends AppCompatActivity {
                 } else if (redClicked == 1) {
                     hazardLevel = "High";
                 } else {
-                    hazardLevel = "";
+                    hazardLevel = "All";
                 }
 
                 if (!greaterThanNum.getText().toString().equals("")) {
                     greatNumCrit = Integer.parseInt(greaterThanNum.getText().toString());
                 } else {
-                    greatNumCrit = Integer.MAX_VALUE;
+                    greatNumCrit = -1;
                 }
 
                 if (!lessThanNum.getText().toString().equals("")) {
                     lessNumCrit = Integer.parseInt((lessThanNum.getText().toString()));
                 } else {
-                    lessNumCrit = -1;
+                    lessNumCrit = Integer.MAX_VALUE;
                 }
 
                 searchManager.populateSearchManager(favouriteClicked, search,

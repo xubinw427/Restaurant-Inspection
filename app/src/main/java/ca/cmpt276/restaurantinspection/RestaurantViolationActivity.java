@@ -32,7 +32,7 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_violation);
 
-        if (SearchManager.getInstance()!=null) {
+        if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1) {
             searchManager = SearchManager.getInstance();
             restaurantIndex = searchManager.getCurrRestaurantPosition();
             inspectionIndex = searchManager.getCurrInspectionPosition();

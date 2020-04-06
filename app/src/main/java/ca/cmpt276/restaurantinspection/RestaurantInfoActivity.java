@@ -56,7 +56,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
     public void setFavoriteBtn() {
         final Button btn = findViewById(R.id.button_favorite);
 
-        if (SearchManager.getInstance() != null) {
+        if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1) {
             if (!searchManager.getRestaurantAt(index).isFavorite()) {
                 btn.setBackgroundResource(R.drawable.button_not_favorite);
             }else{
@@ -147,7 +147,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
     private Intent getParentActivityIntentImplement() {
         Intent intent = null;
-        if (SearchManager.getInstance()!=null) {
+        if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1) {
             if (searchManager.getFromList() == 1) {
                 intent = new Intent(this, RestaurantActivity.class);
                 searchManager.setFromList(0);

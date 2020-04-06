@@ -28,7 +28,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspection);
 
-        if (SearchManager.getInstance()!=null) {
+        if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1) {
             searchManager = SearchManager.getInstance();
             index = searchManager.getCurrRestaurantPosition();
             restaurant = searchManager.getList().get(index);
@@ -64,7 +64,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
 
     @Override
     public void onInspectionClick(int position) {
-        if (SearchManager.getInstance() != null) {
+        if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1) {
             searchManager.setCurrInspectionPosition(position);
         }
         else {
