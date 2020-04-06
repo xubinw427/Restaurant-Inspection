@@ -38,6 +38,7 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
         cancelBtnPressed();
         extractInspection();
     }
+
     private void setScreenSize(){
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -47,6 +48,7 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
 
         getWindow().setLayout((int) (width * .8), (int) (height * .6));
     }
+
     private void cancelBtnPressed(){
         Button btn = findViewById(R.id.btn_cancel);
         btn.setOnClickListener(new View.OnClickListener() {

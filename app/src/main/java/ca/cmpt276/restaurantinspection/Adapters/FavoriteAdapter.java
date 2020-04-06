@@ -68,16 +68,16 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         holder.newestInspDate.setText(currRestaurant.getDate());
         switch(currRestaurant.getHazard()) {
             case "High":
-                holder.hazardIcon.setImageResource(R.drawable.newinsp_high);
+                holder.hazardIcon.setImageResource(R.drawable.circle_red);
                 break;
             case "Moderate":
-                holder.hazardIcon.setImageResource(R.drawable.newinsp_mod);
+                holder.hazardIcon.setImageResource(R.drawable.circle_yellow);
                 break;
             case "Low":
-                holder.hazardIcon.setImageResource(R.drawable.newinsp_low);
+                holder.hazardIcon.setImageResource(R.drawable.circle_green);
                 break;
             case "None":
-                holder.hazardIcon.setImageResource(R.drawable.newinsp_none);
+                holder.hazardIcon.setImageResource(R.drawable.circle_green);
             default:
                 break;
         }

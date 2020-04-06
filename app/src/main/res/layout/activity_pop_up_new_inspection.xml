@@ -9,9 +9,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv4"
-        android:layout_width="279dp"
-        android:layout_height="270dp"
+        android:layout_width="287dp"
+        android:layout_height="274dp"
         android:layout_marginBottom="84dp"
+        android:background="@drawable/favourite_box"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +41,7 @@
         android:textColor="@android:color/white"
         android:textSize="18sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/rv4"
+        app:layout_constraintBottom_toBottomOf="@+id/new_inspection_header"
         app:layout_constraintEnd_toEndOf="@+id/new_inspection_header"
         app:layout_constraintStart_toStartOf="@+id/new_inspection_header"
         app:layout_constraintTop_toTopOf="@+id/new_inspection_header" />
@@ -51,7 +52,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/button_canceldownload"
-        android:text="@android:string/cancel"
+        android:text="OK"
         android:textColor="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
