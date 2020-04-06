@@ -32,7 +32,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
         if (SearchManager.getInstance()!= null) {
             searchManager = SearchManager.getInstance();
-            index = searchManager.getCurrInspectionPosition();
+            index = searchManager.getCurrRestaurantPosition();
             restaurant = searchManager.getRestaurantAt(index);
         }
         else {
