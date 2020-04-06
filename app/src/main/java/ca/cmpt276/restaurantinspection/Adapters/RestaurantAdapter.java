@@ -159,11 +159,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             holder.itemView.setLayoutParams(lp);
         }
 
-        if (position % 10 == 8) {
-            RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-            lp.setMargins(0, -133, 0, 0);
-            holder.itemView.setLayoutParams(lp);
-        }
+//        if (position % 10 == 8) {
+//            RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+//            lp.setMargins(0, -133, 0, 0);
+//            holder.itemView.setLayoutParams(lp);
+//        }
     }
 
     @Override
