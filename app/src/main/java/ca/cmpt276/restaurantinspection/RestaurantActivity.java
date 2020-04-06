@@ -39,67 +39,68 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
 
-        if (searchManager == null || (searchManager != null && searchManager.getFilter() == 1)) {
+        System.out.println(restaurantManager.getList().size());
+
+        if (searchManager == null || searchManager.getFilter() == 0) {
             extractRestaurants();
         } else {
             extractSearchedRestaurants();
         }
 
-        filterRestaurants();
+//        filterRestaurants();
 
         mapView();
     }
 
-    private void filterRestaurants() {
-
-        searchManager = SearchManager.getInstance();
-        String search = "";
-        String hazardLevel= "";
-        int lessNumCrit = - 1;
-        int greatNumCrit = Integer.MAX_VALUE;
-
-        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
-        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
-
-        FileInputStream internalRestaurants = null;
-        FileInputStream internalInspections = null;
-        InputStream restaurantInput = null;
-        InputStream inspectionsInput = null;
-
-        try {
-            internalRestaurants = openFileInput(RESTAURANT_FILENAME);
-            internalInspections = openFileInput(INSPECTION_FILENAME);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if (internalRestaurants == null && internalInspections == null) {
-            restaurantInput = restaurantsIn;
-            inspectionsInput = inspectionsIn;
-        }
-        else {
-            restaurantInput = internalRestaurants;
-            inspectionsInput = internalInspections;
-        }
-
-        //Put buttonOnClicks etc here
-        boolean searchBtnPushed = true;
-        if (searchBtnPushed==true){
-
-            //for testing
-            search = "bar";
-            hazardLevel="Low";
-//            lessNumCrit = 2;
-
-            searchManager.populateSearchManager(restaurantInput, inspectionsInput, search,hazardLevel,lessNumCrit,greatNumCrit);
-            extractSearchedRestaurants();
-        }
-        boolean clearBtnPushed = false;
-        if (clearBtnPushed==true){
-            searchManager.reset();
-        }
-
-    }
+//    private void filterRestaurants() {
+//
+//        searchManager = SearchManager.getInstance();
+//        String search = "";
+//        String hazardLevel= "";
+//        int lessNumCrit = - 1;
+//        int greatNumCrit = Integer.MAX_VALUE;
+//
+//        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
+//        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
+//
+//        FileInputStream internalRestaurants = null;
+//        FileInputStream internalInspections = null;
+//        InputStream restaurantInput = null;
+//        InputStream inspectionsInput = null;
+//
+//        try {
+//            internalRestaurants = openFileInput(RESTAURANT_FILENAME);
+//            internalInspections = openFileInput(INSPECTION_FILENAME);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        if (internalRestaurants == null && internalInspections == null) {
+//            restaurantInput = restaurantsIn;
+//            inspectionsInput = inspectionsIn;
+//        }
+//        else {
+//            restaurantInput = internalRestaurants;
+//            inspectionsInput = internalInspections;
+//        }
+//
+//        //Put buttonOnClicks etc here
+//        boolean searchBtnPushed = true;
+//        if (searchBtnPushed==true){
+//
+//            //for testing
+//            search = "bar";
+//            hazardLevel="Low";
+////            lessNumCrit = 2;
+//
+//            searchManager.populateSearchManager(restaurantInput, inspectionsInput, search,hazardLevel,lessNumCrit,greatNumCrit);
+//            extractSearchedRestaurants();
+//        }
+//        boolean clearBtnPushed = false;
+//        if (clearBtnPushed==true){
+//            searchManager.reset();
+//        }
+//    }
 
     private void mapView() {
         Button btn = findViewById(R.id.map_button_inact);
@@ -134,14 +135,14 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         restaurantRecyclerView.setLayoutManager(restaurantLayoutManager);
         restaurantRecyclerView.setAdapter(restaurantAdapter);
     }
+
     @Override
     public void onRestaurantClick(int position) {
-        if (SearchManager.getInstance() == null) {
+        if (SearchManager.getInstance() == null || SearchManager.getInstance().getFilter() == 0) {
             restaurantManager.setCurrRestaurantPosition(position);
             restaurantManager.setFromList(1);
             restaurantManager.setFromMap(0);
-        }
-        else {
+        } else {
             searchManager.setCurrRestaurantPosition(position);
             searchManager.setFromList(1);
             searchManager.setFromMap(0);

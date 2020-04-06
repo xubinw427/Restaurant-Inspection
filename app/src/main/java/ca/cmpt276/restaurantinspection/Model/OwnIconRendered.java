@@ -33,7 +33,7 @@ public class OwnIconRendered extends DefaultClusterRenderer<CustomMarker> {
     @Override
     protected  void onClusterItemRendered (CustomMarker item, Marker marker){
         super.onClusterItemRendered(item, marker);
-        if (SearchManager.getInstance()!=null){
+        if (SearchManager.getInstance()!= null && SearchManager.getInstance().getFilter() == 1){
             SearchManager searchManager = SearchManager.getInstance();
             int searchPosition = searchManager.getCurrRestaurantPosition();
             Restaurant searchRestaurant = searchManager.getRestaurantAt(searchPosition);

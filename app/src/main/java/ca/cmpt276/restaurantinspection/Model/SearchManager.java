@@ -98,13 +98,13 @@ public class SearchManager implements Iterable<Restaurant> {
         return filter;
     }
 
-    public void populateSearchManager(InputStream restaurantFile, InputStream inspectionsFile,
-                                       String search, String hazardLevel, int lessNumCrit, int greaterNumCrit) {
+    public void populateSearchManager(int favourite, String search, String hazardLevel, int lessNumCrit, int greaterNumCrit) {
 
-        readRestaurantData(restaurantFile, search, hazardLevel, lessNumCrit, greaterNumCrit);
-        populateInspections(inspectionsFile);
+        readRestaurantData(favourite, search, hazardLevel, lessNumCrit, greaterNumCrit);
 
         filter = 1;
+
+        System.out.println(this.restaurantsList.size());
     }
 
     private void addNew(Restaurant restaurant) {
@@ -118,172 +118,155 @@ public class SearchManager implements Iterable<Restaurant> {
         restaurantsList.add(restaurant);
     }
 
-    private void readRestaurantData(InputStream file, String search, String hazardLevel,
+    private void readRestaurantData(int favourite, String search, String hazardLevel,
                                     int lessNumCrit, int greaterNumCrit) {
-        if (file == null) { return; }
 
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(file, Charset.forName("UTF-8"))
-        );
+        ArrayList<Restaurant> restaurantList;
 
-        String line;
+        if (favourite == 1) {
+            restaurantList = restaurantManager.getFaveList();
+        } else {
+            restaurantList = restaurantManager.getList();
+        }
 
-        try {
-            /** Step over header **/
-            reader.readLine();
+        for (Restaurant restaurant : restaurantList) {
+            if (!search.equals("")){
+                if (lessNumCrit>0) {
+                    if (greaterNumCrit<Integer.MAX_VALUE) {
+                        if (!hazardLevel.equals("")) {
+                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
+                                    restaurant.getNumCriticalIssues()<=lessNumCrit &&
+                                    restaurant.getNumCriticalIssues()>=greaterNumCrit &&
+                                    restaurant.getHazard().equals(hazardLevel)){
 
-            while (((line = reader.readLine()) != null)) {
-                Restaurant restaurant = new Restaurant(line);
-                if (!search.equals("")){
-                    if (lessNumCrit>0) {
-                        if (greaterNumCrit<Integer.MAX_VALUE) {
-                            if (!hazardLevel.equals("")) {
-                                if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-                                        restaurant.getNumCriticalIssues()<=lessNumCrit &&
-                                        restaurant.getNumCriticalIssues()>=greaterNumCrit &&
-                                        restaurant.getHazard().equals(hazardLevel)){
-
-                                    this.addNew(restaurant);
-                                }
-                            }
-                            else {
-                                if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-                                        restaurant.getNumCriticalIssues()<=lessNumCrit &&
-                                        restaurant.getNumCriticalIssues()>=greaterNumCrit ){
-
-                                    this.addNew(restaurant);
-                                }
-                            }
-                        }
-                        else {
-                            if (!hazardLevel.equals("")) {
-                                if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-                                        restaurant.getNumCriticalIssues()<=lessNumCrit &&
-                                        restaurant.getHazard().equals(hazardLevel)){
-
-                                    this.addNew(restaurant);
-                                }
-                            }
-                            else {
-                                if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-                                        restaurant.getNumCriticalIssues()<=lessNumCrit){
-
-                                    this.addNew(restaurant);
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        if (greaterNumCrit<Integer.MAX_VALUE) {
-                            if (!hazardLevel.equals("")) {
-                                if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-                                        restaurant.getNumCriticalIssues()>=greaterNumCrit &&
-                                        restaurant.getHazard().equals(hazardLevel)){
-
-                                    this.addNew(restaurant);
-                                }
-                            }
-                            else {
-                                if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-                                        restaurant.getNumCriticalIssues()>=greaterNumCrit ){
-
-                                    this.addNew(restaurant);
-                                }
-                            }
-                        }
-                        else {
-                            if (!hazardLevel.equals("")) {
-                                if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-                                        restaurant.getHazard().equals(hazardLevel)){
-
-                                    this.addNew(restaurant);
-                                }
-                            }
-                            else {
-                                if (restaurant.getName().toLowerCase().contains(search.toLowerCase())){
-                                    this.addNew(restaurant);
-                                }
-                            }
-                        }
-
-                    }
-                }
-                else {
-                    if (lessNumCrit>0) {
-                        if (greaterNumCrit<Integer.MAX_VALUE) {
-                            if (!hazardLevel.equals("")) {
-                                if (restaurant.getNumCriticalIssues()<=lessNumCrit &&
-                                        restaurant.getNumCriticalIssues()>=greaterNumCrit &&
-                                        restaurant.getHazard().equals(hazardLevel)){
-
-                                    this.addNew(restaurant);
-                                }
-                            }
-                            else {
-                                if (restaurant.getNumCriticalIssues()<=lessNumCrit &&
-                                        restaurant.getNumCriticalIssues()>=greaterNumCrit ){
-
-                                    this.addNew(restaurant);
-                                }
-                            }
-                        }
-                        else {
-                            if (!hazardLevel.equals("")) {
-                                if (restaurant.getNumCriticalIssues()<=lessNumCrit &&
-                                        restaurant.getHazard().equals(hazardLevel)){
-
-                                    this.addNew(restaurant);
-                                }
-                            }
-                            else {
-                                if (restaurant.getNumCriticalIssues()<=lessNumCrit){
-                                    this.addNew(restaurant);
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        if (greaterNumCrit<Integer.MAX_VALUE) {
-                            if (!hazardLevel.equals("")) {
-                                if (restaurant.getNumCriticalIssues()>=greaterNumCrit &&
-                                        restaurant.getHazard().equals(hazardLevel)){
-
-                                    this.addNew(restaurant);
-                                }
-                            }
-                            else {
-                                if (restaurant.getNumCriticalIssues()>=greaterNumCrit ){
-                                    this.addNew(restaurant);
-                                }
-                            }
-                        }
-                        else {
-                            if (!hazardLevel.equals("")) {
-                                if (restaurant.getHazard().equals(hazardLevel)){
-                                    this.addNew(restaurant);
-                                }
-                            }
-                            else {
                                 this.addNew(restaurant);
                             }
                         }
+                        else {
+                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
+                                    restaurant.getNumCriticalIssues()<=lessNumCrit &&
+                                    restaurant.getNumCriticalIssues()>=greaterNumCrit ){
 
+                                this.addNew(restaurant);
+                            }
+                        }
+                    }
+                    else {
+                        if (!hazardLevel.equals("")) {
+                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
+                                    restaurant.getNumCriticalIssues()<=lessNumCrit &&
+                                    restaurant.getHazard().equals(hazardLevel)){
+
+                                this.addNew(restaurant);
+                            }
+                        }
+                        else {
+                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
+                                    restaurant.getNumCriticalIssues()<=lessNumCrit){
+
+                                this.addNew(restaurant);
+                            }
+                        }
                     }
                 }
+                else {
+                    if (greaterNumCrit<Integer.MAX_VALUE) {
+                        if (!hazardLevel.equals("")) {
+                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
+                                    restaurant.getNumCriticalIssues()>=greaterNumCrit &&
+                                    restaurant.getHazard().equals(hazardLevel)){
 
+                                this.addNew(restaurant);
+                            }
+                        }
+                        else {
+                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
+                                    restaurant.getNumCriticalIssues()>=greaterNumCrit ){
+
+                                this.addNew(restaurant);
+                            }
+                        }
+                    }
+                    else {
+                        if (!hazardLevel.equals("")) {
+                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
+                                    restaurant.getHazard().equals(hazardLevel)){
+
+                                this.addNew(restaurant);
+                            }
+                        }
+                        else {
+                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase())){
+                                this.addNew(restaurant);
+                            }
+                        }
+                    }
+
+                }
+            }
+            else {
+                if (lessNumCrit>0) {
+                    if (greaterNumCrit<Integer.MAX_VALUE) {
+                        if (!hazardLevel.equals("")) {
+                            if (restaurant.getNumCriticalIssues()<=lessNumCrit &&
+                                    restaurant.getNumCriticalIssues()>=greaterNumCrit &&
+                                    restaurant.getHazard().equals(hazardLevel)){
+
+                                this.addNew(restaurant);
+                            }
+                        }
+                        else {
+                            if (restaurant.getNumCriticalIssues()<=lessNumCrit &&
+                                    restaurant.getNumCriticalIssues()>=greaterNumCrit ){
+
+                                this.addNew(restaurant);
+                            }
+                        }
+                    }
+                    else {
+                        if (!hazardLevel.equals("")) {
+                            if (restaurant.getNumCriticalIssues()<=lessNumCrit &&
+                                    restaurant.getHazard().equals(hazardLevel)){
+
+                                this.addNew(restaurant);
+                            }
+                        }
+                        else {
+                            if (restaurant.getNumCriticalIssues()<=lessNumCrit){
+                                this.addNew(restaurant);
+                            }
+                        }
+                    }
+                }
+                else {
+                    if (greaterNumCrit<Integer.MAX_VALUE) {
+                        if (!hazardLevel.equals("")) {
+                            if (restaurant.getNumCriticalIssues()>=greaterNumCrit &&
+                                    restaurant.getHazard().equals(hazardLevel)){
+
+                                this.addNew(restaurant);
+                            }
+                        }
+                        else {
+                            if (restaurant.getNumCriticalIssues()>=greaterNumCrit ){
+                                this.addNew(restaurant);
+                            }
+                        }
+                    }
+                    else {
+                        if (!hazardLevel.equals("")) {
+                            if (restaurant.getHazard().equals(hazardLevel)){
+                                this.addNew(restaurant);
+                            }
+                        }
+                        else {
+                            this.addNew(restaurant);
+                        }
+                    }
+
+                }
             }
 
-
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            file.close();
-        }
-        catch (IOException ex) {
-            throw new RuntimeException("ERROR: Failed to close " + file);
         }
 
         this.sortRestaurants();

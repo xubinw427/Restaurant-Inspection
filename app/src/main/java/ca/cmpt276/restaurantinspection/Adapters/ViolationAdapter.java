@@ -29,8 +29,8 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
         private ViolationViewHolder(@NonNull View itemView, OnViolationListener onViolationListener) {
             super(itemView);
             violationIcon = itemView.findViewById(R.id.violation_icon);
-            criticalIcon = itemView.findViewById(R.id.critical_level_icon);
-            violationDesc = itemView.findViewById(R.id.violation_description);
+            criticalIcon = itemView.findViewById(R.id.hazard_level_icon);
+            violationDesc = itemView.findViewById(R.id.restaurant_name);
 
             this.onViolationListener = onViolationListener;
             itemView.setOnClickListener(this);

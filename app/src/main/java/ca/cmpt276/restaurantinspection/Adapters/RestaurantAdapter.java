@@ -77,11 +77,11 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
         Restaurant currRestaurant;
-        if (SearchManager.getInstance()==null){
+        if (SearchManager.getInstance() == null || SearchManager.getInstance().getFilter() == 0){
             currRestaurant = restaurantManager.getRestaurantAt(position);
         }
         else {
-            currRestaurant = searchManager.getRestaurantAt(position);
+            currRestaurant = SearchManager.getInstance().getRestaurantAt(position);
         }
         /** Check 10 icon of restaurant(5 of them have 4 stores or more), then set corresponding background **/
         String restaurantName = currRestaurant.getName();
@@ -168,11 +168,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
     @Override
     public int getItemCount() {
-        if (SearchManager.getInstance() == null) {
+        if (SearchManager.getInstance() == null || SearchManager.getInstance().getFilter() == 0) {
             return restaurantManager.getSize();
-        }
-        else {
-            return searchManager.getSize();
+        } else {
+            return SearchManager.getInstance().getSize();
         }
     }
 

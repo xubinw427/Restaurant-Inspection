@@ -29,11 +29,12 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_info);
 
-        if (SearchManager.getInstance()!= null) {
+        if (SearchManager.getInstance()!= null && SearchManager.getInstance().getFilter() == 1) {
             searchManager = SearchManager.getInstance();
             index = searchManager.getCurrRestaurantPosition();
             restaurant = searchManager.getRestaurantAt(index);
         }
+
         else {
             index = restaurantManager.getCurrRestaurantPosition();
             restaurant = restaurantManager.getRestaurantAt(index);
@@ -67,9 +68,11 @@ public class RestaurantInfoActivity extends AppCompatActivity {
                     if (searchManager.getRestaurantAt(index).isFavorite()) {
                         searchManager.getRestaurantAt(index).setFavorite(false);
                         btn.setBackgroundResource(R.drawable.button_not_favorite);
+                        restaurantManager.getFavoriteList().remove(restaurant);
                     } else {
                         searchManager.getRestaurantAt(index).setFavorite(true);
                         btn.setBackgroundResource(R.drawable.button_favorite);
+                        restaurantManager.getFavoriteList().add(restaurant);
                     }
                 }
             });
@@ -86,9 +89,11 @@ public class RestaurantInfoActivity extends AppCompatActivity {
                     if (restaurantManager.getRestaurantAt(index).isFavorite()) {
                         restaurantManager.getRestaurantAt(index).setFavorite(false);
                         btn.setBackgroundResource(R.drawable.button_not_favorite);
+                        restaurantManager.getFavoriteList().remove(restaurant);
                     } else {
                         restaurantManager.getRestaurantAt(index).setFavorite(true);
                         btn.setBackgroundResource(R.drawable.button_favorite);
+                        restaurantManager.getFavoriteList().add(restaurant);
                     }
                 }
             });
@@ -167,7 +172,6 @@ public class RestaurantInfoActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
             }
         }
-
 
         return intent;
     }

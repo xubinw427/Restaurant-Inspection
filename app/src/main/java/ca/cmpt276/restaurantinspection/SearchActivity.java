@@ -127,30 +127,6 @@ public class SearchActivity extends AppCompatActivity {
         search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
-                InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
-
-                FileInputStream internalRestaurants = null;
-                FileInputStream internalInspections = null;
-                InputStream restaurantInput;
-                InputStream inspectionsInput;
-
-                try {
-                    internalRestaurants = openFileInput(RESTAURANT_FILENAME);
-                    internalInspections = openFileInput(INSPECTION_FILENAME);
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-
-                if (internalRestaurants == null && internalInspections == null) {
-                    restaurantInput = restaurantsIn;
-                    inspectionsInput = inspectionsIn;
-                }
-                else {
-                    restaurantInput = internalRestaurants;
-                    inspectionsInput = internalInspections;
-                }
-
                 String search = searchText.getText().toString();
                 String hazardLevel;
                 int lessNumCrit;
@@ -178,7 +154,7 @@ public class SearchActivity extends AppCompatActivity {
                     lessNumCrit = -1;
                 }
 
-                searchManager.populateSearchManager(restaurantInput, inspectionsInput, search,
+                searchManager.populateSearchManager(favouriteClicked, search,
                         hazardLevel,lessNumCrit,greatNumCrit);
 
                 finish();

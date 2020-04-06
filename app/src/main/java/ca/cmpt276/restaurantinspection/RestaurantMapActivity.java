@@ -84,7 +84,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         FileInputStream internalRestaurants = null;
         FileInputStream internalInspections = null;
 
-
         try {
             internalRestaurants = openFileInput(RESTAURANT_FILENAME);
             internalInspections = openFileInput(INSPECTION_FILENAME);
@@ -96,18 +95,17 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         ViolationsMap.init(violationsIn);
 
-        if (SearchManager.getInstance() != null){
-            searchManager = SearchManager.getInstance();
+        if (internalRestaurants == null && internalInspections == null) {
+            RestaurantManager.init(restaurantsIn, inspectionsIn);
+        } else {
+            RestaurantManager.init(internalRestaurants, internalInspections);
         }
 
-        else {
-            if (internalRestaurants == null && internalInspections == null) {
-                RestaurantManager.init(restaurantsIn, inspectionsIn);
-            } else {
-                RestaurantManager.init(internalRestaurants, internalInspections);
-            }
+        restaurantManager = RestaurantManager.getInstance();
 
-            restaurantManager = RestaurantManager.getInstance();
+        if (SearchManager.getInstance() != null){
+            searchManager = SearchManager.getInstance();
+        } else {
             SearchManager.init();
             searchManager = SearchManager.getInstance();
         }
@@ -125,63 +123,68 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             editor.apply();
         }
 
-        /** === SEARCH === **/
-        if (searchManager.getFilter() == 1) {
-            searchRestaurants();
-        }
-        /** ============== **/
+//        /** === SEARCH === **/
+//        if (searchManager.getFilter() == 1) {
+//            searchRestaurants();
+//        }
+//        /** ============== **/
 
         startRestaurantListActivity();
+
+//        /** === TESTING NEW INSPECTION OF FAVOURITE POP-UP === **/
+//        Intent intent = new Intent(this, PopUpNewInspectionActivity.class);
+//        startActivity(intent);
+//        /** === END TESTING === **/
     }
 
-    private void searchRestaurants() {
-        String search = "";
-        String hazardLevel= "";
-        int lessNumCrit = -1;
-        int greatNumCrit = Integer.MAX_VALUE;
-
-        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
-        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
-
-        FileInputStream internalRestaurants = null;
-        FileInputStream internalInspections = null;
-        InputStream restaurantInput;
-        InputStream inspectionsInput;
-
-        try {
-            internalRestaurants = openFileInput(RESTAURANT_FILENAME);
-            internalInspections = openFileInput(INSPECTION_FILENAME);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        if (internalRestaurants == null && internalInspections == null) {
-            restaurantInput = restaurantsIn;
-            inspectionsInput = inspectionsIn;
-        }
-        else {
-            restaurantInput = internalRestaurants;
-            inspectionsInput = internalInspections;
-        }
-
-        //Put buttonOnClicks etc here
-        boolean searchBtnPushed = false;
-        if (searchBtnPushed == true){
-
-            //for testing
-            search = "eleven";
-            hazardLevel="Low";
-
-            searchManager.populateSearchManager(restaurantInput, inspectionsInput, search,hazardLevel,lessNumCrit,greatNumCrit);
-        }
-
-        /** PUT INTO SEARCH ACTIVITY **/
-//        boolean clearBtnPushed = false;
-//        if (clearBtnPushed == true){
-//            searchManager.reset();
+//    private void searchRestaurants() {
+//        String search = "";
+//        String hazardLevel= "";
+//        int lessNumCrit = -1;
+//        int greatNumCrit = Integer.MAX_VALUE;
+//
+//        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
+//        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
+//
+//        FileInputStream internalRestaurants = null;
+//        FileInputStream internalInspections = null;
+//        InputStream restaurantInput;
+//        InputStream inspectionsInput;
+//
+//        try {
+//            internalRestaurants = openFileInput(RESTAURANT_FILENAME);
+//            internalInspections = openFileInput(INSPECTION_FILENAME);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
 //        }
-
-    }
+//
+//        if (internalRestaurants == null && internalInspections == null) {
+//            restaurantInput = restaurantsIn;
+//            inspectionsInput = inspectionsIn;
+//        }
+//        else {
+//            restaurantInput = internalRestaurants;
+//            inspectionsInput = internalInspections;
+//        }
+//
+//        //Put buttonOnClicks etc here
+//        boolean searchBtnPushed = false;
+//        if (searchBtnPushed == true){
+//
+//            //for testing
+//            search = "eleven";
+//            hazardLevel="Low";
+//
+//            searchManager.populateSearchManager(restaurantInput, inspectionsInput, search,hazardLevel,lessNumCrit,greatNumCrit);
+//        }
+//
+//        /** PUT INTO SEARCH ACTIVITY **/
+////        boolean clearBtnPushed = false;
+////        if (clearBtnPushed == true){
+////            searchManager.reset();
+////        }
+//
+//    }
 
     private void updateChecker() {
         /** === CHECKING FOR UPDATES === **/
@@ -254,7 +257,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
-                            if (SearchManager.getInstance() == null) {
+                            if (SearchManager.getInstance() == null || SearchManager.getInstance().getFilter() == 0) {
                                 Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantManager.getCurrRestaurantPosition());
                                 LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
                                 moveCamera(position, DEFAULT_ZOOM);
@@ -322,7 +325,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             @Override
             public void onClusterItemInfoWindowClick(CustomMarker marker) {
                 int position = getRestaurantPosition(marker.getPosition());
-                if (SearchManager.getInstance() == null) {
+                if (SearchManager.getInstance() == null || SearchManager.getInstance().getFilter() == 0) {
                     restaurantManager.setCurrRestaurantPosition(position);
                     restaurantManager.setFromMap(1);
                     restaurantManager.setFromList(0);
@@ -341,7 +344,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
     private void addMapItems() {
         mClusterManager.getMarkerCollection().setInfoWindowAdapter(new RestaurantInfoWindowAdapter(RestaurantMapActivity.this));
-        if (SearchManager.getInstance() == null){
+        if (SearchManager.getInstance() == null || SearchManager.getInstance().getFilter() == 0){
             for (Restaurant restaurant : restaurantManager) {
                 if (restaurant != null) {
                     try {
