@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_popupwindow"
+    tools:context=".PopUpDownloadActivity">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv4"
+        android:layout_width="287dp"
+        android:layout_height="274dp"
+        android:layout_marginBottom="84dp"
+        android:background="@drawable/favourite_box"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/violation_header"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/new_inspection_header"
+        android:layout_width="287dp"
+        android:layout_height="37dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="356dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/inspection_overview"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="@drawable/violation_header"
+        tools:ignore="ContentDescription" />
+
+    <TextView
+        android:id="@+id/new_inspection"
+        android:layout_width="151dp"
+        android:layout_height="25dp"
+        android:text="New Inspections"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/new_inspection_header"
+        app:layout_constraintEnd_toEndOf="@+id/new_inspection_header"
+        app:layout_constraintStart_toStartOf="@+id/new_inspection_header"
+        app:layout_constraintTop_toTopOf="@+id/new_inspection_header" />
+
+    <Button
+        android:id="@+id/btn_cancel"
+        android:layout_width="81dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_canceldownload"
+        android:text="OK"
+        android:textColor="@android:color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/rv4"
+        app:layout_constraintVertical_bias="0.0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
