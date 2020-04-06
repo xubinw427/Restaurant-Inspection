@@ -15,40 +15,39 @@ import java.util.Iterator;
 /** Singleton to Keep Track of All Restaurants in Data **/
 public class SearchManager implements Iterable<Restaurant> {
     private ArrayList<Restaurant> restaurantsList = new ArrayList<>();
+    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
     private static SearchManager instance;
     private ViolationsMap violationsMap;
     private int currRestaurantPosition;
     private int currInspectionPosition;
+    private int filter = 0;
     private int fromMap = 0;
     private int fromList = 0;
 
     /** Private to prevent anyone else from instantiating. **/
-    private SearchManager(InputStream restaurantFile, InputStream inspectionsFile,
-                          String search, String hazardLevel, int lessNumCrit, int greaterNumCrit) {
-        readRestaurantData(restaurantFile, search, hazardLevel, lessNumCrit, greaterNumCrit);
+    private SearchManager() {
         violationsMap = ViolationsMap.getInstance();
-        populateInspections(inspectionsFile);
     }
 
     public static SearchManager getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             return null;
         }
 
         return instance;
     }
 
-    public static void init(InputStream restaurantFile, InputStream inspectionsFile,
-                            String search, String hazardLevel, int lessNumCrit, int greaterNumCrit) {
+    public static void init() {
         if (instance != null) {
             return;
         }
 
-        instance = new SearchManager(restaurantFile, inspectionsFile, search, hazardLevel, lessNumCrit, greaterNumCrit);
+        instance = new SearchManager();
     }
 
     public void reset() {
         instance = null;
+        filter = 0;
     }
 
     public ArrayList<Restaurant> getList() {
@@ -93,6 +92,19 @@ public class SearchManager implements Iterable<Restaurant> {
 
     public void setFromMap(int i) {
         this.fromMap = i;
+    }
+
+    public int getFilter() {
+        return filter;
+    }
+
+    public void populateSearchManager(InputStream restaurantFile, InputStream inspectionsFile,
+                                       String search, String hazardLevel, int lessNumCrit, int greaterNumCrit) {
+
+        readRestaurantData(restaurantFile, search, hazardLevel, lessNumCrit, greaterNumCrit);
+        populateInspections(inspectionsFile);
+
+        filter = 1;
     }
 
     private void addNew(Restaurant restaurant) {

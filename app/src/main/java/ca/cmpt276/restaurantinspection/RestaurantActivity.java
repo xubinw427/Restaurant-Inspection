@@ -26,7 +26,7 @@ import ca.cmpt276.restaurantinspection.Model.SearchManager;
 /** List of Restaurants **/
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
-    private SearchManager searchManager;
+    private SearchManager searchManager = SearchManager.getInstance();
     private final String RESTAURANT_FILENAME = "update_restaurant";
     private final String INSPECTION_FILENAME = "update_inspection";
 
@@ -39,15 +39,13 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
 
-        if (SearchManager.getInstance() == null) {
+        if (searchManager == null || (searchManager != null && searchManager.getFilter() == 1)) {
             extractRestaurants();
-        }
-        else{
-            searchManager= SearchManager.getInstance();
+        } else {
             extractSearchedRestaurants();
         }
-        filterRestaurants();
 
+        filterRestaurants();
 
         mapView();
     }
@@ -57,7 +55,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         searchManager = SearchManager.getInstance();
         String search = "";
         String hazardLevel= "";
-        int lessNumCrit = -1;
+        int lessNumCrit = - 1;
         int greatNumCrit = Integer.MAX_VALUE;
 
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
@@ -93,8 +91,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
             hazardLevel="Low";
 //            lessNumCrit = 2;
 
-            SearchManager.init(restaurantInput, inspectionsInput, search,hazardLevel,lessNumCrit,greatNumCrit);
-            searchManager = SearchManager.getInstance();
+            searchManager.populateSearchManager(restaurantInput, inspectionsInput, search,hazardLevel,lessNumCrit,greatNumCrit);
             extractSearchedRestaurants();
         }
         boolean clearBtnPushed = false;

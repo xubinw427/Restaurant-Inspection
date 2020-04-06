@@ -12,8 +12,6 @@ import androidx.core.app.ActivityCompat;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -69,7 +67,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_map);
         ActionBar actionBar = getSupportActionBar();
-
         if (actionBar != null) {
             actionBar.setTitle(getString(R.string.title_restaurant_map));
             actionBar.setElevation(0);
@@ -111,8 +108,9 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             }
 
             restaurantManager = RestaurantManager.getInstance();
+            SearchManager.init();
+            searchManager = SearchManager.getInstance();
         }
-
 
         initMap();
 
@@ -127,10 +125,14 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             editor.apply();
         }
 
-        searchRestaurants();
+        /** === SEARCH === **/
+        if (searchManager.getFilter() == 1) {
+            searchRestaurants();
+        }
+        /** ============== **/
+
         startRestaurantListActivity();
     }
-
 
     private void searchRestaurants() {
         String search = "";
@@ -143,8 +145,8 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         FileInputStream internalRestaurants = null;
         FileInputStream internalInspections = null;
-        InputStream restaurantInput = null;
-        InputStream inspectionsInput = null;
+        InputStream restaurantInput;
+        InputStream inspectionsInput;
 
         try {
             internalRestaurants = openFileInput(RESTAURANT_FILENAME);
@@ -164,19 +166,20 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         //Put buttonOnClicks etc here
         boolean searchBtnPushed = false;
-        if (searchBtnPushed==true){
+        if (searchBtnPushed == true){
 
             //for testing
             search = "eleven";
             hazardLevel="Low";
 
-            SearchManager.init(restaurantInput, inspectionsInput, search,hazardLevel,lessNumCrit,greatNumCrit);
-            searchManager = SearchManager.getInstance();
+            searchManager.populateSearchManager(restaurantInput, inspectionsInput, search,hazardLevel,lessNumCrit,greatNumCrit);
         }
-        boolean clearBtnPushed = false;
-        if (clearBtnPushed==true){
-            searchManager.reset();
-        }
+
+        /** PUT INTO SEARCH ACTIVITY **/
+//        boolean clearBtnPushed = false;
+//        if (clearBtnPushed == true){
+//            searchManager.reset();
+//        }
 
     }
 
@@ -251,7 +254,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
-                            if (SearchManager.getInstance()==null) {
+                            if (SearchManager.getInstance() == null) {
                                 Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantManager.getCurrRestaurantPosition());
                                 LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
                                 moveCamera(position, DEFAULT_ZOOM);
@@ -319,7 +322,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             @Override
             public void onClusterItemInfoWindowClick(CustomMarker marker) {
                 int position = getRestaurantPosition(marker.getPosition());
-                if (SearchManager.getInstance()==null) {
+                if (SearchManager.getInstance() == null) {
                     restaurantManager.setCurrRestaurantPosition(position);
                     restaurantManager.setFromMap(1);
                     restaurantManager.setFromList(0);
@@ -338,7 +341,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
     private void addMapItems() {
         mClusterManager.getMarkerCollection().setInfoWindowAdapter(new RestaurantInfoWindowAdapter(RestaurantMapActivity.this));
-        if (SearchManager.getInstance()==null){
+        if (SearchManager.getInstance() == null){
             for (Restaurant restaurant : restaurantManager) {
                 if (restaurant != null) {
                     try {
@@ -450,18 +453,4 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         finishAffinity();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        if (item.getItemId() == R.id.action_favorite) {
-            Intent intent = new Intent(this, SearchActivity.class);
-            startActivity(intent);
-        }
-        return super.onOptionsItemSelected(item);
-    }
 }

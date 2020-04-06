@@ -137,22 +137,6 @@
         app:layout_constraintVertical_bias="0.78" />
 
     <EditText
-        android:id="@+id/less_than_filter_num"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="# Critical Violations"
-        android:inputType="number"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.618" />
-
-    <EditText
         android:id="@+id/greater_than_filter_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -167,6 +151,22 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.547" />
+
+    <EditText
+        android:id="@+id/less_than_filter_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:gravity="center"
+        android:hint="# Critical Violations"
+        android:inputType="number"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.618" />
 
     <Button
         android:id="@+id/search_btn"

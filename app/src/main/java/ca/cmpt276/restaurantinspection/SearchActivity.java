@@ -7,11 +7,22 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+import ca.cmpt276.restaurantinspection.Model.SearchManager;
 
 public class SearchActivity extends AppCompatActivity {
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private SearchManager searchManager = SearchManager.getInstance();
+
+    private final String RESTAURANT_FILENAME = "update_restaurant";
+    private final String INSPECTION_FILENAME = "update_inspection";
+
     int greenClicked = 0;
     int yellowClicked = 0;
     int redClicked = 0;
@@ -28,6 +39,10 @@ public class SearchActivity extends AppCompatActivity {
             actionBar.setTitle("Search");
             actionBar.setElevation(0);
         }
+
+        final EditText searchText = findViewById(R.id.search_text);
+        final EditText greaterThanNum = findViewById(R.id.greater_than_filter_num);
+        final EditText lessThanNum = findViewById(R.id.less_than_filter_num);
 
         final Button green = findViewById(R.id.low_filter_btn);
         final Button yellow = findViewById(R.id.mod_filter_btn);
@@ -109,14 +124,66 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
 
-//        search.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = getParentActivityIntentImplement();
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
+        search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
+                InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
+
+                FileInputStream internalRestaurants = null;
+                FileInputStream internalInspections = null;
+                InputStream restaurantInput;
+                InputStream inspectionsInput;
+
+                try {
+                    internalRestaurants = openFileInput(RESTAURANT_FILENAME);
+                    internalInspections = openFileInput(INSPECTION_FILENAME);
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+                if (internalRestaurants == null && internalInspections == null) {
+                    restaurantInput = restaurantsIn;
+                    inspectionsInput = inspectionsIn;
+                }
+                else {
+                    restaurantInput = internalRestaurants;
+                    inspectionsInput = internalInspections;
+                }
+
+                String search = searchText.getText().toString();
+                String hazardLevel;
+                int lessNumCrit;
+                int greatNumCrit;
+
+                if (greenClicked == 1) {
+                    hazardLevel = "Low";
+                } else if (yellowClicked == 1) {
+                    hazardLevel = "Moderate";
+                } else if (redClicked == 1) {
+                    hazardLevel = "High";
+                } else {
+                    hazardLevel = "";
+                }
+
+                if (!greaterThanNum.getText().toString().equals("")) {
+                    greatNumCrit = Integer.parseInt(greaterThanNum.getText().toString());
+                } else {
+                    greatNumCrit = Integer.MAX_VALUE;
+                }
+
+                if (!lessThanNum.getText().toString().equals("")) {
+                    lessNumCrit = Integer.parseInt((lessThanNum.getText().toString()));
+                } else {
+                    lessNumCrit = -1;
+                }
+
+                searchManager.populateSearchManager(restaurantInput, inspectionsInput, search,
+                        hazardLevel,lessNumCrit,greatNumCrit);
+
+                finish();
+            }
+        });
     }
 
 //    private Intent getParentActivityIntentImplement() {
