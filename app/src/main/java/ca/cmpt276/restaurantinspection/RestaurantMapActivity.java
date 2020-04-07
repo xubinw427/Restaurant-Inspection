@@ -114,6 +114,8 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         }
 
         startRestaurantListActivity();
+
+
     }
 
     private void updateChecker() {

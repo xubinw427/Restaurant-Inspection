@@ -56,9 +56,11 @@ public class RestaurantInfoActivity extends AppCompatActivity {
                 if (restaurantManager.getRestaurantAt(index).isFavorite()) {
                     restaurantManager.getRestaurantAt(index).setFavorite(false);
                     btn.setBackgroundResource(R.drawable.button_not_favorite);
+                    restaurantManager.getFavoriteList().remove(restaurant);
                 } else {
                     restaurantManager.getRestaurantAt(index).setFavorite(true);
                     btn.setBackgroundResource(R.drawable.button_favorite);
+                    restaurantManager.getFavoriteList().add(restaurant);
                 }
             }
         });

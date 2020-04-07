@@ -23,6 +23,16 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
         setFinishOnTouchOutside(false);
 
+
+
+        SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
+        final SharedPreferences.Editor EDITOR = pref.edit();
+        setScreenSize();
+        cancelBtnPressed();
+        proceedBtnPressed(EDITOR);
+    }
+
+    private void setScreenSize(){
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
@@ -30,14 +40,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
         int height = dm.heightPixels;
 
         getWindow().setLayout((int) (width * .8), (int) (height * .6));
-
-        SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
-        final SharedPreferences.Editor EDITOR = pref.edit();
-
-        cancelBtnPressed();
-        proceedBtnPressed(EDITOR);
     }
-
     private void proceedBtnPressed(final SharedPreferences.Editor EDITOR) {
         download = new Thread(new Runnable() {
             @Override
