@@ -20,6 +20,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     private ArrayList<Restaurant> restaurantList;
     private OnFavoriteListener favoriteListener;
 
+
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView hazardIcon;
         private TextView restaurantName;
@@ -52,6 +53,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         restaurantList = Restaurants;
         favoriteListener = onFavoriteListener;
     }
+    private boolean isShown = true;
+
+    public boolean isShown() {
+        return isShown;
+    }
 
     @NonNull
     @Override
@@ -64,6 +70,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     @Override
     public void onBindViewHolder(@NonNull FavoriteAdapter.FavoriteViewHolder holder, int position) {
         if (favoriteList.size() == 0) {
+            isShown = false;
             return;
         }
         Restaurant currRestaurant = null;
@@ -73,6 +80,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             if (restaurant.getId().equals(fav[0]) && Integer.parseInt(fav[1]) > restaurant.getInspectionsList().size()) {
                 //fav[1] is the updated one (should be bigger)
                 currRestaurant = restaurant;
+                break;
+            } else {
+                RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+                lp.height = 0;
+                holder.itemView.setLayoutParams(lp);
             }
         }
         if(currRestaurant == null){
