@@ -47,6 +47,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
             actionBar.setTitle(restaurant.getName());
             actionBar.setElevation(0);
         }
+
         extractRestaurantInfo();
 
         setFavoriteBtn();
@@ -59,9 +60,10 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1) {
             if (!searchManager.getRestaurantAt(index).isFavorite()) {
                 btn.setBackgroundResource(R.drawable.button_not_favorite);
-            }else{
+            } else {
                 btn.setBackgroundResource(R.drawable.button_favorite);
             }
+
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -80,9 +82,10 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         else {
             if (!restaurantManager.getRestaurantAt(index).isFavorite()) {
                 btn.setBackgroundResource(R.drawable.button_not_favorite);
-            }else{
+            } else {
                 btn.setBackgroundResource(R.drawable.button_favorite);
             }
+
             btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

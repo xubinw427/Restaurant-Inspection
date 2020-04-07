@@ -27,8 +27,7 @@ import ca.cmpt276.restaurantinspection.Model.SearchManager;
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
     private SearchManager searchManager = SearchManager.getInstance();
-    private final String RESTAURANT_FILENAME = "update_restaurant";
-    private final String INSPECTION_FILENAME = "update_inspection";
+    private final int SEARCH_REQUEST_CODE = 200;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,68 +38,14 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
 
-        System.out.println(restaurantManager.getList().size());
-
         if (searchManager == null || searchManager.getFilter() == 0) {
             extractRestaurants();
         } else {
             extractSearchedRestaurants();
         }
 
-//        filterRestaurants();
-
         mapView();
     }
-
-//    private void filterRestaurants() {
-//
-//        searchManager = SearchManager.getInstance();
-//        String search = "";
-//        String hazardLevel= "";
-//        int lessNumCrit = - 1;
-//        int greatNumCrit = Integer.MAX_VALUE;
-//
-//        InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
-//        InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
-//
-//        FileInputStream internalRestaurants = null;
-//        FileInputStream internalInspections = null;
-//        InputStream restaurantInput = null;
-//        InputStream inspectionsInput = null;
-//
-//        try {
-//            internalRestaurants = openFileInput(RESTAURANT_FILENAME);
-//            internalInspections = openFileInput(INSPECTION_FILENAME);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (internalRestaurants == null && internalInspections == null) {
-//            restaurantInput = restaurantsIn;
-//            inspectionsInput = inspectionsIn;
-//        }
-//        else {
-//            restaurantInput = internalRestaurants;
-//            inspectionsInput = internalInspections;
-//        }
-//
-//        //Put buttonOnClicks etc here
-//        boolean searchBtnPushed = true;
-//        if (searchBtnPushed==true){
-//
-//            //for testing
-//            search = "bar";
-//            hazardLevel="Low";
-////            lessNumCrit = 2;
-//
-//            searchManager.populateSearchManager(restaurantInput, inspectionsInput, search,hazardLevel,lessNumCrit,greatNumCrit);
-//            extractSearchedRestaurants();
-//        }
-//        boolean clearBtnPushed = false;
-//        if (clearBtnPushed==true){
-//            searchManager.reset();
-//        }
-//    }
 
     private void mapView() {
         Button btn = findViewById(R.id.map_button_inact);
@@ -165,9 +110,22 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.action_favorite) {
+            searchManager.setFromList(1);
+            searchManager.setFromMap(0);
             Intent intent = new Intent(this, SearchActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent, SEARCH_REQUEST_CODE);
         }
+
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == SEARCH_REQUEST_CODE && resultCode == RESULT_OK) {
+            startActivity(new Intent(this, RestaurantActivity.class));
+            finish();
+        }
     }
 }

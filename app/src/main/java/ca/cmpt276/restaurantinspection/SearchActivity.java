@@ -19,9 +19,6 @@ import ca.cmpt276.restaurantinspection.Model.SearchManager;
 public class SearchActivity extends AppCompatActivity {
     private SearchManager searchManager = SearchManager.getInstance();
 
-    private final String RESTAURANT_FILENAME = "update_restaurant";
-    private final String INSPECTION_FILENAME = "update_inspection";
-
     int greenClicked = 0;
     int yellowClicked = 0;
     int redClicked = 0;
@@ -76,6 +73,14 @@ public class SearchActivity extends AppCompatActivity {
                 break;
             default:
                 break;
+        }
+
+        if (searchManager.getGreaterThanNum() != -1) {
+            greaterThanNum.setText(Integer.toString(searchManager.getGreaterThanNum()));
+        }
+
+        if (searchManager.getLessThanNum() != Integer.MAX_VALUE) {
+            lessThanNum.setText(Integer.toString(searchManager.getLessThanNum()));
         }
 
         if (searchManager.getFave() == 1) {
@@ -188,25 +193,19 @@ public class SearchActivity extends AppCompatActivity {
                 searchManager.populateSearchManager(favouriteClicked, search,
                         hazardLevel,lessNumCrit,greatNumCrit);
 
+                setResult(RESULT_OK);
+                finish();
+            }
+        });
+
+        reset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                searchManager.reset();
+
+                setResult(RESULT_OK);
                 finish();
             }
         });
     }
-
-//    private Intent getParentActivityIntentImplement() {
-//        Intent intent = null;
-//
-//        if (restaurantManager.getFromList() == 1) {
-//            intent = new Intent(this, RestaurantActivity.class);
-//            restaurantManager.setFromList(0);
-//
-//        } else if (restaurantManager.getFromMap() == 1) {
-//            intent = new Intent(this, RestaurantMapActivity.class);
-//            restaurantManager.setFromMap(0);
-//
-//            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        }
-//
-//        return intent;
-//    }
 }

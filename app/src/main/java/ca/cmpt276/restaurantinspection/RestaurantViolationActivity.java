@@ -38,8 +38,7 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
             inspectionIndex = searchManager.getCurrInspectionPosition();
             restaurant = searchManager.getRestaurantAt(restaurantIndex);
             inspection = restaurant.getInspectionAt(inspectionIndex);
-        }
-        else {
+        } else {
             restaurantIndex = restaurantManager.getCurrRestaurantPosition();
             inspectionIndex = restaurantManager.getCurrInspectionPosition();
             restaurant = restaurantManager.getRestaurantAt(restaurantIndex);
@@ -92,11 +91,10 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         RecyclerView.Adapter violationAdapter;
         RecyclerView.LayoutManager violationLayoutManager;
 
-        if (inspection.getViolationsList() == null) {
+        if (inspection.getViolationsList().size() == 0) {
             TextView noViolationsMsg = this.findViewById(R.id.no_violations_msg);
             noViolationsMsg.setText(R.string.str_no_violation);
-        }
-        else {
+        } else {
             violationList = inspection.getViolationsList();
             violationRecyclerView = findViewById(R.id.rv3);
             violationRecyclerView.setHasFixedSize(true);
@@ -119,5 +117,4 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         toast = Toast.makeText(this, longDescription, Toast.LENGTH_LONG);
         toast.show();
     }
-
 }

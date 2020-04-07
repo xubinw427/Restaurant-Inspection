@@ -9,25 +9,31 @@ import java.util.Iterator;
 
 /** Singleton to Keep Track of All Restaurants in Data **/
 public class SearchManager implements Iterable<Restaurant> {
-    private ArrayList<Restaurant> restaurantsList = new ArrayList<>();
-    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private ArrayList<Restaurant> restaurantsList;
+    private RestaurantManager restaurantManager;
     private static SearchManager instance;
-    private ViolationsMap violationsMap;
     private int currRestaurantPosition;
     private int currInspectionPosition;
     private int filter = 0;
     private int fromMap = 0;
     private int fromList = 0;
 
-    private String search = "";
-    private String hazard = "All";
-    private int lessThanNum = Integer.MAX_VALUE;
-    private int greaterThanNum = -1;
-    private int fave = 0;
+    private String search;
+    private String hazard;
+    private int lessThanNum;
+    private int greaterThanNum;
+    private int fave;
 
     /** Private to prevent anyone else from instantiating. **/
     private SearchManager() {
-        violationsMap = ViolationsMap.getInstance();
+        restaurantManager = RestaurantManager.getInstance();
+        restaurantsList = new ArrayList<>();
+
+        this.search = "";
+        this.hazard = "All";
+        this.lessThanNum = Integer.MAX_VALUE;
+        this.greaterThanNum = -1;
+        this.fave = 0;
     }
 
     public static SearchManager getInstance() {
@@ -47,7 +53,11 @@ public class SearchManager implements Iterable<Restaurant> {
     }
 
     public void reset() {
-        instance = null;
+        this.search = "";
+        this.hazard = "All";
+        this.lessThanNum = Integer.MAX_VALUE;
+        this.greaterThanNum = -1;
+        this.fave = 0;
         filter = 0;
     }
 
@@ -119,13 +129,11 @@ public class SearchManager implements Iterable<Restaurant> {
         return fave;
     }
 
-    public void populateSearchManager(int favourite, String search, String hazardLevel, int lessNumCrit, int greaterNumCrit) {
+    public void populateSearchManager(int favourite, String search, String hazardLevel,
+                                      int lessNumCrit, int greaterNumCrit) {
 
         readRestaurantData(favourite, search, hazardLevel, lessNumCrit, greaterNumCrit);
-
         filter = 1;
-
-        System.out.println(this.restaurantsList.size());
     }
 
     private void addNew(Restaurant restaurant) {
@@ -157,13 +165,6 @@ public class SearchManager implements Iterable<Restaurant> {
             restaurantList = restaurantManager.getList();
         }
 
-        System.out.println("************");
-        System.out.println(hazardLevel);
-        System.out.println(favourite);
-        System.out.println(lessNumCrit);
-        System.out.println(greaterNumCrit);
-        System.out.println("************");
-
         for (Restaurant restaurant : restaurantList) {
             if (!hazardLevel.equals("All")) {
                 if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
@@ -171,9 +172,6 @@ public class SearchManager implements Iterable<Restaurant> {
                         restaurant.getNumCriticalIssues() >= greaterNumCrit &&
                         restaurant.getHazard().equals(hazardLevel)) {
 
-                    System.out.println(restaurant.getName());
-                    System.out.println(restaurant.getInspectionsList().get(0).getHazardRating());
-                    System.out.println(restaurant.getInspectionsList().get(0).getFullDate());
                     this.addNew(restaurant);
                 }
             } else {
@@ -184,200 +182,10 @@ public class SearchManager implements Iterable<Restaurant> {
                     this.addNew(restaurant);
                 }
             }
-
-//            if (!search.equals("")){
-//                if (lessNumCrit>0) {
-//                    if (greaterNumCrit<Integer.MAX_VALUE) {
-//                        if (!hazardLevel.equals("")) {
-//                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-//                                    restaurant.getNumCriticalIssues()<=lessNumCrit &&
-//                                    restaurant.getNumCriticalIssues()>=greaterNumCrit &&
-//                                    restaurant.getHazard().equals(hazardLevel)){
-//
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                        else {
-//                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-//                                    restaurant.getNumCriticalIssues()<=lessNumCrit &&
-//                                    restaurant.getNumCriticalIssues()>=greaterNumCrit ){
-//
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                    }
-//                    else {
-//                        if (!hazardLevel.equals("")) {
-//                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-//                                    restaurant.getNumCriticalIssues()<=lessNumCrit &&
-//                                    restaurant.getHazard().equals(hazardLevel)){
-//
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                        else {
-//                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-//                                    restaurant.getNumCriticalIssues()<=lessNumCrit){
-//
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                    }
-//                }
-//                else {
-//                    if (greaterNumCrit<Integer.MAX_VALUE) {
-//                        if (!hazardLevel.equals("")) {
-//                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-//                                    restaurant.getNumCriticalIssues()>=greaterNumCrit &&
-//                                    restaurant.getHazard().equals(hazardLevel)){
-//
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                        else {
-//                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-//                                    restaurant.getNumCriticalIssues()>=greaterNumCrit ){
-//
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                    }
-//                    else {
-//                        if (!hazardLevel.equals("")) {
-//                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase()) &&
-//                                    restaurant.getHazard().equals(hazardLevel)){
-//
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                        else {
-//                            if (restaurant.getName().toLowerCase().contains(search.toLowerCase())){
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                    }
-//
-//                }
-//            }
-//            else {
-//                if (lessNumCrit>0) {
-//                    if (greaterNumCrit<Integer.MAX_VALUE) {
-//                        if (!hazardLevel.equals("")) {
-//                            if (restaurant.getNumCriticalIssues()<=lessNumCrit &&
-//                                    restaurant.getNumCriticalIssues()>=greaterNumCrit &&
-//                                    restaurant.getHazard().equals(hazardLevel)){
-//
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                        else {
-//                            if (restaurant.getNumCriticalIssues()<=lessNumCrit &&
-//                                    restaurant.getNumCriticalIssues()>=greaterNumCrit ){
-//
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                    }
-//                    else {
-//                        if (!hazardLevel.equals("")) {
-//                            if (restaurant.getNumCriticalIssues()<=lessNumCrit &&
-//                                    restaurant.getHazard().equals(hazardLevel)){
-//
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                        else {
-//                            if (restaurant.getNumCriticalIssues()<=lessNumCrit){
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                    }
-//                }
-//                else {
-//                    if (greaterNumCrit<Integer.MAX_VALUE) {
-//                        if (!hazardLevel.equals("")) {
-//                            if (restaurant.getNumCriticalIssues()>=greaterNumCrit &&
-//                                    restaurant.getHazard().equals(hazardLevel)){
-//
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                        else {
-//                            if (restaurant.getNumCriticalIssues()>=greaterNumCrit ){
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                    }
-//                    else {
-//                        if (!hazardLevel.equals("")) {
-//                            if (restaurant.getHazard().equals(hazardLevel)){
-//                                this.addNew(restaurant);
-//                            }
-//                        }
-//                        else {
-//                            this.addNew(restaurant);
-//                        }
-//                    }
-//
-//                }
-//            }
-
         }
 
         this.sortRestaurants();
     }
-
-
-//    private void sortInspectionsForEveryRestaurant() {
-//        int size = this.restaurantsList.size();
-//
-//        for (int i = 0; i < size; i++) {
-//            Collections.sort(restaurantsList.get(i).getInspectionsList(), new NewSortInspectionsByDate());
-//        }
-//    }
-
-//    private void populateInspections(InputStream file) {
-//        if (file == null) { return; }
-//
-//        BufferedReader input = new BufferedReader(new InputStreamReader(file));
-//
-//        String line;
-//
-//        try {
-//            /** Step over header **/
-//            input.readLine();
-//
-//            while ((line = input.readLine()) != null) {
-//                String[] inspectionLump = line.split(",\"");
-//
-//                if (inspectionLump[0].contains(",,,")) {
-//                    continue;
-//                }
-//
-//                String[] firstHalf = inspectionLump[0].split(",");
-//                String currRestaurantID = firstHalf[0].trim();
-//
-//                Inspection currInspection = new Inspection(inspectionLump, violationsMap);
-//
-//                for (Restaurant restaurant : restaurantsList) {
-//                    if (restaurant.getId().equals(currRestaurantID)) {
-//                        restaurant.addInspection(currInspection);
-//                        break;
-//                    }
-//                }
-//            }
-//        }
-//        catch (IOException ex) {
-//            throw new RuntimeException("ERROR: Failed to read in " + file);
-//        }
-//
-//        try {
-//            file.close();
-//        }
-//        catch (IOException ex) {
-//            throw new RuntimeException("ERROR: Failed to close " + file);
-//        }
-//    }
 
     private void sortRestaurants() {
         Collections.sort(restaurantsList, new SortRestaurantsByNameAlphabet());
@@ -396,10 +204,3 @@ class SortRestaurantsByNameAlphabet implements Comparator<Restaurant> {
         return o1.compareTo(o2);
     }
 }
-
-//class NewSortInspectionsByDate implements  Comparator<Inspection> {
-//    @Override
-//    public int compare(Inspection o1, Inspection o2) {
-//        return o1.compareTo(o2);
-//    }
-//}

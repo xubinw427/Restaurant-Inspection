@@ -32,8 +32,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
             searchManager = SearchManager.getInstance();
             index = searchManager.getCurrRestaurantPosition();
             restaurant = searchManager.getList().get(index);
-        }
-        else {
+        } else {
             restaurantManager = RestaurantManager.getInstance();
             index = restaurantManager.getCurrRestaurantPosition();
             restaurant = restaurantManager.getList().get(index);
@@ -45,6 +44,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
             actionBar.setTitle(restaurant.getName());
             actionBar.setElevation(0);
         }
+
         extractRestaurantInspections();
 
         startRestaurantInfoActivityBtn();
