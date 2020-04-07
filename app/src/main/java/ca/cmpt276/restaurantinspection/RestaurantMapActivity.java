@@ -115,10 +115,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         startRestaurantListActivity();
 
-        /** === TESTING NEW INSPECTION OF FAVOURITE POP-UP === **/
-        Intent intent = new Intent(this, PopUpNewInspectionActivity.class);
-        startActivity(intent);
-        /** === END TESTING === **/
+
     }
 
     private void updateChecker() {
