@@ -58,11 +58,13 @@ public class ViolationsMap {
                 String[] line = violation.split(",");
                 line[0] = line[0].substring(1);
                 String name = "str_" + line[0];
+
                 String packageName = context.getPackageName();
                 int resID = context.getResources().getIdentifier(name, "string", packageName);
                 String vio = context.getResources().getString(resID);
                 String[] info = vio.split(",");
                 Log.d(TAG, "current violation is: " + info);
+
                 violationsLookup.put(line[0], info);
             }
         }
