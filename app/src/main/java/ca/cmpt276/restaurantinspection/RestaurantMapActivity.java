@@ -203,8 +203,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                                 Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantManager.getCurrRestaurantPosition());
                                 LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
                                 moveCamera(position, DEFAULT_ZOOM);
-                            }
-                            else {
+                            } else {
                                 Restaurant restaurant = searchManager.getRestaurantAt(searchManager.getCurrRestaurantPosition());
                                 LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
                                 moveCamera(position, DEFAULT_ZOOM);
@@ -267,12 +266,12 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             @Override
             public void onClusterItemInfoWindowClick(CustomMarker marker) {
                 int position = getRestaurantPosition(marker.getPosition());
+
                 if (SearchManager.getInstance() == null || SearchManager.getInstance().getFilter() == 0) {
                     restaurantManager.setCurrRestaurantPosition(position);
                     restaurantManager.setFromMap(1);
                     restaurantManager.setFromList(0);
-                }
-                else {
+                } else {
                     searchManager.setCurrRestaurantPosition(position);
                     searchManager.setFromMap(1);
                     searchManager.setFromList(0);
