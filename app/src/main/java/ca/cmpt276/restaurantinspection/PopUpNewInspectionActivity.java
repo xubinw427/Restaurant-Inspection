@@ -34,9 +34,11 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
         int restaurantIndex = restaurantManager.getCurrRestaurantPosition();
         restaurant = restaurantManager.getRestaurantAt(restaurantIndex);
 
+
         setScreenSize();
-        cancelBtnPressed();
         extractInspection();
+        cancelBtnPressed();
+
     }
 
     private void setScreenSize(){
@@ -73,18 +75,9 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
         favoriteLayoutManager = new LinearLayoutManager(this);
         favoriteRecyclerView.setLayoutManager(favoriteLayoutManager);
 
-//        Restaurant currRestaurant = null;
-//        String currFavorite = favoriteList.get(position);
-//        String[] fav = currFavorite.split(",");
-//        for (Restaurant restaurant : restaurantList) {
-//            if (restaurant.getId().equals(fav[0]) && Integer.parseInt(fav[1]) > restaurant.getInspectionsList().size()) {
-//                //fav[1] is the updated one (should be bigger)
-//                currRestaurant = restaurant;
-//            }
-//        }
-
         favoriteAdapter = new FavoriteAdapter(favoriteList, restaurantList, this);
         favoriteRecyclerView.setAdapter(favoriteAdapter);
+
 
     }
 

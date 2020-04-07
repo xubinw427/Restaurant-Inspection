@@ -71,6 +71,8 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         updateChecker();
 
+        restaurantManager.readFavoriteList();
+
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
         InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
 
@@ -113,10 +115,13 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             editor.apply();
         }
 
+
+
         /** === TESTING NEW INSPECTION OF FAVOURITE POP-UP === **/
         Intent intent = new Intent(this, PopUpNewInspectionActivity.class);
         startActivity(intent);
         /** === END TESTING === **/
+
 
         startRestaurantListActivity();
 

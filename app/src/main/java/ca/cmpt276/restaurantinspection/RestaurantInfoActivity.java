@@ -66,6 +66,8 @@ public class RestaurantInfoActivity extends AppCompatActivity {
                     btn.setBackgroundResource(R.drawable.button_favorite);
                     restaurantManager.getFavoriteList().add(fav);
                 }
+                restaurantManager.saveFavoriteList(restaurantManager.getFavoriteList());
+
             }
         });
     }

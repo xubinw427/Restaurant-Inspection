@@ -1,11 +1,18 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.os.Environment;
+
 import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -100,6 +107,38 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
     public void setFromMap(int i) {
         this.fromMap = i;
+    }
+
+    public void setFavoriteList(ArrayList<String> favoriteList) {
+        this.favoriteList = favoriteList;
+    }
+
+    public void saveFavoriteList(ArrayList<String> favoriteList){
+        try {
+            File file = Environment.getExternalStorageDirectory();
+            File filename = new File(file, "favoritelist");
+            FileOutputStream fos = new FileOutputStream(filename);
+            ObjectOutputStream out = new ObjectOutputStream(fos);
+            out.writeObject(favoriteList);
+            out.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void readFavoriteList(){
+        try {
+            File file = Environment.getExternalStorageDirectory();
+            File filename = new File(file, "favoritelist");
+            FileInputStream fis = new FileInputStream(filename);
+            ObjectInputStream in = new ObjectInputStream(fis);
+            setFavoriteList((ArrayList<String>) in.readObject());
+            in.close();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
+        }
     }
 
     private void addNew(Restaurant restaurant) {

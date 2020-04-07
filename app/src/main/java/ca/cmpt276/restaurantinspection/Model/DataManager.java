@@ -2,6 +2,7 @@ package ca.cmpt276.restaurantinspection.Model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.os.Environment;
 
 import androidx.annotation.NonNull;
 
@@ -10,10 +11,15 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -54,6 +60,10 @@ public class DataManager {
         instance = new DataManager(context);
         return instance;
     }
+
+
+
+
 
     private void setUpdateURLRestaurant (String url) {
         updateURLRestaurant = url;
