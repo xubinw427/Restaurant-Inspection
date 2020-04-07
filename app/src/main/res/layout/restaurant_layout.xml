@@ -135,6 +135,16 @@
             app:srcCompat="@drawable/restlist_high"
             tools:ignore="ContentDescription" />
 
+        <ImageView
+            android:id="@+id/favorite_icon"
+            android:layout_width="25dp"
+            android:layout_height="24dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="342dp"
+            android:layout_marginBottom="121dp"
+            app:srcCompat="@drawable/box_info" />
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>
