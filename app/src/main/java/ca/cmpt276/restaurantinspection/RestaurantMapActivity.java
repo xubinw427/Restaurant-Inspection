@@ -112,6 +112,9 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             searchManager = SearchManager.getInstance();
         }
 
+        searchManager.setFromMap(1);
+        searchManager.setFromList(0);
+
         initMap();
 
         SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);

@@ -128,10 +128,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/inspection_overview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.385"
+        app:layout_constraintHorizontal_bias="0.373"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.68" />
+        app:layout_constraintTop_toBottomOf="@+id/date_level"
+        app:layout_constraintVertical_bias="0.209" />
 
     <TextView
         android:id="@+id/inspection_type"
@@ -141,10 +141,10 @@
         android:textColor="@color/fontColour"
         app:layout_constraintBottom_toBottomOf="@+id/inspection_overview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.105"
+        app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="@+id/inspection_header"
-        app:layout_constraintVertical_bias="0.64" />
+        app:layout_constraintTop_toBottomOf="@+id/date_level"
+        app:layout_constraintVertical_bias="0.209" />
 
     <TextView
         android:id="@+id/num_noncrit_issues_details"
