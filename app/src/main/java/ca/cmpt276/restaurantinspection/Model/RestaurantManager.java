@@ -15,7 +15,7 @@ import java.util.Iterator;
 /** Singleton to Keep Track of All Restaurants in Data **/
 public class RestaurantManager implements Iterable<Restaurant> {
     private ArrayList<Restaurant> restaurantsList = new ArrayList<>();
-    private ArrayList<Restaurant> favoriteList = new ArrayList<>();
+    private ArrayList<String> favoriteList = new ArrayList<>();
     private static RestaurantManager instance;
     private ViolationsMap violationsMap;
     private int currRestaurantPosition;
@@ -54,8 +54,12 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return restaurantsList;
     }
 
-    public ArrayList<Restaurant> getFavoriteList() {
+    public ArrayList<String> getFavoriteList() {
         return favoriteList;
+    }
+
+    public ArrayList<Restaurant> getRestaurantsList() {
+        return restaurantsList;
     }
 
     public Restaurant getRestaurantAt(int index) {

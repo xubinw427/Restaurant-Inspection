@@ -64,7 +64,8 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
         RecyclerView.Adapter favoriteAdapter;
         RecyclerView.LayoutManager favoriteLayoutManager;
 
-        ArrayList<Restaurant> favoriteList = restaurantManager.getFavoriteList();
+        ArrayList<String> favoriteList = restaurantManager.getFavoriteList();
+        ArrayList<Restaurant> restaurantList = restaurantManager.getRestaurantsList();
 
         favoriteRecyclerView = findViewById(R.id.rv4);
         favoriteRecyclerView.setHasFixedSize(true);
@@ -72,7 +73,7 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
         favoriteLayoutManager = new LinearLayoutManager(this);
         favoriteRecyclerView.setLayoutManager(favoriteLayoutManager);
 
-        favoriteAdapter = new FavoriteAdapter(favoriteList, this);
+        favoriteAdapter = new FavoriteAdapter(favoriteList, restaurantList, this);
         favoriteRecyclerView.setAdapter(favoriteAdapter);
 
     }

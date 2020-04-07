@@ -12,10 +12,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
+import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.R;
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>{
-    private ArrayList<Restaurant> favoriteList;
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
+    private ArrayList<String> favoriteList;
+    private ArrayList<Restaurant> restaurantList;
     private OnFavoriteListener favoriteListener;
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -45,8 +47,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         void onViolationClick(int position);
     }
 
-    public FavoriteAdapter(ArrayList<Restaurant> Favorites, FavoriteAdapter.OnFavoriteListener onFavoriteListener) {
+    public FavoriteAdapter(ArrayList<String> Favorites, ArrayList<Restaurant> Restaurants, FavoriteAdapter.OnFavoriteListener onFavoriteListener) {
         favoriteList = Favorites;
+        restaurantList = Restaurants;
         favoriteListener = onFavoriteListener;
     }
 
@@ -60,13 +63,24 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
     @Override
     public void onBindViewHolder(@NonNull FavoriteAdapter.FavoriteViewHolder holder, int position) {
-        if(favoriteList.size() == 0){
+        if (favoriteList.size() == 0) {
             return;
         }
-        Restaurant currRestaurant = favoriteList.get(position);
+        Restaurant currRestaurant = null;
+        String currFavorite = favoriteList.get(position);
+        String[] fav = currFavorite.split(",");
+        for (Restaurant restaurant : restaurantList) {
+            if (restaurant.getId().equals(fav[0]) && Integer.parseInt(fav[1]) > restaurant.getInspectionsList().size()) {
+                //fav[1] is the updated one (should be bigger)
+                currRestaurant = restaurant;
+            }
+        }
+        if(currRestaurant == null){
+            return;
+        }
         holder.restaurantName.setText(currRestaurant.getName());
         holder.newestInspDate.setText(currRestaurant.getDate());
-        switch(currRestaurant.getHazard()) {
+        switch (currRestaurant.getHazard()) {
             case "High":
                 holder.hazardIcon.setImageResource(R.drawable.circle_red);
                 break;
