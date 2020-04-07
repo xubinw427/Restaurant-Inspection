@@ -62,7 +62,7 @@ public class ViolationsMap {
                 int resID = context.getResources().getIdentifier(name, "string", packageName);
                 String vio = context.getResources().getString(resID);
                 String[] info = vio.split(",");
-                Log.d(TAG, "current violation is: " + info);
+                //Log.d(TAG, "current violation is: " + info);
                 violationsLookup.put(line[0], info);
             }
         }
