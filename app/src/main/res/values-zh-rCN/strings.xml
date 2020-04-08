@@ -61,11 +61,11 @@
     <string name="str_301">"301,设备,严重,设备/餐具/食物接触面未保持卫生 [s. 17(1)],不卫生的设备,未重复"</string>
     <string name="str_302">"302,设备,严重,设备/餐具/食物接触面未正确清洗和消毒 [s. 17(2)],设备冲洗不良,未重复"</string>
     <string name="str_303">"303,设备,严重,设备/设施/冷热水卫生维护不足 [s. 17(3); s. 4(1)(f)],水维护不足,未重复"</string>
-    <string name="str_304">"304,害虫,非严重，处所内无害虫 [s. 26(a)],害虫,非重复"</string>
-    <string name="str_305">"305,害虫,非严重,观察到的条件可能使有害生物进入/携带/繁殖 [s. 26(b)(c)],允许繁殖有害生物,非重复"</string>
+    <string name="str_304">"304,害虫,非严重,处所内无害虫 [s. 26(a)],害虫,非重复"</string>
+    <string name="str_305">"305,害虫,非严重,观察到的条件可能使有害生物进入/携带/繁殖 [s. 26(b)©],允许繁殖有害生物,未重复"</string>
     <string name="str_306">"306,经营,非严重,食品处所未保持卫生 [s. 17(1)],不卫生的食物业处所,非重复"</string>
     <string name="str_307">"307,设备,非严重,设备/器具/食物接触面的设计/材料不合适 [s. 16; s. 19],设备不合适,未重复"</string>
-    <string name="str_308">"308,设备,非严重,设备/器具/食物接触面工作不正常 [s. 16(b)],功能失调的设备,未重复"</string>
+    <string name="str_308">"308,设备,非严重,设备/器具/食物接触面工作不正常 [s. 16(b)],设备功能失调,未重复"</string>
     <string name="str_309">"309,设备,非严重,化学清洁剂和类似试剂的存放或标签不正确 [s. 27],材料标签不当,未重复"</string>
     <string name="str_310">"310,设备,非严重,一次性容器和用具多次使用 [s. 20],重复使用一次性用具,非重复"</string>
     <string name="str_311">"311,经营,非严重,未按批准的计划保存处所 [s. 6(1)(b)],处所未维持,未重复"</string>
@@ -84,4 +84,6 @@
     <string name="str_low">低</string>
     <string name="str_none">无</string>
     <string name="str_days_ago">天前</string>
+    <string name="str_follow_up">跟进</string>
+    <string name="str_routine">例行</string>
 </resources>

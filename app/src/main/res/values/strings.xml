@@ -84,5 +84,7 @@
     <string name="str_low">LOW</string>
     <string name="str_none">NONE</string>
     <string name="str_days_ago">days ago</string>
+    <string name="str_follow_up">Follow Up</string>
+    <string name="str_routine">Routine</string>
 
 </resources>

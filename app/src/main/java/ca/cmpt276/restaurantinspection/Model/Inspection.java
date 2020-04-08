@@ -42,7 +42,7 @@ public class Inspection implements Comparable<Inspection>{
         inspDate = inspectionDetails[1];
         getDateInformation();
 
-        inspType = inspectionDetails[2];
+        inspType = inspectionDetails[2].equals("Follow-Up") ? context.getResources().getString(R.string.str_follow_up) : context.getResources().getString(R.string.str_routine);
 
         try {
             numCritical = Integer.parseInt(inspectionDetails[3].trim());
