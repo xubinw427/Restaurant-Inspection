@@ -66,7 +66,7 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
         RecyclerView.Adapter favoriteAdapter;
         RecyclerView.LayoutManager favoriteLayoutManager;
 
-        ArrayList<String> favoriteList = restaurantManager.getFavoriteList();
+        ArrayList<Restaurant> favoriteList = restaurantManager.getFavoriteList();
         ArrayList<Restaurant> restaurantList = restaurantManager.getRestaurantsList();
 
         favoriteRecyclerView = findViewById(R.id.rv4);

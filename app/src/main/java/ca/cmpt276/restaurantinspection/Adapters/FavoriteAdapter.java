@@ -16,7 +16,7 @@ import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.R;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
-    private ArrayList<String> favoriteList;
+    private ArrayList<Restaurant> favoriteList;
     private ArrayList<Restaurant> restaurantList;
     private OnFavoriteListener favoriteListener;
 
@@ -48,7 +48,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         void onViolationClick(int position);
     }
 
-    public FavoriteAdapter(ArrayList<String> Favorites, ArrayList<Restaurant> Restaurants, FavoriteAdapter.OnFavoriteListener onFavoriteListener) {
+    public FavoriteAdapter(ArrayList<Restaurant> Favorites, ArrayList<Restaurant> Restaurants, FavoriteAdapter.OnFavoriteListener onFavoriteListener) {
         favoriteList = Favorites;
         restaurantList = Restaurants;
         favoriteListener = onFavoriteListener;
@@ -74,24 +74,24 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
             return;
         }
         Restaurant currRestaurant = null;
-        String currFavorite = favoriteList.get(position);
-        String[] fav = currFavorite.split(",");
-        for (Restaurant restaurant : restaurantList) {
-            if (restaurant.getId().equals(fav[0]) && Integer.parseInt(fav[1]) > restaurant.getInspectionsList().size()) {
-                //fav[1] is the updated one (should be bigger)
-                currRestaurant = restaurant;
-                break;
-            } else {
-                RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-                lp.height = 0;
-                holder.itemView.setLayoutParams(lp);
-            }
+        Restaurant currFavorite = favoriteList.get(position);
+
+        if (currFavorite.getOldNumInspections() < currFavorite.getInspectionsList().size()) {
+            //fav[1] is the updated one (should be bigger)
+            currRestaurant = currFavorite;
+        } else {
+            RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+            lp.height = 0;
+            holder.itemView.setLayoutParams(lp);
         }
-        if(currRestaurant == null){
+
+        if (currRestaurant == null){
             return;
         }
+
         holder.restaurantName.setText(currRestaurant.getName());
         holder.newestInspDate.setText(currRestaurant.getDate());
+
         switch (currRestaurant.getHazard()) {
             case "High":
                 holder.hazardIcon.setImageResource(R.drawable.circle_red);

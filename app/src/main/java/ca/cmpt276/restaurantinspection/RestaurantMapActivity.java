@@ -71,8 +71,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         updateChecker();
 
-        restaurantManager.readFavoriteList();
-
         InputStream restaurantsIn = getResources().openRawResource(R.raw.restaurants_itr1);
         InputStream inspectionsIn = getResources().openRawResource(R.raw.inspectionreports_itr1);
 
@@ -99,8 +97,23 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         else {
             RestaurantManager.init(internalRestaurants, internalInspections);
         }
-
         restaurantManager = RestaurantManager.getInstance();
+        restaurantManager.readFavoriteList(this);
+
+//        FileInputStream faveRestaurants = null;
+//
+//        final String FAVE_FILENAME = "favorite_list";
+//
+//        try {
+//            faveRestaurants = openFileInput(FAVE_FILENAME);
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+
+//        if (faveRestaurants != null) {
+//            System.out.println("HERE!!!!!!!!!!!!!!!!!!");
+//            restaurantManager.readFavoriteList(this);
+//        }
 
         initMap();
 

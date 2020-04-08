@@ -53,21 +53,20 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String id = restaurant.getId();
-                int size = restaurant.getInspectionsList().size();
-                String fav = id + "," + size;
                 if (restaurantManager.getRestaurantAt(index).isFavorite()) {
                     restaurantManager.getRestaurantAt(index).setFavorite(false);
                     btn.setBackgroundResource(R.drawable.button_not_favorite);
-                    restaurantManager.getFavoriteList().remove(fav);
-//                    restaurantManager.getFavoriteList().remove(restaurant);
+                    restaurantManager.getFavoriteList().remove(restaurant);
+                    restaurantManager.removeFaveFromInternal(restaurant, getApplicationContext());
                 } else {
                     restaurantManager.getRestaurantAt(index).setFavorite(true);
                     btn.setBackgroundResource(R.drawable.button_favorite);
-                    restaurantManager.getFavoriteList().add(fav);
+                    restaurantManager.getFavoriteList().add(restaurant);
+                    restaurantManager.addFaveToInternal(restaurant, getApplicationContext());
                 }
-                restaurantManager.saveFavoriteList(restaurantManager.getFavoriteList());
-
+//
+//                restaurantManager.saveFavoriteList(restaurantManager.getFavoriteList(),
+//                                                    getApplicationContext());
             }
         });
     }

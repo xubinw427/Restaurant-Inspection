@@ -1,5 +1,7 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
 
 import androidx.annotation.NonNull;
@@ -7,6 +9,7 @@ import androidx.annotation.NonNull;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,18 +20,22 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 /** Singleton to Keep Track of All Restaurants in Data **/
 public class RestaurantManager implements Iterable<Restaurant> {
     private ArrayList<Restaurant> restaurantsList = new ArrayList<>();
-    private ArrayList<String> favoriteList = new ArrayList<>();
+    private ArrayList<Restaurant> favoriteList = new ArrayList<>();
     private static RestaurantManager instance;
     private ViolationsMap violationsMap;
     private int currRestaurantPosition;
     private int currInspectionPosition;
     private int fromMap = 0;
     private int fromList = 0;
+    private int loadFaves = 0;
+
     /** Private to prevent anyone else from instantiating. **/
     private RestaurantManager(InputStream restaurantFile, InputStream inspectionsFile) {
         readRestaurantData(restaurantFile);
@@ -37,7 +44,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 
     public static RestaurantManager getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             throw new AssertionError(
                     "RestaurantManager.init(InputStream file) must be called first.");
         }
@@ -61,7 +68,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return restaurantsList;
     }
 
-    public ArrayList<String> getFavoriteList() {
+    public ArrayList<Restaurant> getFavoriteList() {
         return favoriteList;
     }
 
@@ -109,36 +116,154 @@ public class RestaurantManager implements Iterable<Restaurant> {
         this.fromMap = i;
     }
 
-    public void setFavoriteList(ArrayList<String> favoriteList) {
+    public void setFavoriteList(ArrayList<Restaurant> favoriteList) {
         this.favoriteList = favoriteList;
     }
 
-    public void saveFavoriteList(ArrayList<String> favoriteList){
-        try {
-            File file = Environment.getExternalStorageDirectory();
-            File filename = new File(file, "favoritelist");
-            FileOutputStream fos = new FileOutputStream(filename);
-            ObjectOutputStream out = new ObjectOutputStream(fos);
-            out.writeObject(favoriteList);
-            out.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
+    public void saveFavoriteList(ArrayList<Restaurant> favoriteList, Context context){
+//        try {
+            Set<String> faveStrings = new HashSet<>();
+            SharedPreferences pref = context.getSharedPreferences("favourites_list", 0);
+
+            for (Restaurant restaurant: favoriteList) {
+                String id = restaurant.getId();
+                int size = restaurant.getInspectionsList().size();
+                String fav = id + "," + size;
+
+                faveStrings.add(fav);
+            }
+
+            pref.edit().putStringSet("favourites_list", faveStrings).apply();
+
+//            String filename = "favorite_list";
+//
+//            FileOutputStream outputStream;
+//            outputStream = context.openFileOutput(filename, Context.MODE_PRIVATE);
+//
+//            for (Restaurant restaurant: favoriteList) {
+//                String id = restaurant.getId();
+//                int size = restaurant.getInspectionsList().size();
+//                String fav = id + "," + size + "\n";
+//
+//                try {
+//                    outputStream.write(fav.getBytes());
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            outputStream.close();
+
+
+
+//            File file = Environment.getExternalStorageDirectory();
+//            File filename = new File(file, "favoritelist");
+//            FileOutputStream fos = new FileOutputStream(filename);
+//            ObjectOutputStream out = new ObjectOutputStream(fos);
+//            out.writeObject(favoriteList);
+//            out.close();
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
     }
 
-    public void readFavoriteList(){
-        try {
-            File file = Environment.getExternalStorageDirectory();
-            File filename = new File(file, "favoritelist");
-            FileInputStream fis = new FileInputStream(filename);
-            ObjectInputStream in = new ObjectInputStream(fis);
-            setFavoriteList((ArrayList<String>) in.readObject());
-            in.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            ex.printStackTrace();
+    public void readFavoriteList(Context context){
+        if (loadFaves == 0) {
+            SharedPreferences pref = context.getSharedPreferences("favourites_list", 0);
+            Set<String> newSet = new HashSet<>(pref.getStringSet("favourites_list", new HashSet<String>()));
+
+            for (String str : newSet) {
+                System.out.println(str);
+                String[] data = str.split(",");
+
+                System.out.println(str);
+
+                for (Restaurant restaurant : restaurantsList) {
+                    if (restaurant.getId().equals(data[0])) {
+                        this.favoriteList.add(restaurant);
+                        System.out.println(data[1].trim());
+                        System.out.println("****************");
+                        restaurant.setOldNumInspections(Integer.parseInt(data[1].trim()));
+                        restaurant.setFavorite(true);
+                    }
+                }
+            }
+
+            loadFaves = 1;
         }
+
+//        if (file == null) { return; }
+//
+//        BufferedReader reader = new BufferedReader(
+//                new InputStreamReader(file, Charset.forName("UTF-8"))
+//        );
+//
+//        String line;
+//
+//        try {
+//            while (((line = reader.readLine()) != null)) {
+//                System.out.println(line);
+//                String[] data = line.split(",");
+//
+//                for (Restaurant restaurant : restaurantsList) {
+//                    if (restaurant.getId() == data[0]) {
+//                            this.favoriteList.add(restaurant);
+//                            restaurant.setOldNumInspections(Integer.parseInt(data[1]));
+//                    }
+//                }
+//            }
+
+
+
+//            File file = Environment.getExternalStorageDirectory();
+//            File filename = new File(file, "favoritelist");
+//            FileInputStream fis = new FileInputStream(filename);
+//            ObjectInputStream in = new ObjectInputStream(fis);
+//            setFavoriteList((ArrayList<Restaurant>) in.readObject());
+//            in.close();
+
+
+
+
+//        } catch (IOException ex) {
+//            ex.printStackTrace();
+//        }
+//
+//        try {
+//            file.close();
+//        }
+//        catch (IOException ex) {
+//            throw new RuntimeException("ERROR: Failed to close " + file);
+//        }
+    }
+
+    public void addFaveToInternal(Restaurant restaurant, Context context) {
+        SharedPreferences pref = context.getSharedPreferences("favourites_list", 0);
+        Set<String> newSet = new HashSet<>(pref.getStringSet("favourites_list", new HashSet<String>()));
+
+        String id = restaurant.getId();
+        int size = restaurant.getInspectionsList().size();
+        String fav = id + "," + size;
+
+        newSet.add(fav);
+
+        pref.edit().putStringSet("favourites_list", newSet).apply();
+    }
+
+    public void removeFaveFromInternal (Restaurant restaurant, Context context) {
+        SharedPreferences pref = context.getSharedPreferences("favourites_list", 0);
+        Set<String> newSet = new HashSet<>(pref.getStringSet("favourites_list", new HashSet<String>()));
+
+        for (String str : newSet) {
+            String[] data = str.split(",");
+            if (restaurant.getId().equals(data[0])) {
+                System.out.println("REMOVING!!!!");
+                System.out.println(str);
+                newSet.remove(str);
+            }
+        }
+
+        pref.edit().putStringSet("favourites_list", newSet).apply();
     }
 
     private void addNew(Restaurant restaurant) {
