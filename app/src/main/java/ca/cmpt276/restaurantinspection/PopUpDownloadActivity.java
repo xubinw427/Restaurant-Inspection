@@ -23,8 +23,6 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
         setFinishOnTouchOutside(false);
 
-
-
         SharedPreferences pref = this.getSharedPreferences("UpdatePref", 0);
         final SharedPreferences.Editor EDITOR = pref.edit();
         setScreenSize();
@@ -41,6 +39,7 @@ public class PopUpDownloadActivity extends AppCompatActivity {
 
         getWindow().setLayout((int) (width * .8), (int) (height * .6));
     }
+
     private void proceedBtnPressed(final SharedPreferences.Editor EDITOR) {
         download = new Thread(new Runnable() {
             @Override

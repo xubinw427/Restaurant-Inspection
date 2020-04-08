@@ -34,11 +34,11 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
         int restaurantIndex = restaurantManager.getCurrRestaurantPosition();
         restaurant = restaurantManager.getRestaurantAt(restaurantIndex);
 
+        setFinishOnTouchOutside(false);
 
         setScreenSize();
         extractInspection();
         cancelBtnPressed();
-
     }
 
     private void setScreenSize(){

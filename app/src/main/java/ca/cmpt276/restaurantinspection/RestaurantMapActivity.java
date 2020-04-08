@@ -126,14 +126,17 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             editor.putString("last_modified_inspections_by_server",
                     updateManager.getLastModifiedInspections());
             editor.apply();
+
+            Intent intent = new Intent(this, PopUpNewInspectionActivity.class);
+            startActivity(intent);
+
+            updateManager.setUpdated(2);
         }
 
-
-
-        /** === TESTING NEW INSPECTION OF FAVOURITE POP-UP === **/
-        Intent intent = new Intent(this, PopUpNewInspectionActivity.class);
-        startActivity(intent);
-        /** === END TESTING === **/
+//        /** === TESTING NEW INSPECTION OF FAVOURITE POP-UP === **/
+//        Intent intent = new Intent(this, PopUpNewInspectionActivity.class);
+//        startActivity(intent);
+//        /** === END TESTING === **/
 
 
         startRestaurantListActivity();
