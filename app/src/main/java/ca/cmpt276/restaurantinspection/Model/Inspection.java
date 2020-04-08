@@ -140,9 +140,14 @@ public class Inspection implements Comparable<Inspection>{
             throw new RuntimeException("ERROR: Failed to parse dates");
         }
 
-        SimpleDateFormat getDay = new SimpleDateFormat("dd", Locale.CANADA);
-        SimpleDateFormat getMonth = new SimpleDateFormat("MMMM", Locale.CANADA);
-        SimpleDateFormat getYear = new SimpleDateFormat("yyyy", Locale.CANADA);
+//        SimpleDateFormat getDay = new SimpleDateFormat("dd", Locale.CANADA);
+//        SimpleDateFormat getMonth = new SimpleDateFormat("MMMM", Locale.CANADA);
+//        SimpleDateFormat getYear = new SimpleDateFormat("yyyy", Locale.CANADA);
+
+        SimpleDateFormat monthDate = new SimpleDateFormat("MMMM dd");
+        SimpleDateFormat monthYear = new SimpleDateFormat("MMMM yyyy");
+        SimpleDateFormat monthDateYear = new SimpleDateFormat("MMMM dd, yyyy");
+
 
         cal.add(Calendar.DATE, - daysAgo);
 
@@ -150,14 +155,17 @@ public class Inspection implements Comparable<Inspection>{
             dateDisplay = daysAgo + context.getResources().getString(R.string.str_days_ago);
         }
         else if (daysAgo < 366) {
-            dateDisplay = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime());
+//            dateDisplay = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime());
+            dateDisplay = monthDate.format(cal.getTime());
         }
         else {
-            dateDisplay = getMonth.format(cal.getTime()) + " " + getYear.format(cal.getTime());
+//            dateDisplay = getMonth.format(cal.getTime()) + " " + getYear.format(cal.getTime());
+            dateDisplay = monthYear.format(cal.getTime());
         }
 
-        fullDate = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime()) +
-                ", " + getYear.format(cal.getTime());
+//        fullDate = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime()) +
+//                ", " + getYear.format(cal.getTime());
+        fullDate = monthDateYear.format(cal.getTime());
     }
 
     @Override
