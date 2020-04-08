@@ -15,7 +15,7 @@ import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
 
 /** List of Restaurants **/
 public class RestaurantActivity extends AppCompatActivity implements RestaurantAdapter.OnRestaurantListener {
-    private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private RestaurantManager restaurantManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +26,7 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
 
+        restaurantManager = RestaurantManager.getInstance();
         extractRestaurants();
 
         mapView();
@@ -66,5 +67,10 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
 
     public static Intent makeRestaurantMapIntent(Context c) {
         return new Intent(c, RestaurantMapActivity.class);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
     }
 }

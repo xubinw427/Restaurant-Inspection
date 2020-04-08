@@ -8,18 +8,15 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
-import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.R;
 
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
     private ArrayList<Restaurant> favoriteList;
     private ArrayList<Restaurant> restaurantList;
     private OnFavoriteListener favoriteListener;
-
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private ImageView hazardIcon;
@@ -53,11 +50,6 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         restaurantList = Restaurants;
         favoriteListener = onFavoriteListener;
     }
-    private boolean isShown = true;
-
-    public boolean isShown() {
-        return isShown;
-    }
 
     @NonNull
     @Override
@@ -70,14 +62,13 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
     @Override
     public void onBindViewHolder(@NonNull FavoriteAdapter.FavoriteViewHolder holder, int position) {
         if (favoriteList.size() == 0) {
-            isShown = false;
             return;
         }
+
         Restaurant currRestaurant = null;
         Restaurant currFavorite = favoriteList.get(position);
 
         if (currFavorite.getOldNumInspections() < currFavorite.getInspectionsList().size()) {
-            //fav[1] is the updated one (should be bigger)
             currRestaurant = currFavorite;
         } else {
             RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();

@@ -126,12 +126,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
             default:
                 break;
         }
-        /*
 
-         */
-        if(currRestaurant.isFavorite()){
+        if (currRestaurant.isFavorite()){
             holder.favoriteIcon.setImageResource(R.drawable.button_favorite);
-        }else{
+        } else {
             holder.favoriteIcon.setImageResource(R.drawable.box_info);
         }
 

@@ -91,7 +91,7 @@ public class Restaurant implements Comparable<Restaurant>{
     }
 
     public boolean isFavorite() {
-        if(favorite){
+        if (favorite){
             return true;
         }
         return false;

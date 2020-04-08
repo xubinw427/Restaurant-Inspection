@@ -8,31 +8,21 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import ca.cmpt276.restaurantinspection.Adapters.FavoriteAdapter;
-import ca.cmpt276.restaurantinspection.Adapters.ViolationAdapter;
-import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
-import ca.cmpt276.restaurantinspection.Model.Violation;
 
+/** Pop-up for Displaying Favourite Restaurants With New Inspections **/
 public class PopUpNewInspectionActivity extends AppCompatActivity implements FavoriteAdapter.OnFavoriteListener {
-
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
-    private Restaurant restaurant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pop_up_new_inspection);
-
-        int restaurantIndex = restaurantManager.getCurrRestaurantPosition();
-        restaurant = restaurantManager.getRestaurantAt(restaurantIndex);
 
         setFinishOnTouchOutside(false);
 
@@ -77,13 +67,10 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
 
         favoriteAdapter = new FavoriteAdapter(favoriteList, restaurantList, this);
         favoriteRecyclerView.setAdapter(favoriteAdapter);
-
-
     }
 
     @Override
     public void onViolationClick(int position) {
 
     }
-
 }

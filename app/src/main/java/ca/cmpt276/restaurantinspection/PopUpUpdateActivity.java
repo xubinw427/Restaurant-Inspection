@@ -8,7 +8,6 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 
-import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 
 /** Pop-up to Signal that Data Download is In Progress **/

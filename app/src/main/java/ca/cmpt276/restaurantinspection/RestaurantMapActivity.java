@@ -93,27 +93,12 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         if (internalRestaurants == null && internalInspections == null) {
             RestaurantManager.init(restaurantsIn, inspectionsIn);
-        }
-        else {
+        } else {
             RestaurantManager.init(internalRestaurants, internalInspections);
         }
+
         restaurantManager = RestaurantManager.getInstance();
         restaurantManager.readFavoriteList(this);
-
-//        FileInputStream faveRestaurants = null;
-//
-//        final String FAVE_FILENAME = "favorite_list";
-//
-//        try {
-//            faveRestaurants = openFileInput(FAVE_FILENAME);
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-
-//        if (faveRestaurants != null) {
-//            System.out.println("HERE!!!!!!!!!!!!!!!!!!");
-//            restaurantManager.readFavoriteList(this);
-//        }
 
         initMap();
 
@@ -133,15 +118,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             updateManager.setUpdated(2);
         }
 
-//        /** === TESTING NEW INSPECTION OF FAVOURITE POP-UP === **/
-//        Intent intent = new Intent(this, PopUpNewInspectionActivity.class);
-//        startActivity(intent);
-//        /** === END TESTING === **/
-
-
         startRestaurantListActivity();
-
-
     }
 
     private void updateChecker() {
@@ -367,5 +344,4 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
     public void onBackPressed() {
         finishAffinity();
     }
-
 }

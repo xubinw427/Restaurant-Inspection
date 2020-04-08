@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -64,9 +63,6 @@ public class RestaurantInfoActivity extends AppCompatActivity {
                     restaurantManager.getFavoriteList().add(restaurant);
                     restaurantManager.addFaveToInternal(restaurant, getApplicationContext());
                 }
-//
-//                restaurantManager.saveFavoriteList(restaurantManager.getFavoriteList(),
-//                                                    getApplicationContext());
             }
         });
     }
@@ -131,5 +127,12 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         }
 
         return intent;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = getParentActivityIntent();
+        startActivity(intent);
+        finish();
     }
 }
