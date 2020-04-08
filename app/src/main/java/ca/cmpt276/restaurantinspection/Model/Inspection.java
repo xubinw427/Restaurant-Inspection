@@ -1,15 +1,19 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.content.Context;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import ca.cmpt276.restaurantinspection.R;
+
 /** Inspection class object for each Restaurant **/
 public class Inspection implements Comparable<Inspection>{
+    private Context context;
     private String trackingNumber;
-
     private String inspDate;
     private String dateDisplay;
     private String fullDate;
@@ -26,9 +30,9 @@ public class Inspection implements Comparable<Inspection>{
      * OR
      * [0: First half of Inspection, 1: Violations & Hazard Rating] >> length = 2 **/
     /** ViolLump is currently a long string of all violations to be split by '|' **/
-    public Inspection(String[] inspectionLump, ViolationsMap map) {
+    public Inspection(String[] inspectionLump, ViolationsMap map, Context context) {
         violationsList = new ArrayList<>();
-
+        this.context = context;
         String[] inspectionDetails = inspectionLump[0].split(",");
         /** [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit, 5: NULL, 6: HazardLevel] if len 1
          * OR
@@ -143,7 +147,7 @@ public class Inspection implements Comparable<Inspection>{
         cal.add(Calendar.DATE, - daysAgo);
 
         if (daysAgo < 31) {
-            dateDisplay = daysAgo + " days ago";
+            dateDisplay = daysAgo + context.getResources().getString(R.string.str_days_ago);
         }
         else if (daysAgo < 366) {
             dateDisplay = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime());

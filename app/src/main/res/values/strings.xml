@@ -79,6 +79,10 @@
     <string name="str_404">"404,Employees,Not Critical,Employee smoking in food preparation/processing/storage areas [s. 21(2)],Employee smoking,Not Repeat"</string>
     <string name="str_501">"501,Operations,Not Critical,Operator does not have FOODSAFE Level 1 or Equivalent [s. 10(1)],No FOODSAFE Level 1,Not Repeat"</string>
     <string name="str_502">"502,Employees,Not Critical,In operator’s absence no staff on duty has FOODSAFE Level 1 or equivalent [s. 10(2)],No staff with FOODSAFE Level 1,Not Repeat"</string>
-
+    <string name="str_high">HIGH</string>
+    <string name="str_moderate">MODERATE</string>
+    <string name="str_low">LOW</string>
+    <string name="str_none">NONE</string>
+    <string name="str_days_ago">days ago</string>
 
 </resources>

@@ -1,5 +1,7 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.content.Context;
+
 import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
@@ -14,6 +16,7 @@ import java.util.Iterator;
 
 /** Singleton to Keep Track of All Restaurants in Data **/
 public class RestaurantManager implements Iterable<Restaurant> {
+    private Context context;
     private ArrayList<Restaurant> restaurantsList = new ArrayList<>();
     private ArrayList<Restaurant> favoriteList = new ArrayList<>();
     private static RestaurantManager instance;
@@ -23,7 +26,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private int fromMap = 0;
     private int fromList = 0;
     /** Private to prevent anyone else from instantiating. **/
-    private RestaurantManager(InputStream restaurantFile, InputStream inspectionsFile) {
+    private RestaurantManager(InputStream restaurantFile, InputStream inspectionsFile, Context context) {
+        this.context = context;
         readRestaurantData(restaurantFile);
         violationsMap = ViolationsMap.getInstance();
         populateInspections(inspectionsFile);
@@ -38,12 +42,12 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return instance;
     }
 
-    public static void init(InputStream restaurantFile, InputStream inspectionsFile) {
+    public static void init(InputStream restaurantFile, InputStream inspectionsFile, Context context) {
         if (instance != null) {
             return;
         }
 
-        instance = new RestaurantManager(restaurantFile, inspectionsFile);
+        instance = new RestaurantManager(restaurantFile, inspectionsFile, context);
     }
 
     public void reset() {
@@ -172,7 +176,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
                 String[] firstHalf = inspectionLump[0].split(",");
                 String currRestaurantID = firstHalf[0].trim();
 
-                Inspection currInspection = new Inspection(inspectionLump, violationsMap);
+                Inspection currInspection = new Inspection(inspectionLump, violationsMap, context);
 
                 for (Restaurant restaurant : restaurantsList) {
                     if (restaurant.getId().equals(currRestaurantID)) {

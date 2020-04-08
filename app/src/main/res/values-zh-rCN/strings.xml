@@ -79,5 +79,9 @@
     <string name="str_404">"404,员工,非严重,员工在食品准备/加工/存储区域吸烟 [s. 21(2)],员工吸烟,未重复"</string>
     <string name="str_501">"501,经营,非严重,运营商没有食品安全等级1或同等水平 [s. 10(1)],没有食品安全等级1,未重复"</string>
     <string name="str_502">"502,员工,非严重,在操作员不在的情况下，没有值班人员具有食品安全等级1或同等水平 [s. 10(2)],没有员工拥有食品安全等级1,未重复"</string>
-
+    <string name="str_high">高</string>
+    <string name="str_moderate">中</string>
+    <string name="str_low">低</string>
+    <string name="str_none">无</string>
+    <string name="str_days_ago">天前</string>
 </resources>

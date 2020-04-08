@@ -92,10 +92,10 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         ViolationsMap.init(violationsIn, this);
 
         if (internalRestaurants == null && internalInspections == null) {
-            RestaurantManager.init(restaurantsIn, inspectionsIn);
+            RestaurantManager.init(restaurantsIn, inspectionsIn, this);
         }
         else {
-            RestaurantManager.init(internalRestaurants, internalInspections);
+            RestaurantManager.init(internalRestaurants, internalInspections,this);
         }
 
         restaurantManager = RestaurantManager.getInstance();
