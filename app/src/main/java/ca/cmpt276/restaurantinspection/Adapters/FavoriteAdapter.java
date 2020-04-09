@@ -8,14 +8,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.R;
 
-public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>{
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
     private ArrayList<Restaurant> favoriteList;
+    private ArrayList<Restaurant> restaurantList;
     private OnFavoriteListener favoriteListener;
 
     public static class FavoriteViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -45,8 +45,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
         void onViolationClick(int position);
     }
 
-    public FavoriteAdapter(ArrayList<Restaurant> Favorites, FavoriteAdapter.OnFavoriteListener onFavoriteListener) {
+    public FavoriteAdapter(ArrayList<Restaurant> Favorites, ArrayList<Restaurant> Restaurants, FavoriteAdapter.OnFavoriteListener onFavoriteListener) {
         favoriteList = Favorites;
+        restaurantList = Restaurants;
         favoriteListener = onFavoriteListener;
     }
 
@@ -60,14 +61,29 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
     @Override
     public void onBindViewHolder(@NonNull FavoriteAdapter.FavoriteViewHolder holder, int position) {
-        if (favoriteList.size() == 0){
+        if (favoriteList.size() == 0) {
             return;
         }
 
-        Restaurant currRestaurant = favoriteList.get(position);
+        Restaurant currRestaurant = null;
+        Restaurant currFavorite = favoriteList.get(position);
+
+        if (currFavorite.getOldNumInspections() < currFavorite.getInspectionsList().size()) {
+            currRestaurant = currFavorite;
+        } else {
+            RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+            lp.height = 0;
+            holder.itemView.setLayoutParams(lp);
+        }
+
+        if (currRestaurant == null){
+            return;
+        }
+
         holder.restaurantName.setText(currRestaurant.getName());
         holder.newestInspDate.setText(currRestaurant.getDate());
-        switch(currRestaurant.getHazard()) {
+
+        switch (currRestaurant.getHazard()) {
             case "High":
                 holder.hazardIcon.setImageResource(R.drawable.circle_red);
                 break;

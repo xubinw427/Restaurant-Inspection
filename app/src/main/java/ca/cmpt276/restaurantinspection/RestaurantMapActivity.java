@@ -104,6 +104,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
         }
 
         restaurantManager = RestaurantManager.getInstance();
+        restaurantManager.readFavoriteList(this);
 
         if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1){
             searchManager = SearchManager.getInstance();
@@ -126,6 +127,11 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
             editor.putString("last_modified_inspections_by_server",
                     updateManager.getLastModifiedInspections());
             editor.apply();
+
+            Intent intent = new Intent(this, PopUpNewInspectionActivity.class);
+            startActivity(intent);
+
+            updateManager.setUpdated(2);
         }
 
         startRestaurantListActivity();
@@ -211,7 +217,6 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                                 LatLng position = new LatLng(restaurant.getLatitude(), restaurant.getLongitude());
                                 moveCamera(position, DEFAULT_ZOOM);
                             }
-
                         } else {
                             Toast.makeText(RestaurantMapActivity.this, "Unable to get restaurant location", Toast.LENGTH_SHORT).show();
                         }

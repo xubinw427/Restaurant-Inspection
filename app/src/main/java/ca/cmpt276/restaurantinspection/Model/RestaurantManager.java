@@ -1,16 +1,22 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import androidx.annotation.NonNull;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 
 /** Singleton to Keep Track of All Restaurants in Data **/
 public class RestaurantManager implements Iterable<Restaurant> {
@@ -22,6 +28,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private int currInspectionPosition;
     private int fromMap = 0;
     private int fromList = 0;
+    private int loadFaves = 0;
+
     /** Private to prevent anyone else from instantiating. **/
     private RestaurantManager(InputStream restaurantFile, InputStream inspectionsFile) {
         readRestaurantData(restaurantFile);
@@ -30,7 +38,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
     }
 
     public static RestaurantManager getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             throw new AssertionError(
                     "RestaurantManager.init(InputStream file) must be called first.");
         }
@@ -60,6 +68,10 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
     public ArrayList<Restaurant> getFavoriteList() {
         return favoriteList;
+    }
+
+    public ArrayList<Restaurant> getRestaurantsList() {
+        return restaurantsList;
     }
 
     public Restaurant getRestaurantAt(int index) {
@@ -100,6 +112,58 @@ public class RestaurantManager implements Iterable<Restaurant> {
 
     public void setFromMap(int i) {
         this.fromMap = i;
+    }
+
+    public void readFavoriteList(Context context){
+        if (loadFaves == 0) {
+            SharedPreferences pref = context.getSharedPreferences("favourites_list", 0);
+            Set<String> newSet = new HashSet<>(pref.getStringSet("favourites_list", new HashSet<String>()));
+
+            for (String str : newSet) {
+                String[] data = str.split(",");
+
+                for (Restaurant restaurant : restaurantsList) {
+                    if (restaurant.getId().equals(data[0])) {
+                        this.favoriteList.add(restaurant);
+
+                        restaurant.setOldNumInspections(Integer.parseInt(data[1].trim()));
+                        restaurant.setFavorite(true);
+                    }
+                }
+            }
+
+            loadFaves = 1;
+        }
+    }
+
+    public void addFaveToInternal(Restaurant restaurant, Context context) {
+        SharedPreferences pref = context.getSharedPreferences("favourites_list", 0);
+        Set<String> newSet = new HashSet<>(pref.getStringSet("favourites_list", new HashSet<String>()));
+
+        String id = restaurant.getId();
+        int size = restaurant.getInspectionsList().size();
+        String fav = id + "," + size;
+
+        newSet.add(fav);
+
+        pref.edit().putStringSet("favourites_list", newSet).apply();
+    }
+
+    public void removeFaveFromInternal (Restaurant restaurant, Context context) {
+        SharedPreferences pref = context.getSharedPreferences("favourites_list", 0);
+        Set<String> newSet = new HashSet<>(pref.getStringSet("favourites_list", new HashSet<String>()));
+
+        String toDelete = "";
+        for (String str : newSet) {
+            String[] data = str.split(",");
+            if (restaurant.getId().equals(data[0])) {
+                toDelete = str;
+            }
+        }
+
+        newSet.remove(toDelete);
+
+        pref.edit().putStringSet("favourites_list", newSet).apply();
     }
 
     private void addNew(Restaurant restaurant) {

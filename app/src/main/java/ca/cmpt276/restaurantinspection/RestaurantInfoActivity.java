@@ -71,15 +71,16 @@ public class RestaurantInfoActivity extends AppCompatActivity {
                         searchManager.getRestaurantAt(index).setFavorite(false);
                         btn.setBackgroundResource(R.drawable.button_not_favorite);
                         restaurantManager.getFavoriteList().remove(restaurant);
+                        restaurantManager.removeFaveFromInternal(restaurant, getApplicationContext());
                     } else {
                         searchManager.getRestaurantAt(index).setFavorite(true);
                         btn.setBackgroundResource(R.drawable.button_favorite);
                         restaurantManager.getFavoriteList().add(restaurant);
+                        restaurantManager.addFaveToInternal(restaurant, getApplicationContext());
                     }
                 }
             });
-        }
-        else {
+        } else {
             if (!restaurantManager.getRestaurantAt(index).isFavorite()) {
                 btn.setBackgroundResource(R.drawable.button_not_favorite);
             } else {
@@ -93,10 +94,12 @@ public class RestaurantInfoActivity extends AppCompatActivity {
                         restaurantManager.getRestaurantAt(index).setFavorite(false);
                         btn.setBackgroundResource(R.drawable.button_not_favorite);
                         restaurantManager.getFavoriteList().remove(restaurant);
+                        restaurantManager.removeFaveFromInternal(restaurant, getApplicationContext());
                     } else {
                         restaurantManager.getRestaurantAt(index).setFavorite(true);
                         btn.setBackgroundResource(R.drawable.button_favorite);
                         restaurantManager.getFavoriteList().add(restaurant);
+                        restaurantManager.addFaveToInternal(restaurant, getApplicationContext());
                     }
                 }
             });
@@ -177,5 +180,12 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         }
 
         return intent;
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = getParentActivityIntent();
+        startActivity(intent);
+        finish();
     }
 }

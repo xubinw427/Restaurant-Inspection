@@ -187,16 +187,26 @@ public class UpdateManager {
     }
 
     private boolean isBeforeDate(String date1, String date2) {
-        String replacedDate = date2.replace("T", " ");
-        String[] dateSplit = replacedDate.split("\\.");
+        String firstCleanDate;
+        if (date1.contains("T")) {
+            String replacedFirstDate = date1.replace("T", " ");
+            String[] firstDateSplit = replacedFirstDate.split("\\.");
 
-        String cleanDate2 = dateSplit[0];
+            firstCleanDate = firstDateSplit[0];
+        } else {
+            firstCleanDate = date1;
+        }
+
+        String replacedSecondDate = date2.replace("T", " ");
+        String[] secondDateSplit = replacedSecondDate.split("\\.");
+
+        String secondCleanDate = secondDateSplit[0];
 
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.CANADA);
 
         try {
-            Date firstDate = sdf.parse(date1);
-            Date secondDate = sdf.parse(cleanDate2);
+            Date firstDate = sdf.parse(firstCleanDate);
+            Date secondDate = sdf.parse(secondCleanDate);
 
             long diff = secondDate.getTime() - firstDate.getTime();
             float hoursApart =  diff / (60 * 60 * 1000);

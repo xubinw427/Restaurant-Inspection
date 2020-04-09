@@ -79,10 +79,10 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
         Restaurant currRestaurant;
         if (SearchManager.getInstance() == null || SearchManager.getInstance().getFilter() == 0){
             currRestaurant = restaurantManager.getRestaurantAt(position);
-        }
-        else {
+        } else {
             currRestaurant = SearchManager.getInstance().getRestaurantAt(position);
         }
+
         /** Check 10 icon of restaurant(5 of them have 4 stores or more), then set corresponding background **/
         String restaurantName = currRestaurant.getName();
         if (restaurantName.contains("7-Eleven")) {
@@ -142,7 +142,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
 
         if (currRestaurant.isFavorite()){
             holder.favoriteIcon.setImageResource(R.drawable.button_favorite);
-        } else{
+        } else {
             holder.favoriteIcon.setImageResource(R.drawable.box_info);
         }
 

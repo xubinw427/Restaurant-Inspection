@@ -10,6 +10,7 @@ public class Restaurant implements Comparable<Restaurant>{
     private double latitude;
     private double longitude;
     private ArrayList<Inspection> inspectionsList;
+    private int oldNumInspections;
     private boolean favorite;
 
     public Restaurant(String restaurantLump) {
@@ -45,6 +46,14 @@ public class Restaurant implements Comparable<Restaurant>{
 
     public double getLongitude() {
         return longitude;
+    }
+
+    public void setOldNumInspections(int i) {
+        this.oldNumInspections = i;
+    }
+
+    public int getOldNumInspections() {
+        return oldNumInspections;
     }
 
     public Inspection getInspectionAt(int index) {

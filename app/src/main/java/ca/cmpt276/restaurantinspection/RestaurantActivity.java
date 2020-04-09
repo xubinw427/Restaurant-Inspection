@@ -38,6 +38,8 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
         toolbar.setTitleTextColor(Color.WHITE);
         toolbar.setElevation(0);
 
+        restaurantManager = RestaurantManager.getInstance();
+        extractRestaurants();
         if (searchManager == null || searchManager.getFilter() == 0) {
             extractRestaurants();
         } else {
@@ -99,6 +101,11 @@ public class RestaurantActivity extends AppCompatActivity implements RestaurantA
 
     public static Intent makeRestaurantMapIntent(Context c) {
         return new Intent(c, RestaurantMapActivity.class);
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
     }
 
     @Override
