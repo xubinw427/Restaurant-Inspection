@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
@@ -13,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+import ca.cmpt276.restaurantinspection.Model.SearchManager;
 
 /**
  * Basic Info Page of Restaurant (Address & Coordinates)
@@ -21,6 +21,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
     private static final int LAUNCH_MAP_ACTIVITY = 1;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
     private Restaurant restaurant;
+    private SearchManager searchManager;
     private int index;
 
     @Override
@@ -28,8 +29,17 @@ public class RestaurantInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_restaurant_info);
 
-        index = restaurantManager.getCurrRestaurantPosition();
-        restaurant = restaurantManager.getRestaurantAt(index);
+        if (SearchManager.getInstance()!= null && SearchManager.getInstance().getFilter() == 1) {
+            searchManager = SearchManager.getInstance();
+            index = searchManager.getCurrRestaurantPosition();
+            restaurant = searchManager.getRestaurantAt(index);
+        }
+
+        else {
+            index = restaurantManager.getCurrRestaurantPosition();
+            restaurant = restaurantManager.getRestaurantAt(index);
+        }
+
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -37,6 +47,7 @@ public class RestaurantInfoActivity extends AppCompatActivity {
             actionBar.setTitle(restaurant.getName());
             actionBar.setElevation(0);
         }
+
         extractRestaurantInfo();
 
         setFavoriteBtn();
@@ -45,25 +56,51 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
     public void setFavoriteBtn() {
         final Button btn = findViewById(R.id.button_favorite);
-        if (!restaurantManager.getRestaurantAt(index).isFavorite()) {
-            btn.setBackgroundResource(R.drawable.button_not_favorite);
-        }else{
-            btn.setBackgroundResource(R.drawable.button_favorite);
-        }
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (restaurantManager.getRestaurantAt(index).isFavorite()) {
-                    restaurantManager.getRestaurantAt(index).setFavorite(false);
-                    btn.setBackgroundResource(R.drawable.button_not_favorite);
-                    restaurantManager.getFavoriteList().remove(restaurant);
-                } else {
-                    restaurantManager.getRestaurantAt(index).setFavorite(true);
-                    btn.setBackgroundResource(R.drawable.button_favorite);
-                    restaurantManager.getFavoriteList().add(restaurant);
-                }
+
+        if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1) {
+            if (!searchManager.getRestaurantAt(index).isFavorite()) {
+                btn.setBackgroundResource(R.drawable.button_not_favorite);
+            } else {
+                btn.setBackgroundResource(R.drawable.button_favorite);
             }
-        });
+
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (searchManager.getRestaurantAt(index).isFavorite()) {
+                        searchManager.getRestaurantAt(index).setFavorite(false);
+                        btn.setBackgroundResource(R.drawable.button_not_favorite);
+                        restaurantManager.getFavoriteList().remove(restaurant);
+                    } else {
+                        searchManager.getRestaurantAt(index).setFavorite(true);
+                        btn.setBackgroundResource(R.drawable.button_favorite);
+                        restaurantManager.getFavoriteList().add(restaurant);
+                    }
+                }
+            });
+        }
+        else {
+            if (!restaurantManager.getRestaurantAt(index).isFavorite()) {
+                btn.setBackgroundResource(R.drawable.button_not_favorite);
+            } else {
+                btn.setBackgroundResource(R.drawable.button_favorite);
+            }
+
+            btn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (restaurantManager.getRestaurantAt(index).isFavorite()) {
+                        restaurantManager.getRestaurantAt(index).setFavorite(false);
+                        btn.setBackgroundResource(R.drawable.button_not_favorite);
+                        restaurantManager.getFavoriteList().remove(restaurant);
+                    } else {
+                        restaurantManager.getRestaurantAt(index).setFavorite(true);
+                        btn.setBackgroundResource(R.drawable.button_favorite);
+                        restaurantManager.getFavoriteList().add(restaurant);
+                    }
+                }
+            });
+        }
     }
 
     private void startRestaurantInspectionActivityBtn() {
@@ -113,16 +150,30 @@ public class RestaurantInfoActivity extends AppCompatActivity {
 
     private Intent getParentActivityIntentImplement() {
         Intent intent = null;
+        if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1) {
+            if (searchManager.getFromList() == 1) {
+                intent = new Intent(this, RestaurantActivity.class);
+                searchManager.setFromList(0);
 
-        if (restaurantManager.getFromList() == 1) {
-            intent = new Intent(this, RestaurantActivity.class);
-            restaurantManager.setFromList(0);
+            } else if (searchManager.getFromMap() == 1) {
+                intent = new Intent(this, RestaurantMapActivity.class);
+                searchManager.setFromMap(0);
 
-        } else if (restaurantManager.getFromMap() == 1) {
-            intent = new Intent(this, RestaurantMapActivity.class);
-            restaurantManager.setFromMap(0);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            }
+        }
 
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        else {
+            if (restaurantManager.getFromList() == 1) {
+                intent = new Intent(this, RestaurantActivity.class);
+                restaurantManager.setFromList(0);
+
+            } else if (restaurantManager.getFromMap() == 1) {
+                intent = new Intent(this, RestaurantMapActivity.class);
+                restaurantManager.setFromMap(0);
+
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            }
         }
 
         return intent;

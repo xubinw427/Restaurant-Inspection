@@ -38,4 +38,6 @@
     <string name="str_proceed">Proceed</string>
     <string name="str_cancel">Cancel</string>
     <string name="str_image_download">Image Download</string>
+    <string name="str_less_than">&lt;=</string>
+    <string name="str_greater_than">&gt;=</string>
 </resources>

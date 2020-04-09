@@ -68,6 +68,9 @@
         <activity
             android:name=".PopUpNewInspectionActivity"
             android:theme="@style/AppTheme.CustomTheme" />
+        <activity
+            android:name=".SearchActivity"
+            android:parentActivityName=".RestaurantActivity"/>
     </application>
 
 </manifest>

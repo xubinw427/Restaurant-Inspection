@@ -60,9 +60,10 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.Favori
 
     @Override
     public void onBindViewHolder(@NonNull FavoriteAdapter.FavoriteViewHolder holder, int position) {
-        if(favoriteList.size() == 0){
+        if (favoriteList.size() == 0){
             return;
         }
+
         Restaurant currRestaurant = favoriteList.get(position);
         holder.restaurantName.setText(currRestaurant.getName());
         holder.newestInspDate.setText(currRestaurant.getDate());

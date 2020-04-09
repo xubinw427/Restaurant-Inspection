@@ -74,12 +74,10 @@ public class PopUpNewInspectionActivity extends AppCompatActivity implements Fav
 
         favoriteAdapter = new FavoriteAdapter(favoriteList, this);
         favoriteRecyclerView.setAdapter(favoriteAdapter);
-
     }
 
     @Override
     public void onViolationClick(int position) {
 
     }
-
 }
