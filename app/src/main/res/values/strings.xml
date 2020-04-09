@@ -88,4 +88,18 @@
     <string name="str_routine">Routine</string>
     <string name="str_no_recent_insp">No Recent Inspection</string>
 
+    <string name="str_less_than">&lt;=</string>
+    <string name="str_greater_than">&gt;=</string>
+    <string name="str_search_text">Search Text &#8230;</string>
+    <string name="str_hazard_level_most_recent">Hazard Level of Most Recent Inspection:</string>
+    <string name="str_num_critical_last_year">Number of Critical Violations in Last Year:</string>
+    <string name="str_only_include_fave">Only Include ‘Favourite’ Restaurants:</string>
+    <string name="str_search_num_crit"># Critical Violations</string>
+    <string name="str_search_title">Search</string>
+    <string name="str_search_high">High</string>
+    <string name="str_search_mod">Moderate</string>
+    <string name="str_search_low">Low</string>
+    <string name="str_search_reset">Reset</string>
+    <string name="str_new_inspections_title">New Inspections</string>
+    <string name="str_ok">OK</string>
 </resources>

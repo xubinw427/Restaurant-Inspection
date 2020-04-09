@@ -15,20 +15,28 @@ import ca.cmpt276.restaurantinspection.Adapters.InspectionAdapter;
 import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+import ca.cmpt276.restaurantinspection.Model.SearchManager;
 
 /** List of All Inspections on Record for Restaurant **/
 public class RestaurantInspectionActivity extends AppCompatActivity implements InspectionAdapter.OnInspectionListener {
     private RestaurantManager restaurantManager;
+    private SearchManager searchManager;
     private Restaurant restaurant;
-
+    private int index;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inspection);
 
-        restaurantManager = RestaurantManager.getInstance();
-        int index = restaurantManager.getCurrRestaurantPosition();
-        restaurant = restaurantManager.getList().get(index);
+        if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1) {
+            searchManager = SearchManager.getInstance();
+            index = searchManager.getCurrRestaurantPosition();
+            restaurant = searchManager.getList().get(index);
+        } else {
+            restaurantManager = RestaurantManager.getInstance();
+            index = restaurantManager.getCurrRestaurantPosition();
+            restaurant = restaurantManager.getList().get(index);
+        }
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -36,6 +44,7 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
             actionBar.setTitle(restaurant.getName());
             actionBar.setElevation(0);
         }
+
         extractRestaurantInspections();
 
         startRestaurantInfoActivityBtn();
@@ -55,7 +64,13 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
 
     @Override
     public void onInspectionClick(int position) {
-        restaurantManager.setCurrInspectionPosition(position);
+        if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1) {
+            searchManager.setCurrInspectionPosition(position);
+        }
+        else {
+            restaurantManager.setCurrInspectionPosition(position);
+
+        }
 
         Intent intent = new Intent(getApplicationContext(), RestaurantViolationActivity.class);
         startActivity(intent);

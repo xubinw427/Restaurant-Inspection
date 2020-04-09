@@ -22,6 +22,7 @@ public class Inspection implements Comparable<Inspection>{
     private int numCritical;
     private int numNonCritical;
     private String hazardRating;
+    private boolean withinLastYear;
 
     private ArrayList<Violation> violationsList;
 
@@ -117,6 +118,8 @@ public class Inspection implements Comparable<Inspection>{
         return hazardRating;
     }
 
+    public boolean getWithinLastYear() { return withinLastYear; }
+
     public ArrayList<Violation> getViolationsList() {
         return violationsList;
     }
@@ -153,14 +156,17 @@ public class Inspection implements Comparable<Inspection>{
 
         if (daysAgo < 31) {
             dateDisplay = daysAgo + context.getResources().getString(R.string.str_days_ago);
+            withinLastYear = true;
         }
         else if (daysAgo < 366) {
 //            dateDisplay = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime());
             dateDisplay = monthDate.format(cal.getTime());
+            withinLastYear = true;
         }
         else {
 //            dateDisplay = getMonth.format(cal.getTime()) + " " + getYear.format(cal.getTime());
             dateDisplay = monthYear.format(cal.getTime());
+            withinLastYear = false;
         }
 
 //        fullDate = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime()) +

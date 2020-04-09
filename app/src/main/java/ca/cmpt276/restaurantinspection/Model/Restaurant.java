@@ -14,6 +14,7 @@ public class Restaurant implements Comparable<Restaurant>{
     private double latitude;
     private double longitude;
     private ArrayList<Inspection> inspectionsList;
+    private int oldNumInspections;
     private boolean favorite;
     private Context context;
 
@@ -53,6 +54,14 @@ public class Restaurant implements Comparable<Restaurant>{
         return longitude;
     }
 
+    public void setOldNumInspections(int i) {
+        this.oldNumInspections = i;
+    }
+
+    public int getOldNumInspections() {
+        return oldNumInspections;
+    }
+
     public Inspection getInspectionAt(int index) {
         return inspectionsList.get(index);
     }
@@ -80,6 +89,7 @@ public class Restaurant implements Comparable<Restaurant>{
             int num = inspectionsList.get(0).getNumCritical() + inspectionsList.get(0).getNumNonCritical();
             return Integer.toString(num);
         }
+
         return "0";
     }
 
@@ -88,10 +98,25 @@ public class Restaurant implements Comparable<Restaurant>{
     }
 
     public boolean isFavorite() {
-        if(favorite){
+        if (favorite){
             return true;
         }
+
         return false;
+    }
+
+    public int getNumCriticalIssues() {
+        int num = 0;
+
+        if (this.inspectionsList.size() > 0) {
+            for (Inspection inspection : inspectionsList) {
+                if (inspection.getWithinLastYear()) {
+                    num += inspection.getNumCritical();
+                }
+            }
+        }
+
+        return num;
     }
 
     public void addInspection(Inspection inspection) {

@@ -29,6 +29,7 @@ public class RestaurantInfoWindowAdapter implements GoogleMap.InfoWindowAdapter 
 
         tvSnippet.setText(snippet);
     }
+
     @Override
     public View getInfoWindow(Marker marker) {
         renderWindowText(marker, mWindow);

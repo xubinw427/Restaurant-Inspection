@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
+
 import ca.cmpt276.restaurantinspection.Model.UpdateManager;
 
 /** Pop-up to Signal that Data Download is In Progress **/
@@ -20,7 +21,6 @@ public class PopUpUpdateActivity extends AppCompatActivity {
         setContentView(R.layout.activity_pop_up_update);
 
         setFinishOnTouchOutside(false);
-
         setScreenSize();
         proceedBtnPressed();
         cancelBtnPressed();

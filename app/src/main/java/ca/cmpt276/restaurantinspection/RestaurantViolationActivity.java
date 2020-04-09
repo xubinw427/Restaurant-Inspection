@@ -14,6 +14,7 @@ import ca.cmpt276.restaurantinspection.Adapters.ViolationAdapter;
 import ca.cmpt276.restaurantinspection.Model.Inspection;
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
+import ca.cmpt276.restaurantinspection.Model.SearchManager;
 import ca.cmpt276.restaurantinspection.Model.Violation;
 
 /** List of Violations Associated with an Inspection Record **/
@@ -23,15 +24,28 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
     private Toast toast;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
     private final String TAG = "Debug";
+    private SearchManager searchManager;
+    private int restaurantIndex;
+    private int inspectionIndex;
+    private Restaurant restaurant;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_violation);
 
-        int restaurantIndex = restaurantManager.getCurrRestaurantPosition();
-        int inspectionIndex = restaurantManager.getCurrInspectionPosition();
-        Restaurant restaurant = restaurantManager.getRestaurantAt(restaurantIndex);
-        inspection = restaurant.getInspectionAt(inspectionIndex);
+        if (SearchManager.getInstance() != null && SearchManager.getInstance().getFilter() == 1) {
+            searchManager = SearchManager.getInstance();
+            restaurantIndex = searchManager.getCurrRestaurantPosition();
+            inspectionIndex = searchManager.getCurrInspectionPosition();
+            restaurant = searchManager.getRestaurantAt(restaurantIndex);
+            inspection = restaurant.getInspectionAt(inspectionIndex);
+        } else {
+            restaurantIndex = restaurantManager.getCurrRestaurantPosition();
+            inspectionIndex = restaurantManager.getCurrInspectionPosition();
+            restaurant = restaurantManager.getRestaurantAt(restaurantIndex);
+            inspection = restaurant.getInspectionAt(inspectionIndex);
+        }
 
         ActionBar actionBar = getSupportActionBar();
 
@@ -72,10 +86,6 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
                 break;
         }
 
-
-
-
-
         dateAndLevel.setText(getString(R.string.str_date_level, inspection.getFullDate(),
                                         hazard));
         inspectionType.setText(inspection.getInspType());
@@ -88,11 +98,10 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         RecyclerView.Adapter violationAdapter;
         RecyclerView.LayoutManager violationLayoutManager;
 
-        if (inspection.getViolationsList() == null) {
+        if (inspection.getViolationsList().size() == 0) {
             TextView noViolationsMsg = this.findViewById(R.id.no_violations_msg);
             noViolationsMsg.setText(R.string.str_no_violation);
-        }
-        else {
+        } else {
             violationList = inspection.getViolationsList();
             violationRecyclerView = findViewById(R.id.rv3);
             violationRecyclerView.setHasFixedSize(true);
@@ -115,5 +124,4 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         toast = Toast.makeText(this, longDescription, Toast.LENGTH_LONG);
         toast.show();
     }
-
 }
