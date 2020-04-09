@@ -1,15 +1,19 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.content.Context;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import ca.cmpt276.restaurantinspection.R;
+
 /** Inspection class object for each Restaurant **/
 public class Inspection implements Comparable<Inspection>{
+    private Context context;
     private String trackingNumber;
-
     private String inspDate;
     private String dateDisplay;
     private String fullDate;
@@ -27,9 +31,9 @@ public class Inspection implements Comparable<Inspection>{
      * OR
      * [0: First half of Inspection, 1: Violations & Hazard Rating] >> length = 2 **/
     /** ViolLump is currently a long string of all violations to be split by '|' **/
-    public Inspection(String[] inspectionLump, ViolationsMap map) {
+    public Inspection(String[] inspectionLump, ViolationsMap map, Context context) {
         violationsList = new ArrayList<>();
-
+        this.context = context;
         String[] inspectionDetails = inspectionLump[0].split(",");
         /** [0: ID, 1: Date, 2: InspType 3: NumCrit, 4: NumNonCrit, 5: NULL, 6: HazardLevel] if len 1
          * OR
@@ -39,7 +43,7 @@ public class Inspection implements Comparable<Inspection>{
         inspDate = inspectionDetails[1];
         getDateInformation();
 
-        inspType = inspectionDetails[2];
+        inspType = inspectionDetails[2].equals("Follow-Up") ? context.getResources().getString(R.string.str_follow_up) : context.getResources().getString(R.string.str_routine);
 
         try {
             numCritical = Integer.parseInt(inspectionDetails[3].trim());
@@ -113,7 +117,7 @@ public class Inspection implements Comparable<Inspection>{
     public String getHazardRating() {
         return hazardRating;
     }
-    
+
     public boolean getWithinLastYear() { return withinLastYear; }
 
     public ArrayList<Violation> getViolationsList() {
@@ -139,27 +143,35 @@ public class Inspection implements Comparable<Inspection>{
             throw new RuntimeException("ERROR: Failed to parse dates");
         }
 
-        SimpleDateFormat getDay = new SimpleDateFormat("dd", Locale.CANADA);
-        SimpleDateFormat getMonth = new SimpleDateFormat("MMMM", Locale.CANADA);
-        SimpleDateFormat getYear = new SimpleDateFormat("yyyy", Locale.CANADA);
+//        SimpleDateFormat getDay = new SimpleDateFormat("dd", Locale.CANADA);
+//        SimpleDateFormat getMonth = new SimpleDateFormat("MMMM", Locale.CANADA);
+//        SimpleDateFormat getYear = new SimpleDateFormat("yyyy", Locale.CANADA);
+
+        SimpleDateFormat monthDate = new SimpleDateFormat("MMMM dd");
+        SimpleDateFormat monthYear = new SimpleDateFormat("MMMM yyyy");
+        SimpleDateFormat monthDateYear = new SimpleDateFormat("MMMM dd, yyyy");
+
 
         cal.add(Calendar.DATE, - daysAgo);
 
         if (daysAgo < 31) {
-            dateDisplay = daysAgo + " days ago";
+            dateDisplay = daysAgo + context.getResources().getString(R.string.str_days_ago);
             withinLastYear = true;
         }
         else if (daysAgo < 366) {
-            dateDisplay = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime());
+//            dateDisplay = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime());
+            dateDisplay = monthDate.format(cal.getTime());
             withinLastYear = true;
         }
         else {
-            dateDisplay = getMonth.format(cal.getTime()) + " " + getYear.format(cal.getTime());
+//            dateDisplay = getMonth.format(cal.getTime()) + " " + getYear.format(cal.getTime());
+            dateDisplay = monthYear.format(cal.getTime());
             withinLastYear = false;
         }
 
-        fullDate = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime()) +
-                ", " + getYear.format(cal.getTime());
+//        fullDate = getMonth.format(cal.getTime()) + " " + getDay.format(cal.getTime()) +
+//                ", " + getYear.format(cal.getTime());
+        fullDate = monthDateYear.format(cal.getTime());
     }
 
     @Override

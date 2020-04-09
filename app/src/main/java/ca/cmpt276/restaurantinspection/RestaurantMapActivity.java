@@ -95,12 +95,12 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         InputStream violationsIn = getResources().openRawResource(R.raw.all_violations);
 
-        ViolationsMap.init(violationsIn);
+        ViolationsMap.init(violationsIn, this);
 
         if (internalRestaurants == null && internalInspections == null) {
-            RestaurantManager.init(restaurantsIn, inspectionsIn);
+            RestaurantManager.init(restaurantsIn, inspectionsIn, this);
         } else {
-            RestaurantManager.init(internalRestaurants, internalInspections);
+            RestaurantManager.init(internalRestaurants, internalInspections, this);
         }
 
         restaurantManager = RestaurantManager.getInstance();
@@ -191,7 +191,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                 startActivity(intent);
             } else {
                 /** Permission Denied **/
-                Toast.makeText(this, "Location Permissions Turned Off.", Toast.LENGTH_SHORT)
+                Toast.makeText(this, getResources().getString(R.string.str_location_turned_off), Toast.LENGTH_SHORT)
                         .show();
             }
         } else {
@@ -218,7 +218,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                                 moveCamera(position, DEFAULT_ZOOM);
                             }
                         } else {
-                            Toast.makeText(RestaurantMapActivity.this, "Unable to get restaurant location", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RestaurantMapActivity.this, getResources().getString(R.string.str_unable_get_rest_location), Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -238,7 +238,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                         moveCamera(new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude()), DEFAULT_ZOOM);
                     }
                 } else {
-                    Toast.makeText(RestaurantMapActivity.this, "Unable to get current location", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RestaurantMapActivity.this, getResources().getString(R.string.str_unable_get_current_location), Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -378,7 +378,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         if (requestCode == DOWNLOAD_REQUEST_CODE && resultCode == RESULT_OK) {
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "Map is now refreshing ...",
+                    getResources().getString(R.string.str_map_refreshing),
                     Toast.LENGTH_SHORT);
 
             toast.show();
@@ -395,7 +395,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
 
         } else if (requestCode == DOWNLOAD_REQUEST_CODE && resultCode == RESULT_CANCELED) {
             Toast toast = Toast.makeText(getApplicationContext(),
-                    "Download from server cancelled.",
+                    getResources().getString(R.string.str_download_canceled),
                     Toast.LENGTH_SHORT);
 
             toast.show();

@@ -1,5 +1,8 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.content.Context;
+import android.util.Log;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,10 +12,13 @@ import java.util.Map;
 
 /** Mapping Lookup of Violations Based on Code; Contains Long & Short Descriptions **/
 public class ViolationsMap {
+    private Context context;
     private static ViolationsMap instance = null;
     private static Map<String, String[]> violationsLookup;
+    private final String TAG = "Debug";
 
-    private ViolationsMap(InputStream file) {
+    private ViolationsMap(InputStream file, Context context) {
+        this.context = context;
         violationsLookup = readViolationsData(file);
     }
 
@@ -25,12 +31,12 @@ public class ViolationsMap {
         return instance;
     }
 
-    public static ViolationsMap init(InputStream violationsFile) {
+    public static ViolationsMap init(InputStream violationsFile, Context current) {
         if (instance != null) {
             return null;
         }
 
-        instance = new ViolationsMap(violationsFile);
+        instance = new ViolationsMap(violationsFile, current);
         return instance;
     }
 
@@ -40,7 +46,7 @@ public class ViolationsMap {
     }
 
     /** REFERENCE: https://stackoverflow.com/questions/38415680/how-to-parse-csv-file-into-an-array-in-android-studio **/
-    private static Map<String, String[]> readViolationsData(InputStream file) {
+    private Map<String, String[]> readViolationsData(InputStream file) {
         Map<String, String[]> violationsLookup = new HashMap<>();
 
         BufferedReader input = new BufferedReader(new InputStreamReader(file));
@@ -51,8 +57,15 @@ public class ViolationsMap {
             while ((violation = input.readLine()) != null) {
                 String[] line = violation.split(",");
                 line[0] = line[0].substring(1);
+                String name = "str_" + line[0];
 
-                violationsLookup.put(line[0], line);
+                String packageName = context.getPackageName();
+                int resID = context.getResources().getIdentifier(name, "string", packageName);
+                String vio = context.getResources().getString(resID);
+                String[] info = vio.split(",");
+                Log.d(TAG, "current violation is: " + info);
+
+                violationsLookup.put(line[0], info);
             }
         }
         catch (IOException ex) {

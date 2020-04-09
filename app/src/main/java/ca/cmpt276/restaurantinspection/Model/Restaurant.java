@@ -1,6 +1,10 @@
 package ca.cmpt276.restaurantinspection.Model;
 
+import android.content.Context;
+
 import java.util.ArrayList;
+
+import ca.cmpt276.restaurantinspection.R;
 
 /** Restaurant Object to Represent Each Restaurant in Data **/
 public class Restaurant implements Comparable<Restaurant>{
@@ -12,8 +16,9 @@ public class Restaurant implements Comparable<Restaurant>{
     private ArrayList<Inspection> inspectionsList;
     private int oldNumInspections;
     private boolean favorite;
+    private Context context;
 
-    public Restaurant(String restaurantLump) {
+    public Restaurant(String restaurantLump, Context context) {
         restaurantLump = restaurantLump.replaceAll(", ", " ");
         restaurantLump = restaurantLump.replaceAll("\"", "");
 
@@ -26,6 +31,7 @@ public class Restaurant implements Comparable<Restaurant>{
         longitude = Double.parseDouble(restaurantInfo[6]);
         favorite = false;
         inspectionsList = new ArrayList<>();
+        this.context = context;
     }
 
     public String getId() {
@@ -75,7 +81,7 @@ public class Restaurant implements Comparable<Restaurant>{
         if (this.inspectionsList.size() > 0) {
             return inspectionsList.get(0).getDateDisplay();
         }
-        return "No Recent Inspection.";
+        return context.getResources().getString(R.string.str_no_recent_insp);
     }
 
     public String getNumIssues() {

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
     private ArrayList<Violation> violationList;
     private Toast toast;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
+    private final String TAG = "Debug";
     private SearchManager searchManager;
     private int restaurantIndex;
     private int inspectionIndex;
@@ -63,24 +65,29 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         TextView inspectionType = this.findViewById(R.id.inspection_type);
         TextView numNonCritIssues = this.findViewById(R.id.num_noncrit_issues_details);
         TextView numCritIssues = this.findViewById(R.id.num_crit_issues_details);
-
+        Log.d(TAG, inspection.getHazardRating());
+        String hazard = "";
         switch(inspection.getHazardRating()) {
             case "High":
                 inspectionOverview.setImageResource(R.drawable.inspection_det_high);
+                hazard = getResources().getString(R.string.str_high);
                 break;
             case "Moderate":
                 inspectionOverview.setImageResource(R.drawable.inspection_det_med);
+                hazard = getResources().getString(R.string.str_moderate);
                 break;
             case "Low":
                 inspectionOverview.setImageResource(R.drawable.inspection_det_low);
+                hazard = getResources().getString(R.string.str_low);
                 break;
             case "None":
                 inspectionOverview.setImageResource(R.drawable.inspection_det_none);
+                hazard = getResources().getString(R.string.str_none);
                 break;
         }
 
         dateAndLevel.setText(getString(R.string.str_date_level, inspection.getFullDate(),
-                                        inspection.getHazardRating().toUpperCase()));
+                                        hazard));
         inspectionType.setText(inspection.getInspType());
         numCritIssues.setText(getString(R.string.str_num_issues, inspection.getNumCritical()));
         numNonCritIssues.setText(getString(R.string.str_num_issues, inspection.getNumNonCritical()));

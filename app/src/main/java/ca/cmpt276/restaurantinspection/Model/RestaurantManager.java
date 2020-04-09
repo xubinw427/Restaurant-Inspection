@@ -1,6 +1,8 @@
 package ca.cmpt276.restaurantinspection.Model;
 
 import android.content.Context;
+
+import android.content.Context;
 import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
@@ -20,6 +22,7 @@ import java.util.Set;
 
 /** Singleton to Keep Track of All Restaurants in Data **/
 public class RestaurantManager implements Iterable<Restaurant> {
+    private Context context;
     private ArrayList<Restaurant> restaurantsList = new ArrayList<>();
     private ArrayList<Restaurant> favoriteList = new ArrayList<>();
     private static RestaurantManager instance;
@@ -31,7 +34,8 @@ public class RestaurantManager implements Iterable<Restaurant> {
     private int loadFaves = 0;
 
     /** Private to prevent anyone else from instantiating. **/
-    private RestaurantManager(InputStream restaurantFile, InputStream inspectionsFile) {
+    private RestaurantManager(InputStream restaurantFile, InputStream inspectionsFile, Context context) {
+        this.context = context;
         readRestaurantData(restaurantFile);
         violationsMap = ViolationsMap.getInstance();
         populateInspections(inspectionsFile);
@@ -46,12 +50,12 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return instance;
     }
 
-    public static void init(InputStream restaurantFile, InputStream inspectionsFile) {
+    public static void init(InputStream restaurantFile, InputStream inspectionsFile, Context context) {
         if (instance != null) {
             return;
         }
 
-        instance = new RestaurantManager(restaurantFile, inspectionsFile);
+        instance = new RestaurantManager(restaurantFile, inspectionsFile, context);
     }
 
     public void reset() {
@@ -191,7 +195,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
             reader.readLine();
 
             while (((line = reader.readLine()) != null)) {
-                Restaurant newRestaurant = new Restaurant(line);
+                Restaurant newRestaurant = new Restaurant(line, context);
                 this.addNew(newRestaurant);
             }
         }
@@ -240,7 +244,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
                 String[] firstHalf = inspectionLump[0].split(",");
                 String currRestaurantID = firstHalf[0].trim();
 
-                Inspection currInspection = new Inspection(inspectionLump, violationsMap);
+                Inspection currInspection = new Inspection(inspectionLump, violationsMap, context);
 
                 for (Restaurant restaurant : restaurantsList) {
                     if (restaurant.getId().equals(currRestaurantID)) {
