@@ -36,8 +36,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv3"
         android:layout_width="358dp"
-        android:layout_height="230dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/space"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.485"
         app:layout_constraintStart_toStartOf="parent"
@@ -89,8 +89,8 @@
 
     <TextView
         android:id="@+id/inspection_issues_labels"
-        android:layout_width="157dp"
-        android:layout_height="69dp"
+        android:layout_width="146dp"
+        android:layout_height="57dp"
         android:gravity="center"
         android:lineSpacingExtra="7sp"
         android:text="@string/str_violation_issue_header"
@@ -98,10 +98,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/inspection_overview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.475"
+        app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/date_level"
-        app:layout_constraintVertical_bias="0.721" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/inspection_header"
@@ -128,10 +128,10 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/inspection_overview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.385"
+        app:layout_constraintHorizontal_bias="0.373"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.68" />
+        app:layout_constraintTop_toBottomOf="@+id/date_level"
+        app:layout_constraintVertical_bias="0.209" />
 
     <TextView
         android:id="@+id/inspection_type"
@@ -139,12 +139,12 @@
         android:layout_height="wrap_content"
         android:text="@string/str_violation_followup"
         android:textColor="@color/fontColour"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/inspection_overview"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.068"
+        app:layout_constraintHorizontal_bias="0.133"
         app:layout_constraintStart_toEndOf="@+id/textView2"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.302" />
+        app:layout_constraintTop_toBottomOf="@+id/date_level"
+        app:layout_constraintVertical_bias="0.209" />
 
     <TextView
         android:id="@+id/num_noncrit_issues_details"
@@ -154,10 +154,10 @@
         android:textColor="@color/fontColour"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.672"
+        app:layout_constraintHorizontal_bias="0.68"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3435" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.018" />
 
     <TextView
         android:id="@+id/num_crit_issues_details"
@@ -167,10 +167,10 @@
         android:textColor="@color/fontColour"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.637"
+        app:layout_constraintHorizontal_bias="0.648"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.3835" />
+        app:layout_constraintTop_toBottomOf="@+id/num_noncrit_issues_details"
+        app:layout_constraintVertical_bias="0.012" />
 
     <TextView
         android:id="@+id/no_violations_msg"
@@ -188,5 +188,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.658" />
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="0dp"
+        android:layout_height="30dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/violation_background" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

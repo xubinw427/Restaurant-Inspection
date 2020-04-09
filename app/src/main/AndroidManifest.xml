@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     package="ca.cmpt276.restaurantinspection">
     <!--
          The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
@@ -68,6 +67,9 @@
         <activity
             android:name=".PopUpNewInspectionActivity"
             android:theme="@style/AppTheme.CustomTheme" />
+        <activity
+            android:name=".SearchActivity"
+            android:parentActivityName=".RestaurantActivity"/>
     </application>
 
 </manifest>

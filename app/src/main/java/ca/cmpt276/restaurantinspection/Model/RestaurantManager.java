@@ -62,6 +62,10 @@ public class RestaurantManager implements Iterable<Restaurant> {
         return restaurantsList;
     }
 
+    public ArrayList<Restaurant> getFaveList() {
+        return favoriteList;
+    }
+
     public ArrayList<Restaurant> getFavoriteList() {
         return favoriteList;
     }
