@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,7 +22,6 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
     private ArrayList<Violation> violationList;
     private Toast toast;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();
-    private final String TAG = "Debug";
     private SearchManager searchManager;
     private int restaurantIndex;
     private int inspectionIndex;
@@ -65,7 +63,7 @@ public class RestaurantViolationActivity extends AppCompatActivity implements Vi
         TextView inspectionType = this.findViewById(R.id.inspection_type);
         TextView numNonCritIssues = this.findViewById(R.id.num_noncrit_issues_details);
         TextView numCritIssues = this.findViewById(R.id.num_crit_issues_details);
-        Log.d(TAG, inspection.getHazardRating());
+
         String hazard = "";
         switch(inspection.getHazardRating()) {
             case "High":

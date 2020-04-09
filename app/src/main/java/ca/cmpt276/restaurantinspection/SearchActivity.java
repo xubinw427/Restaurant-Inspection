@@ -2,23 +2,14 @@ package ca.cmpt276.restaurantinspection;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
-import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.SearchManager;
 
 public class SearchActivity extends AppCompatActivity {
     private SearchManager searchManager = SearchManager.getInstance();
-
     int greenClicked = 0;
     int yellowClicked = 0;
     int redClicked = 0;
@@ -32,7 +23,7 @@ public class SearchActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
 
         if (actionBar != null) {
-            actionBar.setTitle("Search");
+            actionBar.setTitle(getString(R.string.str_search_title));
             actionBar.setElevation(0);
         }
 

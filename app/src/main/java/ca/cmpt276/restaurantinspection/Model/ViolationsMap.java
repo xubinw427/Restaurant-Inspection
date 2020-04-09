@@ -1,8 +1,6 @@
 package ca.cmpt276.restaurantinspection.Model;
 
 import android.content.Context;
-import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +13,6 @@ public class ViolationsMap {
     private Context context;
     private static ViolationsMap instance = null;
     private static Map<String, String[]> violationsLookup;
-    private final String TAG = "Debug";
 
     private ViolationsMap(InputStream file, Context context) {
         this.context = context;
@@ -63,7 +60,6 @@ public class ViolationsMap {
                 int resID = context.getResources().getIdentifier(name, "string", packageName);
                 String vio = context.getResources().getString(resID);
                 String[] info = vio.split(",");
-                Log.d(TAG, "current violation is: " + info);
 
                 violationsLookup.put(line[0], info);
             }

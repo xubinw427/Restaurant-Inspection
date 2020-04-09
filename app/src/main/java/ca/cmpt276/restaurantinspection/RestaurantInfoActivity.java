@@ -6,17 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
-
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Model.SearchManager;
 
-/**
- * Basic Info Page of Restaurant (Address & Coordinates)
- **/
+/** Basic Info Page of Restaurant (Address & Coordinates) **/
 public class RestaurantInfoActivity extends AppCompatActivity {
     private static final int LAUNCH_MAP_ACTIVITY = 1;
     private RestaurantManager restaurantManager = RestaurantManager.getInstance();

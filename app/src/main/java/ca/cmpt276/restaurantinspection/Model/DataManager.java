@@ -55,10 +55,6 @@ public class DataManager {
         return instance;
     }
 
-
-
-
-
     private void setUpdateURLRestaurant (String url) {
         updateURLRestaurant = url;
     }

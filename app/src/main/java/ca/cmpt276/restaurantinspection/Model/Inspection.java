@@ -27,8 +27,7 @@ public class Inspection implements Comparable<Inspection>{
     private ArrayList<Violation> violationsList;
 
     /** inspectionLump is either
-     * [0: Inspection (as is, there were no violations)] >> length = 1
-     * OR
+     * [0: Inspection (as is, there were no violations)] >> length = 1 OR
      * [0: First half of Inspection, 1: Violations & Hazard Rating] >> length = 2 **/
     /** ViolLump is currently a long string of all violations to be split by '|' **/
     public Inspection(String[] inspectionLump, ViolationsMap map, Context context) {

@@ -29,11 +29,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.algo.Algorithm;
 import com.google.maps.android.clustering.algo.NonHierarchicalDistanceBasedAlgorithm;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantInfoWindowAdapter;
 import ca.cmpt276.restaurantinspection.Model.CustomMarker;
 import ca.cmpt276.restaurantinspection.Model.OwnIconRendered;
@@ -128,8 +126,19 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     updateManager.getLastModifiedInspections());
             editor.apply();
 
-            Intent intent = new Intent(this, PopUpNewInspectionActivity.class);
-            startActivity(intent);
+            int check = 0;
+
+            for (Restaurant res : restaurantManager.getFavoriteList()) {
+                if (res.getOldNumInspections() < res.getInspectionsList().size()) {
+                    check = 1;
+                    break;
+                }
+            }
+
+            if (check == 1) {
+                Intent intent = new Intent(this, PopUpNewInspectionActivity.class);
+                startActivity(intent);
+            }
 
             updateManager.setUpdated(2);
         }
@@ -310,8 +319,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     }
                 }
             }
-        }
-        else {
+        } else {
             for (Restaurant restaurant : searchManager) {
                 if (restaurant != null) {
                     try {
@@ -359,8 +367,7 @@ public class RestaurantMapActivity extends AppCompatActivity implements OnMapRea
                     return i;
                 }
             }
-        }
-        else {
+        } else {
             for (int i = 0; i < searchManager.getList().size(); i++) {
                 Restaurant restaurant = searchManager.getList().get(i);
                 if (restaurant.getLatitude() == lat && restaurant.getLongitude() == lng) {

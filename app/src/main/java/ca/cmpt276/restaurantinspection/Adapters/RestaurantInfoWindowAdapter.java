@@ -4,10 +4,8 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.Marker;
-
 import ca.cmpt276.restaurantinspection.R;
 
 /** Adapter for Restaurant Info Window Pop-up when Map Marker is Toggled **/

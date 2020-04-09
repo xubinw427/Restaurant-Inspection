@@ -1,9 +1,7 @@
 package ca.cmpt276.restaurantinspection.Model;
 
 import android.content.Context;
-
 import java.util.ArrayList;
-
 import ca.cmpt276.restaurantinspection.R;
 
 /** Restaurant Object to Represent Each Restaurant in Data **/
