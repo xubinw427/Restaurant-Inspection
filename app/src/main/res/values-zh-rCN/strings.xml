@@ -87,4 +87,18 @@
     <string name="str_follow_up">跟进</string>
     <string name="str_routine">例行</string>
     <string name="str_no_recent_insp">最近无检查</string>
+    <string name="str_less_than">&lt;=</string>
+    <string name="str_greater_than">&gt;=</string>
+    <string name="str_search_text">搜索词条 &#8230;</string>
+    <string name="str_hazard_level_most_recent">最近检查的危险等级:</string>
+    <string name="str_num_critical_last_year">去年的严重违规次数:</string>
+    <string name="str_only_include_fave">仅包括"最喜欢"餐厅:</string>
+    <string name="str_search_num_crit"># 严重违规</string>
+    <string name="str_search_title">搜索</string>
+    <string name="str_search_high">高</string>
+    <string name="str_search_mod">中</string>
+    <string name="str_search_low">低</string>
+    <string name="str_search_reset">重置</string>
+    <string name="str_new_inspections_title">新检查</string>
+    <string name="str_ok">完成</string>
 </resources>
