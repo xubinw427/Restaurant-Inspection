@@ -127,7 +127,7 @@ public class RestaurantManager implements Iterable<Restaurant> {
             reader.readLine();
 
             while (((line = reader.readLine()) != null)) {
-                Restaurant newRestaurant = new Restaurant(line);
+                Restaurant newRestaurant = new Restaurant(line, context);
                 this.addNew(newRestaurant);
             }
         }

@@ -86,5 +86,6 @@
     <string name="str_days_ago">days ago</string>
     <string name="str_follow_up">Follow Up</string>
     <string name="str_routine">Routine</string>
+    <string name="str_no_recent_insp">No Recent Inspection</string>
 
 </resources>
