@@ -5,12 +5,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
-
 import ca.cmpt276.restaurantinspection.Model.Violation;
 import ca.cmpt276.restaurantinspection.R;
 
@@ -64,59 +61,55 @@ public class ViolationAdapter extends RecyclerView.Adapter<ViolationAdapter.Viol
         Violation currViolation = violationList.get(position);
 
         /** Check violation type & crit/non-crit of rest, then switch statements to set icon **/
-        switch(currViolation.getType()) {
-            case "Employees":
-                switch(currViolation.getSeverity()) {
-                    case "Not Critical":
-                        holder.violationIcon.setImageResource(R.drawable.employee_noncrit);
-                        holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
-                        break;
-                    case "Critical":
-                        holder.violationIcon.setImageResource(R.drawable.employee_crit);
-                        holder.criticalIcon.setImageResource(R.drawable.violation_crit);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case "Equipment":
-                switch(currViolation.getSeverity()) {
-                    case "Not Critical":
-                        holder.violationIcon.setImageResource(R.drawable.equipment_noncrit);
-                        holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
-                        break;
-                    case "Critical":
-                        holder.violationIcon.setImageResource(R.drawable.equipment_crit);
-                        holder.criticalIcon.setImageResource(R.drawable.violation_crit);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case "Food":
-                switch(currViolation.getSeverity()) {
-                    case "Not Critical":
-                        holder.violationIcon.setImageResource(R.drawable.food_noncrit);
-                        holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
-                        break;
-                    case "Critical":
-                        holder.violationIcon.setImageResource(R.drawable.food_crit);
-                        holder.criticalIcon.setImageResource(R.drawable.violation_crit);
-                        break;
-                    default:
-                        break;
-                }
-                break;
-            case "Operations":
-                holder.violationIcon.setImageResource(R.drawable.operations_noncrit);
-                holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
-                break;
-            case "Pests":
-                holder.violationIcon.setImageResource(R.drawable.pest_noncrit);
-                holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
-                break;
-            default:
-                break;
+        if (currViolation.getID().equals("101") || currViolation.getID().equals("102") ||
+                currViolation.getID().equals("103") || currViolation.getID().equals("104") ||
+                currViolation.getID().equals("306") || currViolation.getID().equals("311") ||
+                currViolation.getID().equals("312") || currViolation.getID().equals("313") ||
+                currViolation.getID().equals("314") || currViolation.getID().equals("501")) {
+
+            holder.violationIcon.setImageResource(R.drawable.operations_noncrit);
+            holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
+        } else if (currViolation.getID().equals("201") || currViolation.getID().equals("202") ||
+                currViolation.getID().equals("203") || currViolation.getID().equals("204") ||
+                currViolation.getID().equals("205") || currViolation.getID().equals("206")) {
+
+            holder.violationIcon.setImageResource(R.drawable.food_crit);
+            holder.criticalIcon.setImageResource(R.drawable.violation_crit);
+
+        } else if (currViolation.getID().equals("208") || currViolation.getID().equals("209") ||
+                currViolation.getID().equals("210") || currViolation.getID().equals("211") ||
+                currViolation.getID().equals("212")) {
+
+            holder.violationIcon.setImageResource(R.drawable.food_noncrit);
+            holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
+
+        } else if (currViolation.getID().equals("301") || currViolation.getID().equals("302") ||
+                currViolation.getID().equals("303")) {
+
+            holder.violationIcon.setImageResource(R.drawable.equipment_crit);
+            holder.criticalIcon.setImageResource(R.drawable.violation_crit);
+
+        } else if (currViolation.getID().equals("304") || currViolation.getID().equals("305")) {
+
+            holder.violationIcon.setImageResource(R.drawable.pest_noncrit);
+            holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
+
+        } else if (currViolation.getID().equals("307") || currViolation.getID().equals("308") ||
+                currViolation.getID().equals("309") || currViolation.getID().equals("310") ||
+                currViolation.getID().equals("315")) {
+
+            holder.violationIcon.setImageResource(R.drawable.equipment_noncrit);
+            holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
+
+        } else if (currViolation.getID().equals("401") || currViolation.getID().equals("402")) {
+
+            holder.violationIcon.setImageResource(R.drawable.employee_crit);
+            holder.criticalIcon.setImageResource(R.drawable.violation_crit);
+        } else if (currViolation.getID().equals("403") || currViolation.getID().equals("404") ||
+                currViolation.getID().equals("502")) {
+
+            holder.violationIcon.setImageResource(R.drawable.employee_noncrit);
+            holder.criticalIcon.setImageResource(R.drawable.violation_noncrit);
         }
 
         holder.violationDesc.setText(currViolation.getShortDescription());

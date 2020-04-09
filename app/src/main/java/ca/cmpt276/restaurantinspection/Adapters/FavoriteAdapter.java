@@ -5,14 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
-
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.R;
 
+/** RecyclerView Adapter for list of Favourite Restaurants with New Inspections **/
 public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder> {
     private ArrayList<Restaurant> favoriteList;
     private ArrayList<Restaurant> restaurantList;

@@ -5,13 +5,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import ca.cmpt276.restaurantinspection.Model.Restaurant;
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
-
 import ca.cmpt276.restaurantinspection.Model.SearchManager;
 import ca.cmpt276.restaurantinspection.R;
 
@@ -77,6 +74,7 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Re
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
         Restaurant currRestaurant;
+
         if (SearchManager.getInstance() == null || SearchManager.getInstance().getFilter() == 0){
             currRestaurant = restaurantManager.getRestaurantAt(position);
         } else {

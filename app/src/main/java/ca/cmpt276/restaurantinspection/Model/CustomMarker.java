@@ -4,7 +4,6 @@ import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.maps.android.clustering.ClusterItem;
-
 import ca.cmpt276.restaurantinspection.R;
 
 /** Setting up Map Pegs depending on Hazard Level of a Restaurant's Latest Inspection **/

@@ -1,17 +1,12 @@
 package ca.cmpt276.restaurantinspection.Model;
 
 import android.content.Context;
-
-import android.content.Context;
 import android.content.SharedPreferences;
-
 import androidx.annotation.NonNull;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Collections;

@@ -46,7 +46,6 @@ public class RestaurantInspectionActivity extends AppCompatActivity implements I
         }
 
         extractRestaurantInspections();
-
         startRestaurantInfoActivityBtn();
     }
 

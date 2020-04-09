@@ -1,16 +1,14 @@
 package ca.cmpt276.restaurantinspection.Model;
 
 import androidx.annotation.NonNull;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 
-/** Singleton to Keep Track of All Restaurants in Data **/
+/** Singleton to Keep Track of Favourited Restaurants in Data **/
 public class SearchManager implements Iterable<Restaurant> {
     private ArrayList<Restaurant> restaurantsList;
-    private RestaurantManager restaurantManager;
     private static SearchManager instance;
     private int currRestaurantPosition;
     private int currInspectionPosition;
@@ -26,7 +24,6 @@ public class SearchManager implements Iterable<Restaurant> {
 
     /** Private to prevent anyone else from instantiating. **/
     private SearchManager() {
-        restaurantManager = RestaurantManager.getInstance();
         restaurantsList = new ArrayList<>();
 
         this.search = "";
@@ -160,9 +157,9 @@ public class SearchManager implements Iterable<Restaurant> {
         ArrayList<Restaurant> restaurantList;
 
         if (favourite == 1) {
-            restaurantList = restaurantManager.getFaveList();
+            restaurantList = RestaurantManager.getInstance().getFaveList();
         } else {
-            restaurantList = restaurantManager.getList();
+            restaurantList = RestaurantManager.getInstance().getList();
         }
 
         for (Restaurant restaurant : restaurantList) {

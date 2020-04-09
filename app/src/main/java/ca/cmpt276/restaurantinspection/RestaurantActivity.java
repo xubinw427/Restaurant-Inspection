@@ -8,17 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 import ca.cmpt276.restaurantinspection.Model.RestaurantManager;
 import ca.cmpt276.restaurantinspection.Adapters.RestaurantAdapter;
 import ca.cmpt276.restaurantinspection.Model.SearchManager;

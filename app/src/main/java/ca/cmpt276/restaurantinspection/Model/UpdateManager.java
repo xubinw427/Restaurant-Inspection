@@ -2,7 +2,6 @@ package ca.cmpt276.restaurantinspection.Model;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
