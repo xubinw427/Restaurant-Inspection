@@ -7,6 +7,7 @@ public class Violation {
     private String severity;
     private String longDescription;
     private String shortDescription;
+    private final String TAG = "Debug";
 
     /** String[]: [0: ID, 1: Type, 2: Severity, 3: LongDescription, 4: ShortDescription]**/
     public Violation(String[] violationDetails) {
@@ -15,6 +16,10 @@ public class Violation {
         severity = violationDetails[2];
         longDescription = violationDetails[3];
         shortDescription = violationDetails[4];
+    }
+
+    public String getID() {
+        return ID;
     }
 
     public String getType() {
