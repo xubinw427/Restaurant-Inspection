@@ -103,7 +103,12 @@ public class DataManager {
 
                         /** Get real url to read actual data. **/
                         String url2 = csv.get("url").toString();
-                        String updateURL2 = url2.replace("http", "https");
+
+                        String updateURL2 = url2;
+
+                        if (!url2.contains("https")) {
+                            updateURL2 = url2.replace("http", "https");
+                        }
 
                         String lastModified = csv.get("last_modified").toString();
 
@@ -154,7 +159,13 @@ public class DataManager {
                         JSONObject csv = (JSONObject) jsonArray.get(0);
 
                         String url2 = csv.get("url").toString();
-                        String updateURL2 = url2.replace("http", "https");
+
+                        String updateURL2 = url2;
+
+                        if (!url2.contains("https")) {
+                            updateURL2 = url2.replace("http", "https");
+                        }
+
                         String lastModified = csv.get("last_modified").toString();
 
                         SharedPreferences pref = fileContext.getSharedPreferences("UpdatePref", 0);
